@@ -63,7 +63,7 @@
     "@stacksjs/qrx": "link:@stacksjs/qrx"
   },
   "devDependencies": {
-    "better-dx": "^0.2.1"
+    "better-dx": "^0.2.5"
   },
   "git-hooks": {
     "pre-commit": {
