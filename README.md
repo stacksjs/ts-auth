@@ -27,10 +27,50 @@ A native WebAuthn and OTP authentication library built with Bun. Zero external a
 - **Fully Typed** - Complete TypeScript support with comprehensive type definitions
 - **Native Implementation** - No dependency on external auth libraries; uses Bun's native crypto
 
+## Why ts-auth?
+
+| Feature | ts-auth | @simplewebauthn | otplib |
+|---------|---------|-----------------|--------|
+| WebAuthn Support | Yes | Yes | No |
+| TOTP Support | Yes | No | Yes |
+| QR Code Generation | Yes | No | No |
+| Zero Auth Dependencies | Yes | No | No |
+| Native Bun Crypto | Yes | No | No |
+| Bundle Size | Minimal | ~50KB | ~25KB |
+| Single Package | Yes | 2 packages (server + browser) | Yes |
+
+**Key advantages:**
+
+- **All-in-one solution** - WebAuthn, TOTP, and QR codes in a single package
+- **Zero external auth dependencies** - Uses native Web Crypto APIs and Bun's built-in crypto
+- **Bun-optimized** - Built specifically for Bun's runtime for optimal performance
+- **Simpler API** - Streamlined functions that are easy to understand and use
+- **Fully typed** - Complete TypeScript definitions with no `any` types in the public API
+
+## Requirements
+
+- **Bun** >= 1.0.0 (for server-side TOTP and WebAuthn verification)
+- **HTTPS** - WebAuthn requires a secure context (HTTPS or localhost)
+- **Browser Support** (for WebAuthn):
+  - Chrome/Edge 67+
+  - Firefox 60+
+  - Safari 13+
+  - Mobile: iOS 14.5+, Android Chrome 67+
+
 ## Installation
 
 ```bash
+# Using bun
 bun add ts-auth
+
+# Using npm
+npm install ts-auth
+
+# Using yarn
+yarn add ts-auth
+
+# Using pnpm
+pnpm add ts-auth
 ```
 
 ## Usage
@@ -185,6 +225,141 @@ const dataUrl = await generateQRCodeDataURL({
 })
 ```
 
+### Complete Authentication Flow Example
+
+Here's a complete example showing WebAuthn registration and authentication:
+
+```ts
+// === SERVER SIDE ===
+import {
+  generateRegistrationOptions,
+  generateAuthenticationOptions,
+  verifyRegistrationResponse,
+  verifyAuthenticationResponse,
+} from 'ts-auth'
+
+// Store for demo purposes (use a real database in production)
+const userCredentials = new Map()
+const challenges = new Map()
+
+// 1. Registration: Generate options
+function handleRegistrationStart(userId: string, userName: string) {
+  const options = generateRegistrationOptions({
+    rpName: 'My Application',
+    rpID: 'example.com',
+    userID: userId,
+    userName: userName,
+  })
+
+  // Store challenge for verification
+  challenges.set(userId, options.challenge)
+
+  return options
+}
+
+// 2. Registration: Verify response
+async function handleRegistrationFinish(userId: string, credential: any) {
+  const expectedChallenge = challenges.get(userId)
+
+  const verification = await verifyRegistrationResponse(
+    credential,
+    expectedChallenge,
+    'https://example.com',
+    'example.com',
+  )
+
+  if (verification.verified && verification.registrationInfo) {
+    // Store credential for future authentication
+    userCredentials.set(userId, {
+      credentialId: verification.registrationInfo.credential.id,
+      publicKey: verification.registrationInfo.credential.publicKey,
+      counter: verification.registrationInfo.credential.counter,
+    })
+
+    return { success: true }
+  }
+
+  return { success: false }
+}
+
+// 3. Authentication: Generate options
+function handleAuthenticationStart(userId: string) {
+  const stored = userCredentials.get(userId)
+
+  const options = generateAuthenticationOptions({
+    rpID: 'example.com',
+    allowCredentials: stored ? [{
+      id: stored.credentialId,
+      type: 'public-key',
+    }] : [],
+  })
+
+  challenges.set(userId, options.challenge)
+
+  return options
+}
+
+// 4. Authentication: Verify response
+async function handleAuthenticationFinish(userId: string, credential: any) {
+  const stored = userCredentials.get(userId)
+  const expectedChallenge = challenges.get(userId)
+
+  const verification = await verifyAuthenticationResponse(
+    credential,
+    expectedChallenge,
+    'https://example.com',
+    'example.com',
+    stored.publicKey,
+    stored.counter,
+  )
+
+  if (verification.verified) {
+    // Update counter
+    stored.counter = verification.authenticationInfo!.newCounter
+    userCredentials.set(userId, stored)
+
+    return { success: true }
+  }
+
+  return { success: false }
+}
+```
+
+```ts
+// === BROWSER SIDE ===
+import { startRegistration, startAuthentication } from 'ts-auth'
+
+// Registration
+async function register() {
+  // Get options from server
+  const options = await fetch('/api/register/start').then(r => r.json())
+
+  // Create credential
+  const credential = await startRegistration(options)
+
+  // Send to server for verification
+  await fetch('/api/register/finish', {
+    method: 'POST',
+    body: JSON.stringify(credential),
+  })
+}
+
+// Authentication
+async function login() {
+  // Get options from server
+  const options = await fetch('/api/auth/start').then(r => r.json())
+
+  // Get credential
+  const credential = await startAuthentication(options)
+
+  // Send to server for verification
+  await fetch('/api/auth/finish', {
+    method: 'POST',
+    body: JSON.stringify(credential),
+  })
+}
+```
+
 ## API Reference
 
 ### WebAuthn
@@ -218,6 +393,87 @@ const dataUrl = await generateQRCodeDataURL({
 | `generateQRCodeDataURL()` | Generate a QR code as a data URL |
 | `createQRCode()` | Create a QR code instance attached to a DOM element |
 
+## TypeScript Types
+
+All types are exported and available for use in your TypeScript projects:
+
+```ts
+import type {
+  // Configuration
+  AuthConfig,
+  AuthOptions,
+
+  // TOTP
+  TOTPOptions,
+
+  // WebAuthn
+  RegistrationOptions,
+  AuthenticationOptions,
+  RegistrationCredential,
+  AuthenticationCredential,
+  PublicKeyCredentialCreationOptions,
+  PublicKeyCredentialRequestOptions,
+
+  // QR Code
+  QRCodeOptions,
+} from 'ts-auth'
+```
+
+### Key Types
+
+| Type | Description |
+|------|-------------|
+| `TOTPOptions` | Options for TOTP generation/verification (secret, step, digits, algorithm, window) |
+| `RegistrationOptions` | Server-side options for WebAuthn registration |
+| `AuthenticationOptions` | Server-side options for WebAuthn authentication |
+| `QRCodeOptions` | Options for QR code generation (text, dimensions, colors, error correction) |
+
+## Security Considerations
+
+When implementing authentication, keep these security practices in mind:
+
+### WebAuthn
+
+- **Always use HTTPS** - WebAuthn only works in secure contexts
+- **Store challenges server-side** - Generate challenges on the server and validate them; never trust client-provided challenges
+- **Validate the origin** - Always verify the origin matches your expected domain
+- **Track credential counters** - Store and validate the signature counter to detect cloned authenticators
+- **Use appropriate user verification** - Set `userVerification: 'required'` for sensitive operations
+
+### TOTP
+
+- **Secure secret storage** - Store TOTP secrets encrypted at rest
+- **Use timing-safe comparison** - This library uses timing-safe comparison internally to prevent timing attacks
+- **Implement rate limiting** - Protect against brute-force attacks on TOTP codes
+- **Consider backup codes** - Provide users with backup codes in case they lose their authenticator
+- **Clock synchronization** - The `window` parameter helps account for clock drift (default: 1 step = ±30 seconds)
+
+### General
+
+- **Transport security** - Always use HTTPS/TLS for all authentication-related requests
+- **Session management** - Implement secure session handling after successful authentication
+- **Audit logging** - Log authentication attempts for security monitoring
+
+## Configuration
+
+You can configure ts-auth by creating an `auth.config.ts` file in your project root:
+
+```ts
+import type { AuthOptions } from 'ts-auth'
+
+const config: AuthOptions = {
+  verbose: true, // Enable verbose logging
+}
+
+export default config
+```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `verbose` | `boolean` | `false` | Enable verbose logging for debugging |
+
 ## Testing
 
 ```bash
@@ -244,7 +500,7 @@ For casual chit-chat with others using this package:
 
 ## Postcardware
 
-“Software that is free, but hopes for a postcard.” We love receiving postcards from around the world showing where Stacks is being used! We showcase them on our website too.
+"Software that is free, but hopes for a postcard." We love receiving postcards from around the world showing where Stacks is being used! We showcase them on our website too.
 
 Our address: Stacks.js, 12665 Village Ln #2306, Playa Vista, CA 90094, United States 🌎
 

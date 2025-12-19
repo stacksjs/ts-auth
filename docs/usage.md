@@ -1,8 +1,6 @@
 # Get Started
 
-There are two ways of using this reverse proxy: _as a library or as a CLI._
-
-## Library
+There are two ways of using this reverse proxy:_as a library or as a CLI._## Library
 
 Given the npm package is installed:
 
@@ -33,11 +31,8 @@ const config: ReverseProxyOptions = {
 }
 
 startProxy(config)
-```
+```In case you are trying to start multiple proxies, you may use this configuration:```ts
 
-In case you are trying to start multiple proxies, you may use this configuration:
-
-```ts
 // reverse-proxy.config.{ts,js}
 import type { ReverseProxyOptions } from '@stacksjs/rpx'
 import os from 'node:os'
@@ -71,19 +66,14 @@ const config: ReverseProxyOptions = {
 }
 
 export default config
-```
 
-## CLI
-
-```bash
+```## CLI```bash
 rpx --from localhost:3000 --to my-project.localhost
 rpx --from localhost:8080 --to my-project.test --keyPath ./key.pem --certPath ./cert.pem
 rpx --help
 rpx --version
-```
+```## Testing```bash
 
-## Testing
-
-```bash
 bun test
+
 ```

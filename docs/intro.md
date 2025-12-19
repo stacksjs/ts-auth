@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/stacksjs/rpx/blob/main/.github/art/cover.jpg?raw=true" alt="Social Card of this repo"></p>
+<p align="center"><img src="<https://github.com/stacksjs/rpx/blob/main/.github/art/cover.jpg?raw=true"> alt="Social Card of this repo"></p>
 
 # A Better Developer Experience
 
@@ -13,21 +13,19 @@ This is an opinionated TypeScript Starter kit to help kick-start development of 
 It's rather simple to get your package development started:
 
 ```bash
-# you may use this GitHub template or the following command:
+
+# you may use this GitHub template or the following command
+
 bunx degit stacksjs/ts-starter my-pkg
 cd my-pkg
 
- # if you don't have pnpm installed, run `npm i -g pnpm`
-bun i # install all deps
+# if you don't have pnpm installed, run `npm i -g pnpm`bun i # install all deps
+
 bun run build # builds the library for production-ready use
 
 # after you have successfully committed, you may create a "release"
-bun run release # automates git commits, versioning, and changelog generations
-```
 
-_Check out the package.json scripts for more commands._
-
-### Developer Experience (DX)
+bun run release # automates git commits, versioning, and changelog generations```_Check out the package.json scripts for more commands._### Developer Experience (DX)
 
 This Starter Kit comes pre-configured with the following:
 
@@ -38,10 +36,7 @@ This Starter Kit comes pre-configured with the following:
 - [Be a Good Commitizen](https://www.npmjs.com/package/git-cz) - pre-configured Commitizen & git-cz setup to simplify semantic git commits, versioning, and changelog generations
 - [Built With Testing In Mind](https://bun.sh/docs/cli/test) - pre-configured unit-testing powered by [Bun](https://bun.sh/docs/cli/test)
 - [Renovate](https://renovatebot.com/) - optimized & automated PR dependency updates
-- [ESLint](https://eslint.org/) - for code linting _(and formatting)_
-- [GitHub Actions](https://github.com/features/actions) - runs your CI _(fixes code style issues, tags releases & creates its changelogs, runs the test suite, etc.)_
-
-## Changelog
+- [ESLint](https://eslint.org/) - for code linting_(and formatting)_- [GitHub Actions](https://github.com/features/actions) - runs your CI_(fixes code style issues, tags releases & creates its changelogs, runs the test suite, etc.)_## Changelog
 
 Please see our [releases](https://github.com/stacksjs/stacks/releases) page for more information on what has changed recently.
 
@@ -65,9 +60,7 @@ For casual chit-chat with others using this package:
 
 ## Postcardware
 
-Two things are true: Stacks OSS will always stay open-source, and we do love to receive postcards from wherever Stacks is used! 🌍 _We also publish them on our website. And thank you, Spatie_
-
-Our address: Stacks.js, 12665 Village Ln #2306, Playa Vista, CA 90094
+Two things are true: Stacks OSS will always stay open-source, and we do love to receive postcards from wherever Stacks is used! 🌍_We also publish them on our website. And thank you, Spatie_Our address: Stacks.js, 12665 Village Ln #2306, Playa Vista, CA 90094
 
 ## Sponsors
 
@@ -89,5 +82,5 @@ Made with 💙
 
 <!-- Badges -->
 
-<!-- [codecov-src]: https://img.shields.io/codecov/c/gh/stacksjs/rpx/main?style=flat-square
-[codecov-href]: https://codecov.io/gh/stacksjs/rpx -->
+<!-- [codecov-src]: <https://img.shields.io/codecov/c/gh/stacksjs/rpx/main?style=flat-square>
+[codecov-href]: <https://codecov.io/gh/stacksjs/rpx> -->
