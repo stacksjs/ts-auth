@@ -8,39 +8,215 @@
 
 # ts-auth
 
-This is an opinionated TypeScript Starter kit to help kick-start development of your next Bun package.
+A native WebAuthn and OTP authentication library built with Bun. Zero external authentication dependencies—everything is implemented using native Web Crypto APIs.
 
 ## Features
 
-This Starter Kit comes pre-configured with the following:
+- **WebAuthn/Passkeys** - Full WebAuthn support for passwordless authentication
+  - Server-side registration and authentication verification
+  - Browser-side credential creation and assertion
+  - Platform authenticator detection
+  - Conditional UI (autofill) support
+- **TOTP (Two-Factor Authentication)** - Time-based One-Time Password implementation
+  - Generate and verify TOTP codes
+  - Configurable time steps, digits, and algorithms (SHA-1, SHA-256, SHA-512)
+  - Generate otpauth:// URIs for authenticator apps
+- **QR Code Generation** - Built-in QR code generation for 2FA setup
+  - SVG and Data URL output formats
+  - Configurable error correction levels
+- **Fully Typed** - Complete TypeScript support with comprehensive type definitions
+- **Native Implementation** - No dependency on external auth libraries; uses Bun's native crypto
 
-- 🛠️ [Powerful Build Process](https://github.com/oven-sh/bun) - via Bun
-- 💪🏽 [Fully Typed APIs](https://www.typescriptlang.org/) - via TypeScript
-- 📚 [Documentation-ready](https://vitepress.dev/) - via VitePress
-- ⌘ [CLI & Binary](https://www.npmjs.com/package/bunx) - via Bun & CAC
-- 🧪 [Built With Testing In Mind](https://bun.sh/docs/cli/test) - pre-configured unit-testing powered by [Bun](https://bun.sh/docs/cli/test)
-- 🤖 [Renovate](https://renovatebot.com/) - optimized & automated PR dependency updates
-- 🎨 [ESLint](https://eslint.org/) - for code linting _(and formatting)_
-- 📦️ [pkg.pr.new](https://pkg.pr.new) - Continuous (Preview) Releases for your libraries
-- 🐙 [GitHub Actions](https://github.com/features/actions) - runs your CI _(fixes code style issues, tags releases & creates its changelogs, runs the test suite, etc.)_
-
-## Get Started
-
-It's rather simple to get your package development started:
+## Installation
 
 ```bash
-# you may use this GitHub template or the following command:
-bunx degit stacksjs/ts-starter my-pkg
-cd my-pkg
-
-bun i # install all deps
-bun run build # builds the library for production-ready use
-
-# after you have successfully committed, you may create a "release"
-bun run release # automates git commits, versioning, and changelog generations
+bun add ts-auth
 ```
 
-_Check out the package.json scripts for more commands._
+## Usage
+
+### WebAuthn (Passkeys)
+
+#### Server-side Registration
+
+```ts
+import {
+  generateRegistrationOptions,
+  verifyRegistrationResponse,
+} from 'ts-auth'
+
+// Generate registration options
+const options = generateRegistrationOptions({
+  rpName: 'My App',
+  rpID: 'example.com',
+  userID: 'user-123',
+  userName: 'john@example.com',
+  userDisplayName: 'John Doe',
+  authenticatorSelection: {
+    authenticatorAttachment: 'platform',
+    userVerification: 'preferred',
+  },
+})
+
+// Send `options` to the browser...
+
+// After receiving the response from the browser:
+const verification = await verifyRegistrationResponse(
+  credential,
+  expectedChallenge,
+  'https://example.com',
+  'example.com',
+)
+
+if (verification.verified) {
+  // Store verification.registrationInfo.credential in your database
+}
+```
+
+#### Browser-side Registration
+
+```ts
+import {
+  startRegistration,
+  browserSupportsWebAuthn,
+  platformAuthenticatorIsAvailable,
+} from 'ts-auth'
+
+// Check for WebAuthn support
+if (!browserSupportsWebAuthn()) {
+  console.log('WebAuthn is not supported')
+}
+
+// Check for platform authenticator (Face ID, Touch ID, Windows Hello)
+if (await platformAuthenticatorIsAvailable()) {
+  console.log('Platform authenticator available')
+}
+
+// Start registration with options from your server
+const credential = await startRegistration(optionsFromServer)
+
+// Send credential to your server for verification
+```
+
+#### Server-side Authentication
+
+```ts
+import {
+  generateAuthenticationOptions,
+  verifyAuthenticationResponse,
+} from 'ts-auth'
+
+// Generate authentication options
+const options = generateAuthenticationOptions({
+  rpID: 'example.com',
+  allowCredentials: [{
+    id: storedCredentialId,
+    type: 'public-key',
+  }],
+})
+
+// After receiving the response from the browser:
+const verification = await verifyAuthenticationResponse(
+  credential,
+  expectedChallenge,
+  'https://example.com',
+  'example.com',
+  storedPublicKey,
+  storedCounter,
+)
+
+if (verification.verified) {
+  // Update the stored counter with verification.authenticationInfo.newCounter
+}
+```
+
+### TOTP (Two-Factor Authentication)
+
+```ts
+import {
+  generateTOTPSecret,
+  generateTOTP,
+  verifyTOTP,
+  totpKeyUri,
+} from 'ts-auth'
+
+// Generate a secret for the user
+const secret = generateTOTPSecret()
+
+// Generate the otpauth:// URI for QR codes
+const uri = totpKeyUri('user@example.com', 'MyApp', secret)
+
+// Generate a TOTP code (for testing/display)
+const code = generateTOTP({ secret })
+
+// Verify a code submitted by the user
+const isValid = verifyTOTP(userSubmittedCode, {
+  secret,
+  window: 1, // Allow 1 step before/after for clock drift
+})
+```
+
+### QR Code Generation
+
+```ts
+import {
+  generateQRCodeSVG,
+  generateQRCodeDataURL,
+  QRErrorCorrection,
+  totpKeyUri,
+} from 'ts-auth'
+
+// Generate a QR code for TOTP setup
+const uri = totpKeyUri('user@example.com', 'MyApp', secret)
+
+// Generate as SVG (browser environment)
+const svg = generateQRCodeSVG({
+  text: uri,
+  width: 256,
+  height: 256,
+  correctLevel: QRErrorCorrection.H,
+})
+
+// Generate as data URL for <img> tags
+const dataUrl = await generateQRCodeDataURL({
+  text: uri,
+  width: 256,
+  height: 256,
+})
+```
+
+## API Reference
+
+### WebAuthn
+
+| Function | Description |
+|----------|-------------|
+| `generateRegistrationOptions()` | Generate options for creating a new credential |
+| `generateAuthenticationOptions()` | Generate options for authenticating with an existing credential |
+| `verifyRegistrationResponse()` | Verify the registration response from the browser |
+| `verifyAuthenticationResponse()` | Verify the authentication response from the browser |
+| `startRegistration()` | Start the registration process in the browser |
+| `startAuthentication()` | Start the authentication process in the browser |
+| `browserSupportsWebAuthn()` | Check if the browser supports WebAuthn |
+| `platformAuthenticatorIsAvailable()` | Check if a platform authenticator is available |
+| `browserSupportsWebAuthnAutofill()` | Check if conditional UI is supported |
+
+### TOTP
+
+| Function | Description |
+|----------|-------------|
+| `generateTOTPSecret()` | Generate a random base32-encoded secret |
+| `generateTOTP()` | Generate a TOTP code |
+| `verifyTOTP()` | Verify a TOTP code |
+| `totpKeyUri()` | Generate an otpauth:// URI for authenticator apps |
+
+### QR Code
+
+| Function | Description |
+|----------|-------------|
+| `generateQRCodeSVG()` | Generate a QR code as an SVG string |
+| `generateQRCodeDataURL()` | Generate a QR code as a data URL |
+| `createQRCode()` | Create a QR code instance attached to a DOM element |
 
 ## Testing
 
