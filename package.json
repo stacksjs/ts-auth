@@ -61,9 +61,6 @@
     "preview:docs": "bun --bun vitepress preview docs",
     "typecheck": "bun --bun tsc --noEmit"
   },
-  "dependencies": {
-    "@stacksjs/qrx": "link:@stacksjs/qrx"
-  },
   "devDependencies": {
     "better-dx": "^0.2.5"
   },

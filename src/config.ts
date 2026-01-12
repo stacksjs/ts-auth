@@ -5,8 +5,18 @@ export const defaultConfig: AuthConfig = {
   verbose: true,
 }
 
-// eslint-disable-next-line antfu/no-top-level-await
-export const config: AuthConfig = await loadConfig({
+// Lazy-loaded config to avoid top-level await (enables bun --compile)
+let _config: AuthConfig | null = null
+
+export async function getConfig(): Promise<AuthConfig> {
+  if (!_config) {
+    _config = await loadConfig({
   name: 'auth',
   defaultConfig,
 })
+  }
+  return _config
+}
+
+// For backwards compatibility - synchronous access with default fallback
+export const config: AuthConfig = defaultConfig
