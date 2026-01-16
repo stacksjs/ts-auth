@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "moduleDetection": "force",
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -20,5 +20,7 @@
     "verbatimModuleSyntax": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "bin/**/*.ts", "build.ts"],
+  "exclude": ["node_modules", "dist"]
 }

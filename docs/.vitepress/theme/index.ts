@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 import type { Theme } from 'vitepress'
 import TwoSlashFloatingVue from '@shikijs/vitepress-twoslash/client'
 import DefaultTheme from 'vitepress/theme'

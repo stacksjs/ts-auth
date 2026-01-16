@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 /**
  * Base32 encoding/decoding utilities (RFC 4648)
  */

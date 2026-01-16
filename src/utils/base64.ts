@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 /**
  * Base64 encoding/decoding utilities
  */

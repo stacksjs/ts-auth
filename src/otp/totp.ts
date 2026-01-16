@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 /**
  * TOTP (Time-based One-Time Password) Implementation
  * Native implementation to replace otplib
@@ -134,13 +135,13 @@ function generateHOTP(options: HOTPOptions): string {
 
 function hmacDigest(key: Uint8Array, message: Uint8Array, algorithm: string): Uint8Array {
   // Use Bun's CryptoHasher for HMAC
-  const algoMap: Record<string, string> = {
+  const algoMap: Record<string, 'sha1' | 'sha256' | 'sha512'> = {
     'SHA-1': 'sha1',
     'SHA-256': 'sha256',
     'SHA-512': 'sha512',
   }
 
-  const hasher = new Bun.CryptoHasher(algoMap[algorithm] || 'sha1', key)
+  const hasher = new Bun.CryptoHasher(algoMap[algorithm] ?? 'sha1', key)
   hasher.update(message)
 
   const hex = hasher.digest('hex')

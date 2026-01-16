@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 /**
  * WebAuthn Server Implementation
  * Native implementation to replace @simplewebauthn/server
@@ -341,7 +342,7 @@ async function verifySignature(
       },
       key,
       signature,
-      data,
+      data.buffer as ArrayBuffer,
     )
   }
   catch {

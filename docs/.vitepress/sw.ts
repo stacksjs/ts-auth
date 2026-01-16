@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 /// <reference types="vite/client" />
 
 /// <reference lib="webworker" />

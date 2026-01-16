@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-unused-capturing-group */
 import contributors from './contributors.json'
 
 export interface Contributor {
