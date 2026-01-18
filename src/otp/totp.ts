@@ -1,7 +1,7 @@
 /* eslint-disable regexp/no-unused-capturing-group */
 /**
  * TOTP (Time-based One-Time Password) Implementation
- * Native implementation to replace otplib
+ * Uses Web Crypto API for cross-platform compatibility (Bun, Node.js, browsers)
  */
 
 import { base32Decode, base32Encode } from '../utils/base32'
@@ -30,7 +30,7 @@ export function generateSecret(length: number = 20): string {
 /**
  * Generate a TOTP code
  */
-export function generate(options: TOTPOptions): string {
+export async function generate(options: TOTPOptions): Promise<string> {
   const step = options.step || 30
   const digits = options.digits || 6
   const algorithm = options.algorithm || 'SHA-1'
@@ -47,7 +47,7 @@ export function generate(options: TOTPOptions): string {
 /**
  * Verify a TOTP code
  */
-export function verify(token: string, options: TOTPOptions): boolean {
+export async function verify(token: string, options: TOTPOptions): Promise<boolean> {
   const step = options.step || 30
   const window = options.window ?? 1
   const currentCounter = Math.floor(Date.now() / 1000 / step)
@@ -55,7 +55,7 @@ export function verify(token: string, options: TOTPOptions): boolean {
   // Check current time and within window
   for (let i = -window; i <= window; i++) {
     const counter = currentCounter + i
-    const expectedToken = generateHOTP({
+    const expectedToken = await generateHOTP({
       secret: options.secret,
       counter,
       digits: options.digits || 6,
@@ -112,12 +112,12 @@ interface HOTPOptions {
   algorithm: 'SHA-1' | 'SHA-256' | 'SHA-512'
 }
 
-function generateHOTP(options: HOTPOptions): string {
+async function generateHOTP(options: HOTPOptions): Promise<string> {
   const secret = base32Decode(options.secret)
   const counter = numberToBuffer(options.counter)
 
-  // Generate HMAC
-  const hmac = hmacDigest(secret, counter, options.algorithm)
+  // Generate HMAC using Web Crypto API
+  const hmac = await hmacDigest(secret, counter, options.algorithm)
 
   // Dynamic truncation
   const offset = hmac[hmac.length - 1] & 0x0f
@@ -133,25 +133,26 @@ function generateHOTP(options: HOTPOptions): string {
   return otp.toString().padStart(options.digits, '0')
 }
 
-function hmacDigest(key: Uint8Array, message: Uint8Array, algorithm: string): Uint8Array {
-  // Use Bun's CryptoHasher for HMAC
-  const algoMap: Record<string, 'sha1' | 'sha256' | 'sha512'> = {
-    'SHA-1': 'sha1',
-    'SHA-256': 'sha256',
-    'SHA-512': 'sha512',
+/**
+ * HMAC digest using Web Crypto API (cross-platform: Bun, Node.js, browsers)
+ */
+async function hmacDigest(key: Uint8Array, message: Uint8Array, algorithm: string): Promise<Uint8Array> {
+  const algoMap: Record<string, string> = {
+    'SHA-1': 'SHA-1',
+    'SHA-256': 'SHA-256',
+    'SHA-512': 'SHA-512',
   }
 
-  const hasher = new Bun.CryptoHasher(algoMap[algorithm] ?? 'sha1', key)
-  hasher.update(message)
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    key,
+    { name: 'HMAC', hash: algoMap[algorithm] || 'SHA-1' },
+    false,
+    ['sign'],
+  )
 
-  const hex = hasher.digest('hex')
-  const bytes = new Uint8Array(hex.length / 2)
-
-  for (let i = 0; i < hex.length; i += 2) {
-    bytes[i / 2] = Number.parseInt(hex.substr(i, 2), 16)
-  }
-
-  return bytes
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, message)
+  return new Uint8Array(signature)
 }
 
 function numberToBuffer(num: number): Uint8Array {

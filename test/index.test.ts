@@ -1,128 +1,270 @@
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn, test } from 'bun:test'
+/**
+ * ts-auth Integration Tests
+ *
+ * This file tests that all exports are properly available and
+ * demonstrates common usage patterns for the library.
+ */
+import { describe, expect, it, beforeEach, afterEach } from 'bun:test'
+import {
+  // Auth Manager
+  createAuthManager,
+  AuthenticationManager,
 
-// Example function to test
-function add(a: number, b: number): number {
-  return a + b
-}
+  // Session
+  SessionManager,
+  createSession,
+  sessionMiddleware,
+  csrfMiddleware,
 
-// Example async function to test
-async function fetchData(): Promise<string> {
-  return new Promise(resolve => setTimeout(() => resolve('data'), 100))
-}
+  // JWT
+  signJwt,
+  verifyJwt,
+  decodeJwt,
+  createTokenPair,
 
-// Example module to mock
-const apiModule = {
-  fetchUserData: async (id: number) => {
-    // Simulating an API call
-    return { id, name: 'John Doe', email: 'john@example.com' }
-  },
-}
+  // Hash
+  hash,
+  verifyHash,
+  generateToken,
 
-describe('my awesome package', () => {
-  let testValue: number
+  // TOTP
+  generateTOTP,
+  verifyTOTP,
+  generateTOTPSecret,
 
-  beforeAll(() => {
-    // eslint-disable-next-line no-console
-    console.log('Running before all tests')
+  // Rate Limiting
+  AuthRateLimiter,
+  createAuthRateLimiter,
+  AccountLockoutManager,
+  createAccountLockout,
+
+  // Token Blacklist
+  TokenBlacklist,
+  createTokenBlacklist,
+
+  // Audit
+  AuditLogger,
+  createAuditLogger,
+
+  // Validation
+  validateEmail,
+  validateUrl,
+
+  // Errors
+  AuthError,
+  TokenExpiredError,
+  InvalidCredentialsError,
+} from '../src'
+
+describe('ts-auth Library', () => {
+  describe('Exports', () => {
+    it('should export Auth Manager', () => {
+      expect(createAuthManager).toBeDefined()
+      expect(AuthenticationManager).toBeDefined()
+    })
+
+    it('should export Session utilities', () => {
+      expect(SessionManager).toBeDefined()
+      expect(createSession).toBeDefined()
+      expect(sessionMiddleware).toBeDefined()
+      expect(csrfMiddleware).toBeDefined()
+    })
+
+    it('should export JWT utilities', () => {
+      expect(signJwt).toBeDefined()
+      expect(verifyJwt).toBeDefined()
+      expect(decodeJwt).toBeDefined()
+      expect(createTokenPair).toBeDefined()
+    })
+
+    it('should export Hash utilities', () => {
+      expect(hash).toBeDefined()
+      expect(verifyHash).toBeDefined()
+      expect(generateToken).toBeDefined()
+    })
+
+    it('should export TOTP utilities', () => {
+      expect(generateTOTP).toBeDefined()
+      expect(verifyTOTP).toBeDefined()
+      expect(generateTOTPSecret).toBeDefined()
+    })
+
+    it('should export Rate Limiting utilities', () => {
+      expect(AuthRateLimiter).toBeDefined()
+      expect(createAuthRateLimiter).toBeDefined()
+      expect(AccountLockoutManager).toBeDefined()
+      expect(createAccountLockout).toBeDefined()
+    })
+
+    it('should export Token Blacklist utilities', () => {
+      expect(TokenBlacklist).toBeDefined()
+      expect(createTokenBlacklist).toBeDefined()
+    })
+
+    it('should export Audit utilities', () => {
+      expect(AuditLogger).toBeDefined()
+      expect(createAuditLogger).toBeDefined()
+    })
+
+    it('should export Validation utilities', () => {
+      expect(validateEmail).toBeDefined()
+      expect(validateUrl).toBeDefined()
+    })
+
+    it('should export Error classes', () => {
+      expect(AuthError).toBeDefined()
+      expect(TokenExpiredError).toBeDefined()
+      expect(InvalidCredentialsError).toBeDefined()
+    })
   })
 
-  afterAll(() => {
-    // eslint-disable-next-line no-console
-    console.log('Running after all tests')
+  describe('Integration: Authentication Flow', () => {
+    const secret = 'test-secret-that-is-at-least-32-bytes-long!'
+    let blacklist: TokenBlacklist
+    let auditLogger: AuditLogger
+
+    beforeEach(() => {
+      blacklist = createTokenBlacklist()
+      auditLogger = createAuditLogger()
+    })
+
+    afterEach(async () => {
+      await blacklist.close()
+      await auditLogger.close()
+    })
+
+    it('should complete a login flow with JWT', async () => {
+      // 1. Hash and verify password
+      const password = 'securePassword123!'
+      const hashedPassword = await hash(password)
+      const isValidPassword = await verifyHash(password, hashedPassword)
+      expect(isValidPassword).toBe(true)
+
+      // 2. Issue tokens using createTokenPair
+      const userId = 'user-123'
+      const tokens = await createTokenPair(userId, secret, {
+        expiry: '15m',
+        refresh: true,
+        refreshExpiry: '7d',
+      }, { role: 'user' })
+      expect(tokens.accessToken).toBeDefined()
+      expect(tokens.refreshToken).toBeDefined()
+
+      // 3. Log the event
+      await auditLogger.logLoginSuccess(userId)
+
+      // 4. Verify the access token
+      const payload = await verifyJwt(tokens.accessToken, secret)
+      expect(payload.sub).toBe(userId)
+
+      // 5. Verify audit log
+      const logs = await auditLogger.query({ userId })
+      expect(logs.length).toBeGreaterThan(0)
+      expect(logs[0].event).toBe('login.success')
+    })
+
+    it('should handle token revocation', async () => {
+      // Issue a token using signJwt
+      const token = await signJwt(
+        { sub: 'user-456' },
+        secret,
+        { jwtId: 'unique-token-id', expiresIn: '1h' },
+      )
+
+      // Verify it works
+      const payload = await verifyJwt(token, secret)
+      expect(payload.sub).toBe('user-456')
+
+      // Revoke the token
+      await blacklist.revoke('unique-token-id', Date.now() + 3600000)
+
+      // Check if revoked
+      const isRevoked = await blacklist.isRevoked('unique-token-id')
+      expect(isRevoked).toBe(true)
+    })
+
+    it('should handle 2FA with TOTP', async () => {
+      // Generate a secret for user
+      const totpSecret = generateTOTPSecret()
+      expect(totpSecret).toBeDefined()
+
+      // Generate and verify code
+      const code = await generateTOTP({ secret: totpSecret })
+      const isValid = await verifyTOTP(code, { secret: totpSecret })
+      expect(isValid).toBe(true)
+    })
   })
 
-  beforeEach(() => {
-    testValue = 10
-  })
+  describe('Integration: Rate Limiting & Lockout', () => {
+    let rateLimiter: AuthRateLimiter
+    let lockoutManager: AccountLockoutManager
 
-  afterEach(() => {
-    testValue = 0
-  })
+    beforeEach(() => {
+      rateLimiter = createAuthRateLimiter({
+        login: { maxRequests: 3, windowMs: 1000 },
+      })
+      lockoutManager = createAccountLockout({
+        maxAttempts: 3,
+        lockoutDuration: 1000,
+      })
+    })
 
-  it('should demonstrate basic assertion', () => {
-    expect(1).toBe(1)
-  })
+    afterEach(() => {
+      rateLimiter.dispose()
+    })
 
-  it('should test the add function', () => {
-    expect(add(2, 3)).toBe(5)
-    expect(add(-1, 1)).toBe(0)
-  })
-
-  it('should work with various matchers', () => {
-    expect(true).toBeTruthy()
-    expect(false).toBeFalsy()
-    expect(null).toBeNull()
-    expect(undefined).toBeUndefined()
-    expect([1, 2, 3]).toContain(2)
-    expect({ name: 'John' }).toHaveProperty('name')
-    expect(() => {
-      throw new Error('Test error')
-    }).toThrow('Test error')
-  })
-
-  it('should handle async tests', async () => {
-    const result = await fetchData()
-    expect(result).toBe('data')
-  })
-
-  it('should use beforeEach and afterEach', () => {
-    expect(testValue).toBe(10)
-    testValue += 5
-    expect(testValue).toBe(15)
-  })
-
-  test('should work with test function as well', () => {
-    expect(true).toBe(true)
-  })
-
-  it('should demonstrate spy functionality', () => {
-    const consoleSpy = spyOn(console, 'log')
-    // eslint-disable-next-line no-console
-    console.log('Test message')
-    expect(consoleSpy).toHaveBeenCalledWith('Test message')
-    consoleSpy.mockRestore()
-  })
-
-  it.todo('should implement this test later')
-
-  it.skip('should skip this test', () => {
-    // This test will be skipped
-    expect(true).toBe(false)
-  })
-
-  describe('Mocking example', () => {
-    it('should demonstrate mock functionality', async () => {
-      // Create a mock function
-      const mockFetchUserData = mock((id: number) => {
-        return Promise.resolve({ id, name: 'Mocked User', email: 'mocked@example.com' })
+    it('should enforce rate limits and lock accounts', async () => {
+      const email = 'attacker@example.com'
+      const request = new Request('http://localhost/login', {
+        headers: { 'x-forwarded-for': '10.0.0.1' },
       })
 
-      // Replace the original function with the mock
-      apiModule.fetchUserData = mockFetchUserData
+      // First 3 attempts should be allowed by rate limiter
+      for (let i = 0; i < 3; i++) {
+        const result = await rateLimiter.checkLogin(request)
+        expect(result.allowed).toBe(true)
 
-      // Use the mocked function
-      const result = await apiModule.fetchUserData(1)
+        // Record failed attempt for lockout
+        lockoutManager.recordFailedAttempt(email)
+      }
 
-      // Assert the mock was called with the correct argument
-      expect(mockFetchUserData).toHaveBeenCalledWith(1)
+      // 4th rate limit check should be blocked
+      const blockedResult = await rateLimiter.checkLogin(request)
+      expect(blockedResult.allowed).toBe(false)
 
-      // Assert the mock returned the expected result
-      expect(result).toEqual({ id: 1, name: 'Mocked User', email: 'mocked@example.com' })
+      // Account should be locked
+      const lockStatus = lockoutManager.isLocked(email)
+      expect(lockStatus.locked).toBe(true)
+    })
+  })
 
-      // Check how many times the mock was called
-      expect(mockFetchUserData).toHaveBeenCalledTimes(1)
+  describe('Integration: Validation', () => {
+    it('should validate user input', () => {
+      // validateEmail throws on invalid, returns void on valid
+      expect(() => validateEmail('user@example.com')).not.toThrow()
+      expect(() => validateEmail('invalid')).toThrow()
 
-      // Reset the mock
-      mockFetchUserData.mockReset()
+      // validateUrl throws on invalid, returns void on valid
+      expect(() => validateUrl('https://example.com')).not.toThrow()
+      expect(() => validateUrl('not-a-url')).toThrow()
+    })
+  })
 
-      // Provide a new implementation for the mock
-      mockFetchUserData.mockImplementation((id: number) => {
-        return Promise.resolve({ id, name: 'New Mock', email: 'new@example.com' })
-      })
+  describe('Integration: Error Handling', () => {
+    it('should provide meaningful error information', () => {
+      const error = new TokenExpiredError('Token expired', new Date())
 
-      // Use the mock with the new implementation
-      const newResult = await apiModule.fetchUserData(2)
-      expect(newResult).toEqual({ id: 2, name: 'New Mock', email: 'new@example.com' })
+      expect(error.code).toBe('TOKEN_EXPIRED')
+      expect(error.expiredAt).toBeDefined()
+      expect(error instanceof AuthError).toBe(true)
+      expect(error instanceof Error).toBe(true)
+    })
+
+    it('should handle invalid credentials error', () => {
+      const error = new InvalidCredentialsError()
+
+      expect(error.code).toBe('INVALID_CREDENTIALS')
+      expect(error.message).toBe('Invalid credentials provided')
     })
   })
 })

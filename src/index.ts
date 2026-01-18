@@ -1,5 +1,7 @@
 export * from './config'
 export * from './types'
+export * from './errors'
+export * from './validation'
 
 // Auth Manager
 export * from './auth-manager'
@@ -19,14 +21,23 @@ export * from './guards'
 // Providers exports
 export * from './providers'
 
+// Hash exports
+export * from './hash'
+
+// Rate Limiting exports
+export * from './rate-limit'
+
+// Token Blacklist exports
+export * from './token-blacklist'
+
+// Audit Logging exports
+export * from './audit'
+
 // WebAuthn exports
 export * from './webauthn'
 
 // OTP exports
 export * from './otp'
-
-// QR Code exports
-export * from './qr'
 
 // Utility exports
 export * from './utils'
@@ -130,10 +141,110 @@ export {
   keyuri as totpKeyUri,
 } from './otp/totp'
 
-// QR
+// Hash
 export {
-  generateQRCodeSVG,
-  generateQRCodeDataURL,
-  createQRCode,
-  QRErrorCorrection,
-} from './qr'
+  hash,
+  verify as verifyHash,
+  needsRehash,
+  createHasher,
+  generateRandomString,
+  generateToken,
+} from './hash'
+
+// Validation
+export {
+  validateEmail,
+  validateUrl,
+  validateRedirectUri,
+  validateRpId,
+  validateBase32,
+  validateJwtAlgorithm,
+  validateDuration,
+  validateLength,
+  validateRequired,
+  validatePositiveNumber,
+  validateProviderName,
+  validateOAuthCredentials,
+  sanitizeString,
+  validateUsername,
+  validateScopes,
+} from './validation'
+
+// Error Classes
+export {
+  AuthError,
+  AuthenticationError,
+  InvalidCredentialsError,
+  UserNotFoundError,
+  AccountLockedError,
+  SessionExpiredError,
+  TokenError,
+  TokenExpiredError,
+  TokenInvalidError,
+  TokenMalformedError,
+  TokenSignatureError,
+  TokenNotBeforeError,
+  TokenRevokedError,
+  OAuthError,
+  OAuthStateError,
+  OAuthTokenError,
+  OAuthUserInfoError,
+  OAuthProviderNotFoundError,
+  WebAuthnError,
+  WebAuthnRegistrationError,
+  WebAuthnAuthenticationError,
+  WebAuthnChallengeError,
+  WebAuthnOriginError,
+  WebAuthnRpIdError,
+  WebAuthnCounterError,
+  TOTPError,
+  TOTPInvalidCodeError,
+  TOTPSecretError,
+  SessionError,
+  SessionNotStartedError,
+  SessionStorageError,
+  CSRFError,
+  CSRFTokenMissingError,
+  CSRFTokenMismatchError,
+  ValidationError,
+  InvalidEmailError,
+  InvalidUrlError,
+  GuardError,
+  GuardNotFoundError,
+  ProviderError,
+  ProviderNotFoundError,
+  ConfigurationError,
+  MissingSecretError,
+  InvalidConfigurationError,
+} from './errors'
+
+// Rate Limiting
+export {
+  AuthRateLimiter,
+  createAuthRateLimiter,
+  AccountLockoutManager,
+  createAccountLockout,
+  defaultAuthRateLimits,
+  withRateLimit,
+} from './rate-limit'
+
+// Token Blacklist
+export {
+  TokenBlacklist,
+  MemoryTokenBlacklist,
+  RedisTokenBlacklist,
+  createTokenBlacklist,
+  createRedisTokenBlacklist,
+  tokenBlacklistMiddleware,
+} from './token-blacklist'
+
+// Audit Logging
+export {
+  AuditLogger,
+  MemoryAuditLogStorage,
+  ConsoleAuditLogStorage,
+  CallbackAuditLogStorage,
+  createAuditLogger,
+  createConsoleAuditLogger,
+  createCallbackAuditLogger,
+} from './audit'

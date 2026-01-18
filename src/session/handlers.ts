@@ -1,7 +1,12 @@
 import type { SessionHandler } from '../types'
 
+// Re-export specialized handlers
+export * from './handlers/database'
+export * from './handlers/redis'
+
 /**
  * In-memory session handler for testing and development
+ * WARNING: Sessions are lost on server restart. Do not use in production!
  */
 export class MemorySessionHandler implements SessionHandler {
   private sessions: Map<string, { data: string, lastAccess: number }> = new Map()
@@ -49,6 +54,20 @@ export class MemorySessionHandler implements SessionHandler {
     }
 
     return count
+  }
+
+  /**
+   * Get session count (useful for monitoring)
+   */
+  getSessionCount(): number {
+    return this.sessions.size
+  }
+
+  /**
+   * Clear all sessions
+   */
+  clear(): void {
+    this.sessions.clear()
   }
 }
 
