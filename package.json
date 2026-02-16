@@ -1,6 +1,6 @@
 {
   "name": "ts-auth",
-  "version": "0.4.1",
+  "version": "0.4.0",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "repository": {
     "type": "git",
@@ -26,10 +26,7 @@
     "url": "https://github.com/stacksjs/ts-auth/issues"
   },
   "description": "Native WebAuthn and OTP authentication library built with Bun.",
-  "files": [
-    "README.md",
-    "dist"
-  ],
+  "files": ["README.md", "dist"],
   "git-hooks": {
     "pre-commit": {
       "staged-lint": {
@@ -39,16 +36,7 @@
     "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
   },
   "homepage": "https://github.com/stacksjs/ts-auth#readme",
-  "keywords": [
-    "typescript",
-    "webauthn",
-    "passkeys",
-    "totp",
-    "2fa",
-    "authentication",
-    "otp",
-    "bun"
-  ],
+  "keywords": ["typescript", "webauthn", "passkeys", "totp", "2fa", "authentication", "otp", "bun"],
   "license": "MIT",
   "scripts": {
     "build": "bun --bun build.ts && bun run compile",
@@ -75,7 +63,7 @@
     "format:check": "bunx --bun pickier run --mode format --check",
     "changelog": "bunx logsmith --verbose",
     "changelog:generate": "bunx logsmith --output CHANGELOG.md",
-    "release": "bun --bun run changelog:generate && bunx --bun bumpx prompt --recursive",
+    "release": "bun run changelog:generate && bunx bumpx prompt --recursive",
     "postinstall": "bunx git-hooks",
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
