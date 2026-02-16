@@ -1,5 +1,5 @@
 {
-  "name": "ts-auth",
+  "name": "@stacksjs/ts-auth",
   "version": "0.4.1",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "repository": {
