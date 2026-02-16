@@ -3,24 +3,6 @@ title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
 
-# TOTP/2FA Setup
-
-Time-based One-Time Password (TOTP) provides an additional layer of security by requiring users to enter a code from an authenticator app. This guide covers implementing TOTP two-factor authentication.
-
-## Overview
-
-TOTP generates time-based codes that change every 30 seconds (configurable). It works with popular authenticator apps:
-
-- Google Authenticator
-- Microsoft Authenticator
-- Authy
-- 1Password
-- Bitwarden
-
-## Basic Usage
-
-### Generate a Secret
-
 ```typescript
 import { generateTOTPSecret, totpKeyUri } from 'ts-auth'
 
@@ -228,7 +210,7 @@ async function login(email: string, password: string) {
     // Create a temporary token for the 2FA step
     const tempToken = await signJwt(
       { sub: user.id, purpose: '2fa-pending' },
-      process.env.JWT_SECRET!,
+      process.env.JWT*SECRET!,
       { expiresIn: '5m' }
     )
 
@@ -250,7 +232,7 @@ import { verifyTOTP } from 'ts-auth'
 
 async function verify2FA(tempToken: string, code: string) {
   // Verify the temp token
-  const payload = await verifyJwt(tempToken, process.env.JWT_SECRET!, {
+  const payload = await verifyJwt(tempToken, process.env.JWT*SECRET!, {
     issuer: 'my-app',
   })
 
@@ -340,13 +322,13 @@ Most authenticator apps support all algorithms, but SHA-1 is the most widely sup
 import { encrypt, decrypt } from './crypto'
 
 async function storeTOTPSecret(userId: string, secret: string) {
-  const encryptedSecret = await encrypt(secret, process.env.ENCRYPTION_KEY!)
+  const encryptedSecret = await encrypt(secret, process.env.ENCRYPTION*KEY!)
   await db.users.update(userId, { totpSecret: encryptedSecret })
 }
 
 async function getTOTPSecret(userId: string) {
   const user = await db.users.findById(userId)
-  return decrypt(user.totpSecret, process.env.ENCRYPTION_KEY!)
+  return decrypt(user.totpSecret, process.env.ENCRYPTION*KEY!)
 }
 ```
 

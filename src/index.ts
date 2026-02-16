@@ -1,3 +1,9 @@
+// Disambiguate conflicting exports before wildcard re-exports
+// 'verify' is exported from jwt, hash, and otp - pick jwt as the default
+export { verify } from './jwt/jwt'
+// 'RedisClient' is exported from session and token-blacklist
+export type { RedisClient } from './token-blacklist'
+
 export * from './config'
 export * from './types'
 export * from './errors'

@@ -3,24 +3,10 @@ title: Installation
 description: Install ts-auth in your project
 ---
 
-# Installation
-
-## Package Installation
-
-Install ts-auth using your preferred package manager:
-
-```bash
-# Using bun (recommended)
-bun add ts-auth
-
-# Using npm
-npm install ts-auth
-
-# Using yarn
-yarn add ts-auth
-
 # Using pnpm
+
 pnpm add ts-auth
+
 ```
 
 ## Requirements
@@ -54,6 +40,7 @@ For WebAuthn (Passkeys) functionality in the browser:
 You can optionally create an `auth.config.ts` file in your project root:
 
 ```typescript
+
 import type { AuthOptions } from 'ts-auth'
 
 const config: AuthOptions = {
@@ -61,6 +48,7 @@ const config: AuthOptions = {
 }
 
 export default config
+
 ```
 
 ### Configuration Options
@@ -76,6 +64,7 @@ ts-auth is written in TypeScript and includes comprehensive type definitions. No
 Ensure your `tsconfig.json` includes:
 
 ```json
+
 {
   "compilerOptions": {
     "moduleResolution": "bundler",
@@ -83,6 +72,7 @@ Ensure your `tsconfig.json` includes:
     "strict": true
   }
 }
+
 ```
 
 ## Importing
@@ -92,6 +82,7 @@ Ensure your `tsconfig.json` includes:
 Import specific functions as needed:
 
 ```typescript
+
 import {
   // WebAuthn
   generateRegistrationOptions,
@@ -118,6 +109,7 @@ import {
   createGoogleProvider,
   createGitHubProvider,
 } from 'ts-auth'
+
 ```
 
 ### Type Imports
@@ -125,6 +117,7 @@ import {
 Import types for TypeScript:
 
 ```typescript
+
 import type {
   AuthConfig,
   TOTPOptions,
@@ -134,6 +127,7 @@ import type {
   SessionConfig,
   OAuthProviderConfig,
 } from 'ts-auth'
+
 ```
 
 ## Verifying Installation
@@ -141,6 +135,7 @@ import type {
 Create a simple test file to verify the installation:
 
 ```typescript
+
 // test-auth.ts
 import { generateTOTPSecret, generateTOTP } from 'ts-auth'
 
@@ -150,20 +145,25 @@ const code = await generateTOTP({ secret })
 console.log('Secret:', secret)
 console.log('TOTP Code:', code)
 console.log('ts-auth is working!')
+
 ```
 
 Run with:
 
 ```bash
+
 bun run test-auth.ts
+
 ```
 
 You should see output similar to:
 
 ```
+
 Secret: JBSWY3DPEHPK3PXP
 TOTP Code: 123456
 ts-auth is working!
+
 ```
 
 ## Next Steps

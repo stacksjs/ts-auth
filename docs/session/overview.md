@@ -2,23 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-
-# Session Management
-
-ts-auth provides Laravel-inspired session management with multiple storage drivers.
-
-## Features
-
-- Multiple storage drivers (memory, file, Redis)
-- Automatic session ID generation
-- Cookie-based session tracking
-- CSRF protection
-- Session regeneration
-- Flash data support
-
-## Quick Start
-
-```typescript
 import { createSession, SessionManager } from 'ts-auth'
 
 // Create a session with default settings
@@ -41,6 +24,7 @@ const role = session.get('role', 'guest') // With default
 
 // Save the session
 await session.save()
+
 ```
 
 ## Session Drivers
@@ -50,18 +34,22 @@ await session.save()
 Stores sessions in memory. Best for development or single-server deployments.
 
 ```typescript
+
 const session = createSession({
   driver: 'memory',
   lifetime: 120,
 })
+
 ```
 
 **Pros:**
+
 - Very fast
 - No external dependencies
 - Simple setup
 
 **Cons:**
+
 - Lost on server restart
 - Not suitable for multi-server deployments
 
@@ -70,18 +58,22 @@ const session = createSession({
 Stores sessions in the filesystem.
 
 ```typescript
+
 const session = createSession({
   driver: 'file',
   lifetime: 120,
   path: '/tmp/sessions', // Session file directory
 })
+
 ```
 
 **Pros:**
+
 - Persistent across restarts
 - No external dependencies
 
 **Cons:**
+
 - Slower than memory
 - Not suitable for multi-server without shared filesystem
 
@@ -90,6 +82,7 @@ const session = createSession({
 Stores sessions in Redis. Recommended for production.
 
 ```typescript
+
 const session = createSession({
   driver: 'redis',
   lifetime: 120,
@@ -100,19 +93,23 @@ const session = createSession({
     db: 0,
   },
 })
+
 ```
 
 **Pros:**
+
 - Fast and persistent
 - Works with multiple servers
 - Built-in expiration
 
 **Cons:**
+
 - Requires Redis server
 
 ## Configuration Options
 
 ```typescript
+
 interface SessionConfig {
   // Storage driver
   driver: 'memory' | 'file' | 'redis'
@@ -141,6 +138,7 @@ interface SessionConfig {
   // Driver-specific options
   connection?: RedisOptions
 }
+
 ```
 
 ## Session Methods
@@ -148,6 +146,7 @@ interface SessionConfig {
 ### Reading Data
 
 ```typescript
+
 // Get a value
 const value = session.get('key')
 
@@ -167,11 +166,13 @@ const subset = session.only(['user_id', 'role'])
 
 // Get all except specific keys
 const filtered = session.except(['password'])
+
 ```
 
 ### Writing Data
 
 ```typescript
+
 // Set a value
 session.put('key', 'value')
 
@@ -192,11 +193,13 @@ session.increment('page_views', 5) // By 5
 // Decrement
 session.decrement('credits')
 session.decrement('credits', 10) // By 10
+
 ```
 
 ### Removing Data
 
 ```typescript
+
 // Remove a specific key
 session.forget('key')
 
@@ -208,6 +211,7 @@ const value = session.pull('key')
 
 // Clear all data
 session.flush()
+
 ```
 
 ### Flash Data
@@ -215,6 +219,7 @@ session.flush()
 Flash data is available only for the next request:
 
 ```typescript
+
 // Set flash data
 session.flash('message', 'Welcome back!')
 session.flash('errors', { email: 'Invalid email' })
@@ -224,11 +229,13 @@ session.reflash()
 
 // Keep only specific keys
 session.keep(['message'])
+
 ```
 
 ## Session Lifecycle
 
 ```typescript
+
 // 1. Start the session
 await session.start()
 
@@ -243,6 +250,7 @@ await session.save()
 
 // 5. Optionally invalidate
 await session.invalidate() // Clear and regenerate
+
 ```
 
 ## Security Considerations

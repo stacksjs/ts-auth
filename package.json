@@ -71,5 +71,8 @@
     "typecheck": "bun --bun tsc --noEmit"
   },
   "type": "module",
-  "types": "./dist/index.d.ts"
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "ts-rate-limiter": "^0.4.0"
+  }
 }

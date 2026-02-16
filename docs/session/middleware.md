@@ -2,23 +2,6 @@
 title: Session Middleware
 description: Integrate sessions with your web framework
 ---
-
-# Session Middleware
-
-Integrate ts-auth sessions with Bun.serve and other web frameworks.
-
-## Bun.serve Integration
-
-```typescript
-import { createSession, sessionMiddleware } from 'ts-auth'
-
-const sessionConfig = {
-  driver: 'memory' as const,
-  lifetime: 120,
-  cookie: 'app_session',
-  secure: process.env.NODE_ENV === 'production',
-  httpOnly: true,
-  sameSite: 'lax' as const,
 }
 
 Bun.serve({
@@ -60,11 +43,13 @@ Bun.serve({
     })
   },
 })
+
 ```
 
 ## Express/Hono-style Middleware
 
 ```typescript
+
 import type { Context, Next } from 'hono'
 import { createSession } from 'ts-auth'
 
@@ -100,7 +85,7 @@ import { Hono } from 'hono'
 
 const app = new Hono()
 
-app.use('*', session({
+app.use('_', session({
   driver: 'redis',
   lifetime: 120,
   cookie: 'app_session',
@@ -111,6 +96,7 @@ app.get('/', (c) => {
   session.put('visits', (session.get('visits') || 0) + 1)
   return c.json({ visits: session.get('visits') })
 })
+
 ```
 
 ## Type-Safe Session Data
@@ -118,6 +104,7 @@ app.get('/', (c) => {
 Define session data types for TypeScript:
 
 ```typescript
+
 // Define your session data structure
 interface SessionData {
   user_id?: number
@@ -172,11 +159,13 @@ const session = new TypedSession(await createSession(config))
 session.userId = 123
 session.role = 'admin'
 await session.save()
+
 ```
 
 ## Request/Response Helpers
 
 ```typescript
+
 // Parse session ID from request
 function getSessionIdFromRequest(req: Request, cookieName: string): string | null {
   const cookies = req.headers.get('Cookie')
@@ -236,7 +225,7 @@ async function withSession<T>(
     config.cookie,
     session.getId(),
     {
-      maxAge: config.lifetime * 60,
+      maxAge: config.lifetime _ 60,
       path: config.path || '/',
       secure: config.secure,
       httpOnly: config.httpOnly,
@@ -258,6 +247,7 @@ Bun.serve({
     return Response.json(result, { headers })
   },
 })
+
 ```
 
 ## Session Validation Middleware
@@ -265,6 +255,7 @@ Bun.serve({
 Add authentication checks:
 
 ```typescript
+
 function requireAuth(session: Session) {
   if (!session.get('user_id')) {
     throw new UnauthorizedError('Authentication required')
@@ -306,6 +297,7 @@ Bun.serve({
     }
   },
 })
+
 ```
 
 ## Flash Messages
@@ -313,6 +305,7 @@ Bun.serve({
 Handle one-time flash messages:
 
 ```typescript
+
 // Set flash message
 session.flash('success', 'Profile updated successfully')
 session.flash('errors', { email: 'Email already taken' })
@@ -328,6 +321,7 @@ session.reflash()
 
 // Keep only specific keys
 session.keep(['success'])
+
 ```
 
 ## Next Steps

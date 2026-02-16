@@ -3,23 +3,6 @@ title: ts-auth - Native WebAuthn and OTP Authentication
 description: A native WebAuthn and OTP authentication library built with Bun. Zero external authentication dependencies.
 ---
 
-# ts-auth
-
-A native WebAuthn and OTP authentication library built with Bun. Zero external authentication dependencies - everything is implemented using native Web Crypto APIs.
-
-## Features
-
-- **WebAuthn/Passkeys** - Full WebAuthn support for passwordless authentication
-- **TOTP (Two-Factor Authentication)** - Time-based One-Time Password implementation
-- **QR Code Generation** - Built-in QR code generation for 2FA setup
-- **Session Management** - Laravel-style session handling with multiple drivers
-- **JWT Support** - Full JWT signing and verification with multiple algorithms
-- **OAuth Integration** - Support for 11+ OAuth providers
-- **Fully Typed** - Complete TypeScript support with comprehensive type definitions
-- **Native Implementation** - No dependency on external auth libraries; uses Bun's native crypto
-
-## Quick Example
-
 ```typescript
 import { generateRegistrationOptions, verifyTOTP, signJwt } from 'ts-auth'
 
@@ -38,7 +21,7 @@ const isValid = verifyTOTP(userCode, { secret: userSecret })
 const token = await signJwt({ sub: 'user-123' }, secret, { expiresIn: '7d' })
 ```
 
-## Why ts-auth?
+## Why ts-auth
 
 | Feature | ts-auth | @simplewebauthn | otplib |
 |---------|---------|-----------------|--------|

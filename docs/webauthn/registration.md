@@ -2,24 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-
-# Server-side Registration
-
-This guide covers implementing WebAuthn credential registration on your server using ts-auth.
-
-## Registration Flow
-
-1. Generate registration options
-2. Send options to the browser
-3. Receive credential from browser
-4. Verify and store the credential
-
-## Generate Registration Options
-
-```typescript
-import { generateRegistrationOptions } from 'ts-auth'
-
-function handleRegistrationStart(userId: string, userName: string) {
   const options = generateRegistrationOptions({
     // Relying Party information
     rpName: 'My Application',
@@ -57,6 +39,7 @@ function handleRegistrationStart(userId: string, userName: string) {
 
   return options
 }
+
 ```
 
 ## Registration Options Reference
@@ -84,6 +67,7 @@ function handleRegistrationStart(userId: string, userName: string) {
 ### Authenticator Selection
 
 ```typescript
+
 authenticatorSelection: {
   // Require platform (built-in) or cross-platform (roaming) authenticator
   authenticatorAttachment: 'platform' | 'cross-platform',
@@ -97,6 +81,7 @@ authenticatorSelection: {
   // User verification requirement
   userVerification: 'required' | 'preferred' | 'discouraged',
 }
+
 ```
 
 ## Verify Registration Response
@@ -104,6 +89,7 @@ authenticatorSelection: {
 After receiving the credential from the browser, verify it:
 
 ```typescript
+
 import { verifyRegistrationResponse } from 'ts-auth'
 
 async function handleRegistrationFinish(
@@ -152,6 +138,7 @@ async function handleRegistrationFinish(
     error: 'Verification failed',
   }
 }
+
 ```
 
 ## Verification Response
@@ -159,6 +146,7 @@ async function handleRegistrationFinish(
 The `verifyRegistrationResponse` function returns:
 
 ```typescript
+
 {
   verified: boolean
   registrationInfo?: {
@@ -172,11 +160,13 @@ The `verifyRegistrationResponse` function returns:
     credentialBackedUp: boolean  // Whether synced to cloud
   }
 }
+
 ```
 
 ## Complete Example
 
 ```typescript
+
 // registration-handler.ts
 import {
   generateRegistrationOptions,
@@ -259,11 +249,13 @@ export async function finishRegistration(
     credentialId: verification.registrationInfo.credential.id,
   }
 }
+
 ```
 
 ## Express/Bun Integration
 
 ```typescript
+
 // Using Bun.serve
 Bun.serve({
   port: 3000,
@@ -285,6 +277,7 @@ Bun.serve({
     return new Response('Not Found', { status: 404 })
   },
 })
+
 ```
 
 ## Next Steps

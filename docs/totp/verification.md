@@ -2,30 +2,15 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-
-# Code Verification
-
-Verify TOTP codes submitted by users against their stored secret.
-
-## Basic Verification
-
-```typescript
-import { verifyTOTP } from 'ts-auth'
-
-const isValid = await verifyTOTP(userSubmittedCode, {
-  secret: userSecret,
-})
-
-if (isValid) {
-  console.log('Authentication successful')
-} else {
   console.log('Invalid code')
 }
+
 ```
 
 ## Verification Options
 
 ```typescript
+
 const isValid = await verifyTOTP(code, {
   // Required: The user's secret
   secret: 'JBSWY3DPEHPK3PXP',
@@ -42,6 +27,7 @@ const isValid = await verifyTOTP(code, {
   // Window for drift tolerance (default: 1)
   window: 1,
 })
+
 ```
 
 ## Time Window
@@ -49,23 +35,27 @@ const isValid = await verifyTOTP(code, {
 The `window` parameter allows for clock drift between the server and the user's device:
 
 ```typescript
+
 // window: 0 - Only current time period (strict)
 // window: 1 - Current + 1 before + 1 after (default, recommended)
 // window: 2 - Current + 2 before + 2 after (more lenient)
 
 // With 30-second steps and window: 1
 // Accepts codes from -30 to +30 seconds around the current time
+
 ```
 
 ### How Window Works
 
 ```
+
 Time:     |-----|-----|-----|-----|-----|
           T-2   T-1   T     T+1   T+2
 
 window=0:              [T]
 window=1:        [T-1, T, T+1]
 window=2: [T-2, T-1, T, T+1, T+2]
+
 ```
 
 ## Timing-Safe Comparison
@@ -73,6 +63,7 @@ window=2: [T-2, T-1, T, T+1, T+2]
 ts-auth uses timing-safe comparison internally to prevent timing attacks:
 
 ```typescript
+
 // The verification function compares codes safely
 // regardless of where they differ
 function timingSafeEqual(a: string, b: string): boolean {
@@ -85,11 +76,13 @@ function timingSafeEqual(a: string, b: string): boolean {
 
   return result === 0
 }
+
 ```
 
 ## Complete Verification Flow
 
 ```typescript
+
 import { verifyTOTP, hash, verifyHash } from 'ts-auth'
 
 interface VerificationResult {
@@ -153,6 +146,7 @@ async function verify2FA(
 
   return { success: false, error: 'Invalid code' }
 }
+
 ```
 
 ## Rate Limiting
@@ -160,6 +154,7 @@ async function verify2FA(
 Implement rate limiting to prevent brute-force attacks:
 
 ```typescript
+
 import { createAuthRateLimiter } from 'ts-auth'
 
 const totpLimiter = createAuthRateLimiter({
@@ -192,6 +187,7 @@ async function verifyWithRateLimit(userId: string, code: string) {
   await totpLimiter.reset(userId)
   return result
 }
+
 ```
 
 ## Code Reuse Prevention
@@ -199,6 +195,7 @@ async function verifyWithRateLimit(userId: string, code: string) {
 Prevent the same code from being used twice:
 
 ```typescript
+
 const usedCodes = new Map<string, Set<string>>()
 
 async function verifyWithReusePrevention(
@@ -233,6 +230,7 @@ async function verifyWithReusePrevention(
 
   return isValid
 }
+
 ```
 
 ## Generating Codes (Testing)
@@ -240,6 +238,7 @@ async function verifyWithReusePrevention(
 Generate a TOTP code for testing or debugging:
 
 ```typescript
+
 import { generateTOTP } from 'ts-auth'
 
 // Generate current code
@@ -251,11 +250,13 @@ const futureCode = await generateTOTP({
   secret,
   // Note: This is internal - use for testing only
 })
+
 ```
 
 ## Error Handling
 
 ```typescript
+
 async function handleVerification(userId: string, code: string) {
   try {
     // Validate code format first
@@ -275,6 +276,7 @@ async function handleVerification(userId: string, code: string) {
     return { error: 'Verification failed' }
   }
 }
+
 ```
 
 ## Next Steps

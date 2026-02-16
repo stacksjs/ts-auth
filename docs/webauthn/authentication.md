@@ -2,24 +2,6 @@
 title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
-
-# Server-side Authentication
-
-This guide covers implementing WebAuthn authentication verification on your server.
-
-## Authentication Flow
-
-1. Generate authentication options
-2. Send options to the browser
-3. Receive assertion from browser
-4. Verify the assertion
-
-## Generate Authentication Options
-
-```typescript
-import { generateAuthenticationOptions } from 'ts-auth'
-
-function handleAuthenticationStart(userId: string) {
   // Get user's stored credentials
   const storedCredentials = getCredentialsForUser(userId)
 
@@ -46,6 +28,7 @@ function handleAuthenticationStart(userId: string) {
 
   return options
 }
+
 ```
 
 ## Authentication Options Reference
@@ -68,6 +51,7 @@ function handleAuthenticationStart(userId: string) {
 ### Allow Credentials
 
 ```typescript
+
 allowCredentials: [
   {
     id: credentialId,        // ArrayBuffer or Uint8Array
@@ -80,11 +64,13 @@ allowCredentials: [
     ],
   },
 ]
+
 ```
 
 ## Verify Authentication Response
 
 ```typescript
+
 import { verifyAuthenticationResponse } from 'ts-auth'
 
 async function handleAuthenticationFinish(
@@ -137,6 +123,7 @@ async function handleAuthenticationFinish(
     error: 'Authentication failed',
   }
 }
+
 ```
 
 ## Verification Response
@@ -144,12 +131,14 @@ async function handleAuthenticationFinish(
 The `verifyAuthenticationResponse` function returns:
 
 ```typescript
+
 {
   verified: boolean
   authenticationInfo?: {
     newCounter: number  // Updated signature counter
   }
 }
+
 ```
 
 ## Counter Verification
@@ -157,6 +146,7 @@ The `verifyAuthenticationResponse` function returns:
 The signature counter prevents replay attacks and detects cloned authenticators:
 
 ```typescript
+
 // In verifyAuthenticationResponse, the counter is checked:
 // - If newCounter > storedCounter: Valid, authenticator is genuine
 // - If newCounter <= storedCounter && newCounter > 0: Potential clone!
@@ -166,11 +156,13 @@ await db.credentials.update({
   where: { id: credential.id },
   data: { counter: verification.authenticationInfo.newCounter },
 })
+
 ```
 
 ## Complete Example
 
 ```typescript
+
 // authentication-handler.ts
 import {
   generateAuthenticationOptions,
@@ -259,6 +251,7 @@ export async function finishAuthentication(
     userId,
   }
 }
+
 ```
 
 ## Passwordless Authentication
@@ -266,6 +259,7 @@ export async function finishAuthentication(
 For true passwordless authentication without specifying a user:
 
 ```typescript
+
 // Start authentication without userId
 const options = generateAuthenticationOptions({
   rpID: 'example.com',
@@ -276,11 +270,13 @@ const options = generateAuthenticationOptions({
 // The authenticator will show all available credentials
 // User selects one, and the response includes the credential ID
 // Server looks up the user from the credential ID
+
 ```
 
 ## Error Handling
 
 ```typescript
+
 async function authenticate(credential: AuthenticationCredential) {
   try {
     const result = await finishAuthentication(challengeKey, credential)
@@ -305,6 +301,7 @@ async function authenticate(credential: AuthenticationCredential) {
     return { success: false, error: 'Internal error' }
   }
 }
+
 ```
 
 ## Next Steps

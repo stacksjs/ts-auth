@@ -6,8 +6,8 @@
 import { RateLimiter, MemoryStorage } from 'ts-rate-limiter'
 import type { RateLimiterOptions, RateLimitResult, StorageProvider } from 'ts-rate-limiter'
 
-export { RateLimiter, MemoryStorage, RateLimitResult }
-export type { RateLimiterOptions, StorageProvider }
+export { RateLimiter, MemoryStorage }
+export type { RateLimitResult, RateLimiterOptions, StorageProvider }
 
 /**
  * Pre-configured rate limiters for common auth operations
@@ -77,7 +77,7 @@ export interface AuthRateLimitConfig {
 /**
  * Default rate limit configurations for auth operations
  */
-export const defaultAuthRateLimits = {
+export const defaultAuthRateLimits: Record<string, { windowMs: number, maxRequests: number }> = {
   login: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxRequests: 5, // 5 attempts per 15 minutes
@@ -277,7 +277,7 @@ export class AuthRateLimiter {
   /**
    * Get middleware for a specific limiter
    */
-  middleware(limiterName: 'login' | 'registration' | 'passwordReset' | 'tokenRefresh' | 'twoFactor' | 'api') {
+  middleware(limiterName: 'login' | 'registration' | 'passwordReset' | 'tokenRefresh' | 'twoFactor' | 'api'): (request: Request, next: (request: Request) => Promise<Response> | Response) => Promise<Response> {
     const limiter = this.limiters.get(limiterName)
     if (!limiter) {
       throw new Error(`Rate limiter '${limiterName}' not found`)

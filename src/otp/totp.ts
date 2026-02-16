@@ -145,13 +145,13 @@ async function hmacDigest(key: Uint8Array, message: Uint8Array, algorithm: strin
 
   const cryptoKey = await crypto.subtle.importKey(
     'raw',
-    key,
+    key as BufferSource,
     { name: 'HMAC', hash: algoMap[algorithm] || 'SHA-1' },
     false,
     ['sign'],
   )
 
-  const signature = await crypto.subtle.sign('HMAC', cryptoKey, message)
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, message as BufferSource)
   return new Uint8Array(signature)
 }
 

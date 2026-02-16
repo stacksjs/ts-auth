@@ -99,7 +99,7 @@ async function importKey(
   if (config.name === 'RSASSA-PKCS1-v1_5') {
     return crypto.subtle.importKey(
       format,
-      keyBytes,
+      keyBytes as BufferSource,
       { name: 'RSASSA-PKCS1-v1_5', hash: config.hash! },
       false,
       keyUsage,
@@ -109,7 +109,7 @@ async function importKey(
   // ECDSA
   return crypto.subtle.importKey(
     format,
-    keyBytes,
+    keyBytes as BufferSource,
     { name: 'ECDSA', namedCurve: config.namedCurve! },
     false,
     keyUsage,
@@ -130,7 +130,7 @@ async function signData(data: Uint8Array, key: CryptoKey, alg: JWTAlgorithm): Pr
     algorithm = { name: 'ECDSA', hash: config.hash! }
   }
 
-  const signature = await crypto.subtle.sign(algorithm, key, data)
+  const signature = await crypto.subtle.sign(algorithm, key, data as BufferSource)
   return new Uint8Array(signature)
 }
 
@@ -153,7 +153,7 @@ async function verifySignature(
     algorithm = { name: 'ECDSA', hash: config.hash! }
   }
 
-  return crypto.subtle.verify(algorithm, key, signature, data)
+  return crypto.subtle.verify(algorithm, key, signature as BufferSource, data as BufferSource)
 }
 
 /**
@@ -203,7 +203,7 @@ export async function sign(
   const now = Math.floor(Date.now() / 1000)
 
   // Build payload
-  const fullPayload: JWTPayload = {
+  const fullPayload = {
     ...payload,
     iat: payload.iat ?? now,
     exp: payload.exp ?? now + (
@@ -211,7 +211,7 @@ export async function sign(
         ? parseDuration(options.expiresIn)
         : (options.expiresIn ?? 3600)
     ),
-  }
+  } as JWTPayload
 
   if (options.issuer) {
     fullPayload.iss = options.issuer

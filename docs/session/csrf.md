@@ -3,23 +3,9 @@ title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
 
-# CSRF Protection
-
-Cross-Site Request Forgery (CSRF) is an attack where a malicious site tricks a user's browser into making unwanted requests to your application.
-
-## How CSRF Works
-
-```
-1. User logs into yourapp.com
-2. Session cookie is stored in browser
-3. User visits malicious.com
-4. malicious.com has hidden form:
-   <form action="yourapp.com/transfer" method="POST">
-     <input name="amount" value="1000">
-     <input name="to" value="attacker">
-   </form>
 5. Form auto-submits with user's session cookie
 6. Your app processes the request as legitimate
+
 ```
 
 ## CSRF Token Protection
@@ -27,6 +13,7 @@ Cross-Site Request Forgery (CSRF) is an attack where a malicious site tricks a u
 Generate and validate CSRF tokens to prevent these attacks:
 
 ```typescript
+
 import { generateCSRFToken, validateCSRFToken } from 'ts-auth'
 
 // Generate token and store in session
@@ -64,11 +51,13 @@ async function validateCSRF(req: Request, session: Session): Promise<boolean> {
 
   return false
 }
+
 ```
 
 ## CSRF Middleware
 
 ```typescript
+
 import { generateCSRFToken, validateCSRFToken } from 'ts-auth'
 
 // Methods that require CSRF validation
@@ -118,6 +107,7 @@ Bun.serve({
     // Continue with request handling...
   },
 })
+
 ```
 
 ## HTML Form Integration
@@ -125,6 +115,7 @@ Bun.serve({
 Include the CSRF token in forms:
 
 ```typescript
+
 // Server-side: Render form with token
 function renderForm(session: Session) {
   const token = session.get('_csrf_token')
@@ -137,6 +128,7 @@ function renderForm(session: Session) {
     </form>
   `
 }
+
 ```
 
 ## JavaScript/AJAX Requests
@@ -144,6 +136,7 @@ function renderForm(session: Session) {
 For AJAX requests, include the token in headers:
 
 ```typescript
+
 // Get token from meta tag or cookie
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
@@ -159,11 +152,13 @@ fetch('/api/transfer', {
 
 // Or set up axios defaults
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
+
 ```
 
 ## React Integration
 
 ```tsx
+
 // Create CSRF context
 import { createContext, useContext } from 'react'
 
@@ -188,7 +183,7 @@ function TransferForm() {
   return (
     <form method="POST" action="/transfer">
       <input type="hidden" name="_token" value={csrfToken} />
-      {/* form fields */}
+      {/_ form fields _/}
     </form>
   )
 }
@@ -207,6 +202,7 @@ function useSecureFetch() {
     })
   }
 }
+
 ```
 
 ## Token Rotation
@@ -214,6 +210,7 @@ function useSecureFetch() {
 Regenerate tokens periodically for additional security:
 
 ```typescript
+
 // Regenerate token after sensitive actions
 async function regenerateCSRFToken(session: Session): Promise<string> {
   const newToken = generateCSRFToken()
@@ -232,6 +229,7 @@ async function handleLogin(req: Request, session: Session) {
 
   return new Response('Logged in')
 }
+
 ```
 
 ## Double Submit Cookie Pattern
@@ -239,6 +237,7 @@ async function handleLogin(req: Request, session: Session) {
 An alternative approach using cookies:
 
 ```typescript
+
 import { generateCSRFToken, validateCSRFToken } from 'ts-auth'
 
 // Generate and set as cookie
@@ -263,6 +262,7 @@ async function validateDoubleSubmit(req: Request): Promise<boolean> {
 
   return validateCSRFToken(headerToken, cookieToken)
 }
+
 ```
 
 ## SameSite Cookie Protection
@@ -270,6 +270,7 @@ async function validateDoubleSubmit(req: Request): Promise<boolean> {
 Modern browsers support SameSite cookies which provide CSRF protection:
 
 ```typescript
+
 const sessionConfig = {
   // ...
   sameSite: 'strict', // or 'lax'
@@ -277,6 +278,7 @@ const sessionConfig = {
 
 // SameSite=Strict: Cookie only sent for same-site requests
 // SameSite=Lax: Cookie sent for same-site + top-level navigations
+
 ```
 
 **Note:** SameSite is not supported in all browsers and scenarios. Always use CSRF tokens as the primary defense.

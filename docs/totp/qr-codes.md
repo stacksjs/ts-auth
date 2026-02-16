@@ -3,28 +3,12 @@ title: QR Code Generation
 description: Generate QR codes for TOTP setup with authenticator apps
 ---
 
-# QR Code Generation
-
-ts-auth provides built-in QR code generation for easy TOTP setup with authenticator apps.
-
-## Generating the URI
-
-First, create an `otpauth://` URI that authenticator apps understand:
-
-```typescript
-import { totpKeyUri } from 'ts-auth'
-
-const uri = totpKeyUri(
-  'user@example.com', // Account name
-  'MyApp',            // Issuer (your app name)
-  secret              // The TOTP secret
-)
-// Result: "otpauth://totp/MyApp:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=MyApp"
 ```
 
 ### URI Options
 
 ```typescript
+
 const uri = totpKeyUri(
   'user@example.com',
   'MyApp',
@@ -36,6 +20,7 @@ const uri = totpKeyUri(
     period: 60,           // Default: 30
   }
 )
+
 ```
 
 ## Generating QR Codes
@@ -43,6 +28,7 @@ const uri = totpKeyUri(
 ### SVG Format (Browser)
 
 ```typescript
+
 import { generateQRCodeSVG, QRErrorCorrection } from 'ts-auth'
 
 const svg = generateQRCodeSVG({
@@ -54,11 +40,13 @@ const svg = generateQRCodeSVG({
 
 // Use in HTML
 document.getElementById('qr-container').innerHTML = svg
+
 ```
 
 ### Data URL Format
 
 ```typescript
+
 import { generateQRCodeDataURL } from 'ts-auth'
 
 const dataUrl = await generateQRCodeDataURL({
@@ -72,11 +60,13 @@ const img = document.createElement('img')
 img.src = dataUrl
 img.alt = 'Scan with your authenticator app'
 document.getElementById('qr-container').appendChild(img)
+
 ```
 
 ### Attach to DOM Element
 
 ```typescript
+
 import { createQRCode } from 'ts-auth'
 
 // Render directly into a container
@@ -85,11 +75,13 @@ createQRCode(document.getElementById('qr-container'), {
   width: 256,
   height: 256,
 })
+
 ```
 
 ## QR Code Options
 
 ```typescript
+
 interface QRCodeOptions {
   // The text/URL to encode
   text: string
@@ -115,6 +107,7 @@ enum QRErrorCorrection {
   Q = 3, // Quartile (~25% recovery)
   H = 2, // High (~30% recovery) - Recommended for TOTP
 }
+
 ```
 
 ## Server-Side Generation
@@ -122,6 +115,7 @@ enum QRErrorCorrection {
 Generate QR codes on the server and send to the client:
 
 ```typescript
+
 import { generateQRCodeDataURL, totpKeyUri, generateTOTPSecret } from 'ts-auth'
 
 // API endpoint
@@ -144,7 +138,7 @@ app.post('/api/totp/setup', async (req, res) => {
   // Store secret temporarily
   await session.put(`totp_setup_${user.id}`, {
     secret,
-    expiresAt: Date.now() + 10 * 60 * 1000,
+    expiresAt: Date.now() + 10 _ 60 _ 1000,
   })
 
   res.json({
@@ -152,11 +146,13 @@ app.post('/api/totp/setup', async (req, res) => {
     secret, // Show for manual entry
   })
 })
+
 ```
 
 ## React Component Example
 
 ```tsx
+
 import { useState, useEffect } from 'react'
 
 interface TOTPSetupProps {
@@ -256,6 +252,7 @@ function TOTPSetup({ userId, email }: TOTPSetupProps) {
     </div>
   )
 }
+
 ```
 
 ## Accessibility Considerations
@@ -263,6 +260,7 @@ function TOTPSetup({ userId, email }: TOTPSetupProps) {
 Always provide an alternative to QR codes for users who cannot scan:
 
 ```html
+
 <div class="totp-setup">
   <!-- QR Code -->
   <img
@@ -286,6 +284,7 @@ Always provide an alternative to QR codes for users who cannot scan:
     </dl>
   </div>
 </div>
+
 ```
 
 ## Best Practices

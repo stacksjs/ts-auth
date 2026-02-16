@@ -2,24 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-
-# Credential Management
-
-This guide covers best practices for storing and managing WebAuthn credentials.
-
-## Credential Data Structure
-
-After successful registration, store these fields:
-
-```typescript
-interface StoredCredential {
-  // Unique credential identifier (base64url encoded)
-  credentialId: string
-
-  // Public key in COSE format
-  publicKey: ArrayBuffer
-
-  // Signature counter for replay attack detection
   counter: number
 
   // Device type: 'singleDevice' or 'multiDevice'
@@ -37,6 +19,7 @@ interface StoredCredential {
   createdAt: Date
   lastUsedAt?: Date
 }
+
 ```
 
 ## Database Schema Example
@@ -44,6 +27,7 @@ interface StoredCredential {
 ### PostgreSQL / SQLite
 
 ```sql
+
 CREATE TABLE webauthn_credentials (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -60,11 +44,13 @@ CREATE TABLE webauthn_credentials (
 
 CREATE INDEX idx_credentials_user_id ON webauthn_credentials(user_id);
 CREATE INDEX idx_credentials_credential_id ON webauthn_credentials(credential_id);
+
 ```
 
 ### Prisma Schema
 
 ```prisma
+
 model WebAuthnCredential {
   id           String   @id @default(uuid())
   userId       String
@@ -81,11 +67,13 @@ model WebAuthnCredential {
 
   @@index([userId])
 }
+
 ```
 
 ## Credential Service
 
 ```typescript
+
 import { db } from './database'
 
 export class CredentialService {
@@ -169,6 +157,7 @@ export class CredentialService {
     return count > 0
   }
 }
+
 ```
 
 ## Converting Public Key
@@ -176,6 +165,7 @@ export class CredentialService {
 The public key is stored as an ArrayBuffer. Here is how to handle conversion:
 
 ```typescript
+
 // ArrayBuffer to Base64 for storage
 function arrayBufferToBase64(buffer: ArrayBuffer): string {
   return Buffer.from(buffer).toString('base64')
@@ -197,6 +187,7 @@ const publicKeyBase64 = arrayBufferToBase64(
 
 // Retrieve for verification
 const publicKeyBuffer = base64ToArrayBuffer(storedCredential.publicKey)
+
 ```
 
 ## Managing Multiple Credentials
@@ -204,6 +195,7 @@ const publicKeyBuffer = base64ToArrayBuffer(storedCredential.publicKey)
 Users may register multiple credentials (different devices):
 
 ```typescript
+
 // Registration: exclude existing credentials
 const existingCredentials = await credentialService.getByUserId(userId)
 
@@ -224,11 +216,13 @@ const options = generateAuthenticationOptions({
     transports: c.transports,
   })),
 })
+
 ```
 
 ## User Interface for Credential Management
 
 ```typescript
+
 // API endpoint to list credentials
 app.get('/api/credentials', async (req, res) => {
   const credentials = await credentialService.getByUserId(req.user.id)
@@ -266,6 +260,7 @@ function getDefaultName(credential: StoredCredential): string {
     ? 'Security Key'
     : 'Passkey'
 }
+
 ```
 
 ## Security Considerations
@@ -275,6 +270,7 @@ function getDefaultName(credential: StoredCredential): string {
 Always check the counter to detect cloned authenticators:
 
 ```typescript
+
 if (newCounter <= storedCounter && newCounter !== 0) {
   // Potential cloned authenticator!
   await logSecurityEvent('counter_regression', {
@@ -288,6 +284,7 @@ if (newCounter <= storedCounter && newCounter !== 0) {
   // 2. Require additional verification
   // 3. Revoke all credentials and force re-registration
 }
+
 ```
 
 ### Credential Backup Status
@@ -295,6 +292,7 @@ if (newCounter <= storedCounter && newCounter !== 0) {
 Track whether credentials are synced to cloud providers:
 
 ```typescript
+
 // Synced credentials (backedUp: true)
 // - Available across devices
 // - May be more convenient for users
@@ -309,6 +307,7 @@ Track whether credentials are synced to cloud providers:
 if (operation === 'withdraw_funds' && credential.backedUp) {
   requireSecurityKeyVerification()
 }
+
 ```
 
 ### Revocation
@@ -316,6 +315,7 @@ if (operation === 'withdraw_funds' && credential.backedUp) {
 Implement credential revocation for security events:
 
 ```typescript
+
 // Revoke a specific credential
 async function revokeCredential(credentialId: string, reason: string) {
   await credentialService.delete(credentialId)
@@ -330,6 +330,7 @@ async function revokeAllCredentials(userId: string, reason: string) {
   )
   await logSecurityEvent('all_credentials_revoked', { userId, reason })
 }
+
 ```
 
 ## Next Steps

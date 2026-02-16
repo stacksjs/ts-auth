@@ -2,30 +2,15 @@
 title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
-
-# TOTP / Two-Factor Authentication
-
-TOTP (Time-based One-Time Password) is a widely-used two-factor authentication method that generates temporary codes using a shared secret and the current time.
-
-## How TOTP Works
-
-```
-┌─────────────────────┐     ┌─────────────────────┐
-│    Authenticator    │     │       Server        │
-│    (App/Device)     │     │                     │
-│                     │     │                     │
-│  Shared Secret ─────┼─────┼── Shared Secret     │
-│        +            │     │        +            │
-│  Current Time ──────┼─────┼── Current Time      │
-│        =            │     │        =            │
-│   TOTP Code         │     │   TOTP Code         │
 │   (123456)          │     │   (123456)          │
 │                     │     │                     │
 │   Matches? ─────────┼─────┼─── Yes, verified!   │
 └─────────────────────┘     └─────────────────────┘
+
 ```
 
 The same code is generated on both sides because:
+
 1. They share the same secret
 2. They use the same time (within a window)
 3. They use the same algorithm
@@ -33,6 +18,7 @@ The same code is generated on both sides because:
 ## Basic Usage
 
 ```typescript
+
 import {
   generateTOTPSecret,
   generateTOTP,
@@ -57,6 +43,7 @@ const isValid = await verifyTOTP(userCode, {
   secret,
   window: 1, // Allow 1 step before/after
 })
+
 ```
 
 ## Supported Authenticator Apps
@@ -73,6 +60,7 @@ TOTP codes work with any standard authenticator app:
 ## Configuration Options
 
 ```typescript
+
 interface TOTPOptions {
   // The base32-encoded secret
   secret: string
@@ -90,6 +78,7 @@ interface TOTPOptions {
   // Allows codes from +-window time steps
   window?: number
 }
+
 ```
 
 ### Default Values
@@ -110,6 +99,7 @@ interface TOTPOptions {
 - Consider using a hardware security module (HSM)
 
 ```typescript
+
 // Example: Encrypt secret before storage
 import { encrypt, decrypt } from './encryption'
 
@@ -123,6 +113,7 @@ await db.user.update({
 // Retrieve
 const encryptedSecret = user.totpSecret
 const secret = decrypt(encryptedSecret, process.env.ENCRYPTION_KEY)
+
 ```
 
 ### Rate Limiting
@@ -130,11 +121,12 @@ const secret = decrypt(encryptedSecret, process.env.ENCRYPTION_KEY)
 Implement rate limiting to prevent brute-force attacks:
 
 ```typescript
+
 import { createAuthRateLimiter } from 'ts-auth'
 
 const limiter = createAuthRateLimiter({
   maxAttempts: 5,
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 _ 60 _ 1000, // 15 minutes
 })
 
 async function verifyTOTPWithRateLimit(userId: string, code: string) {
@@ -153,6 +145,7 @@ async function verifyTOTPWithRateLimit(userId: string, code: string) {
 
   return isValid
 }
+
 ```
 
 ### Backup Codes
@@ -160,6 +153,7 @@ async function verifyTOTPWithRateLimit(userId: string, code: string) {
 Always provide backup codes when setting up TOTP:
 
 ```typescript
+
 import { generateToken } from 'ts-auth'
 
 function generateBackupCodes(count = 10): string[] {
@@ -176,17 +170,20 @@ const hashedCodes = await Promise.all(
 
 // Show codes to user (only once!)
 // Store only the hashed versions
+
 ```
 
 ## When to Use TOTP
 
 **Good for:**
+
 - Second factor authentication
 - Account recovery verification
 - Sensitive operation confirmation
 - Applications requiring offline code generation
 
 **Consider alternatives when:**
+
 - WebAuthn/Passkeys are available (more secure, better UX)
 - Push notifications are feasible
 - SMS is acceptable (less secure but more convenient)
@@ -196,6 +193,7 @@ const hashedCodes = await Promise.all(
 TOTP and WebAuthn can complement each other:
 
 ```typescript
+
 // Check if user has WebAuthn or TOTP enabled
 async function requireSecondFactor(userId: string) {
   const hasWebAuthn = await credentialService.hasCredentials(userId)
@@ -211,6 +209,7 @@ async function requireSecondFactor(userId: string) {
 
   return { method: 'none' }
 }
+
 ```
 
 ## Next Steps

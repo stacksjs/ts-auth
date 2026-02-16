@@ -27,7 +27,7 @@ A native WebAuthn and OTP authentication library built with Bun. Zero external a
 - **Fully Typed** - Complete TypeScript support with comprehensive type definitions
 - **Native Implementation** - No dependency on external auth libraries; uses Bun's native crypto
 
-## Why ts-auth?
+## Why ts-auth
 
 | Feature | ts-auth | @simplewebauthn | otplib |
 |---------|---------|-----------------|--------|

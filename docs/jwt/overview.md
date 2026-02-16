@@ -2,30 +2,13 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-
-# JWT Authentication
-
-JSON Web Tokens (JWT) provide a compact, URL-safe way to represent claims for stateless authentication.
-
-## What is a JWT?
-
-A JWT consists of three parts separated by dots:
-
-```
-header.payload.signature
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4iLCJpYXQiOjE1MTYyMzkwMjJ9.
-SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-```
-
-- **Header**: Algorithm and token type
 - **Payload**: Claims (user data)
 - **Signature**: Verification signature
 
 ## Quick Start
 
 ```typescript
+
 import { signJwt, verifyJwt } from 'ts-auth'
 
 // Create a token
@@ -38,6 +21,7 @@ const token = await signJwt(
 // Verify and decode
 const payload = await verifyJwt(token, 'your-secret-key')
 console.log(payload.sub) // 'user-123'
+
 ```
 
 ## Supported Algorithms
@@ -61,9 +45,11 @@ ts-auth supports these signing algorithms:
 Use the same secret for signing and verification:
 
 ```typescript
+
 const secret = 'your-256-bit-secret'
 const token = await signJwt(payload, secret, { algorithm: 'HS256' })
 const verified = await verifyJwt(token, secret)
+
 ```
 
 ### Asymmetric (RSA/ECDSA)
@@ -71,11 +57,13 @@ const verified = await verifyJwt(token, secret)
 Use private key for signing, public key for verification:
 
 ```typescript
+
 // Sign with private key
 const token = await signJwt(payload, privateKey, { algorithm: 'RS256' })
 
 // Verify with public key
 const verified = await verifyJwt(token, publicKey, { algorithms: ['RS256'] })
+
 ```
 
 ## Standard Claims
@@ -83,6 +71,7 @@ const verified = await verifyJwt(token, publicKey, { algorithms: ['RS256'] })
 JWTs support standard registered claims:
 
 ```typescript
+
 const token = await signJwt(
   {
     // Standard claims
@@ -100,6 +89,7 @@ const token = await signJwt(
   },
   secret
 )
+
 ```
 
 ## Token Expiration
@@ -107,6 +97,7 @@ const token = await signJwt(
 Always set expiration for security:
 
 ```typescript
+
 // Using expiresIn option (recommended)
 const token = await signJwt(payload, secret, {
   expiresIn: '15m', // 15 minutes
@@ -122,11 +113,13 @@ const token = await signJwt(
   },
   secret
 )
+
 ```
 
 ## When to Use JWT
 
 **Good for:**
+
 - Stateless API authentication
 - Microservices communication
 - Single Sign-On (SSO)
@@ -134,6 +127,7 @@ const token = await signJwt(
 - Short-lived access tokens
 
 **Consider alternatives when:**
+
 - You need immediate token revocation
 - Tokens contain sensitive data
 - Token size is a concern
@@ -155,6 +149,7 @@ const token = await signJwt(
 A common pattern uses two tokens:
 
 ```typescript
+
 import { createTokenPair } from 'ts-auth'
 
 // Create token pair
@@ -170,6 +165,7 @@ const { accessToken, refreshToken } = await createTokenPair(
 
 // Use access token for API requests
 // Use refresh token to get new access tokens
+
 ```
 
 ## Security Considerations

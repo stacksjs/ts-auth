@@ -2,31 +2,17 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-
-# WebAuthn / Passkeys
-
-WebAuthn (Web Authentication) is a W3C standard for passwordless authentication. It enables users to authenticate using biometrics (Face ID, Touch ID, Windows Hello), security keys, or device PINs.
-
-## What are Passkeys?
-
-Passkeys are a user-friendly name for WebAuthn credentials. They provide:
-
-- **Passwordless Authentication** - No passwords to remember or steal
-- **Phishing Resistance** - Credentials are bound to specific domains
-- **Biometric Security** - Uses device biometrics for verification
-- **Cross-Device Support** - Sync across devices via cloud providers
-
-## How It Works
-
-```
-┌─────────────┐     ┌─────────────┐     ┌─────────────────────┐
-│   Browser   │────>│   Server    │────>│  Authenticator      │
 │             │<────│             │<────│  (Face ID, etc.)    │
 └─────────────┘     └─────────────┘     └─────────────────────┘
+
      1. Request          2. Generate          3. User
+
         options             challenge            verification
+
      4. Create           5. Verify
+
         credential          response
+
 ```
 
 ### Registration Flow
@@ -46,6 +32,7 @@ Passkeys are a user-friendly name for WebAuthn credentials. They provide:
 ### Server-side (Bun)
 
 ```typescript
+
 import {
   generateRegistrationOptions,
   generateAuthenticationOptions,
@@ -69,11 +56,13 @@ const authOptions = generateAuthenticationOptions({
     type: 'public-key',
   }],
 })
+
 ```
 
 ### Browser-side
 
 ```typescript
+
 import {
   startRegistration,
   startAuthentication,
@@ -97,6 +86,7 @@ const credential = await startRegistration(optionsFromServer)
 
 // Authenticate
 const assertion = await startAuthentication(optionsFromServer)
+
 ```
 
 ## Authenticator Types
@@ -111,6 +101,7 @@ Built into the device:
 - **Android Biometrics** (Android)
 
 ```typescript
+
 const options = generateRegistrationOptions({
   // ... other options
   authenticatorSelection: {
@@ -118,6 +109,7 @@ const options = generateRegistrationOptions({
     userVerification: 'required',
   },
 })
+
 ```
 
 ### Roaming Authenticators
@@ -129,12 +121,14 @@ External security keys:
 - **Feitian**
 
 ```typescript
+
 const options = generateRegistrationOptions({
   // ... other options
   authenticatorSelection: {
     authenticatorAttachment: 'cross-platform',
   },
 })
+
 ```
 
 ## Security Considerations

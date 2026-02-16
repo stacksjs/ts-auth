@@ -3,26 +3,10 @@ title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
 
-# Getting Started
-
-This guide will walk you through setting up authentication in your application using ts-auth.
-
-## Installation
-
-Install ts-auth using your preferred package manager:
-
-```bash
-# Using bun
-bun add ts-auth
-
-# Using npm
-npm install ts-auth
-
-# Using yarn
-yarn add ts-auth
-
 # Using pnpm
+
 pnpm add ts-auth
+
 ```
 
 ## Basic Setup
@@ -32,6 +16,7 @@ pnpm add ts-auth
 WebAuthn enables passwordless authentication using biometrics, security keys, or device PINs.
 
 ```typescript
+
 // Server-side: Generate registration options
 import {
   generateRegistrationOptions,
@@ -52,9 +37,11 @@ const options = generateRegistrationOptions({
 })
 
 // Send options to the browser...
+
 ```
 
 ```typescript
+
 // Browser-side: Create credential
 import { startRegistration, browserSupportsWebAuthn } from 'ts-auth'
 
@@ -62,6 +49,7 @@ if (browserSupportsWebAuthn()) {
   const credential = await startRegistration(optionsFromServer)
   // Send credential to server for verification
 }
+
 ```
 
 ### 2. TOTP Two-Factor Authentication
@@ -69,6 +57,7 @@ if (browserSupportsWebAuthn()) {
 Add an extra layer of security with time-based one-time passwords.
 
 ```typescript
+
 import {
   generateTOTPSecret,
   generateTOTP,
@@ -87,6 +76,7 @@ const isValid = verifyTOTP(userSubmittedCode, {
   secret,
   window: 1, // Allow 1 step before/after for clock drift
 })
+
 ```
 
 ### 3. Session Management
@@ -94,6 +84,7 @@ const isValid = verifyTOTP(userSubmittedCode, {
 Manage user sessions with built-in session handling.
 
 ```typescript
+
 import { createSession, sessionMiddleware } from 'ts-auth'
 
 // Create a session
@@ -117,6 +108,7 @@ const userId = session.get('user_id')
 
 // Save the session
 await session.save()
+
 ```
 
 ### 4. JWT Authentication
@@ -124,6 +116,7 @@ await session.save()
 Generate and verify JSON Web Tokens for API authentication.
 
 ```typescript
+
 import { signJwt, verifyJwt, createTokenPair } from 'ts-auth'
 
 // Sign a JWT token
@@ -149,6 +142,7 @@ const tokens = await createTokenPair('user-123', 'your-secret-key', {
   refresh: true,
   refreshExpiry: '7d',
 })
+
 ```
 
 ## Complete Authentication Flow
@@ -156,6 +150,7 @@ const tokens = await createTokenPair('user-123', 'your-secret-key', {
 Here is a complete example showing how to implement a full authentication system:
 
 ```typescript
+
 // auth-service.ts
 import {
   generateRegistrationOptions,
@@ -230,6 +225,7 @@ export class AuthService {
     )
   }
 }
+
 ```
 
 ## Next Steps

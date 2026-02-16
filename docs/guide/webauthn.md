@@ -2,26 +2,6 @@
 title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
-
-# WebAuthn/Passkeys Implementation
-
-WebAuthn (Web Authentication) enables passwordless authentication using biometrics, security keys, or device PINs. This guide covers everything you need to implement WebAuthn in your application.
-
-## Overview
-
-WebAuthn provides a standardized way to authenticate users without passwords. It uses public-key cryptography where:
-
-- The private key stays secure on the user's device (never leaves)
-- The public key is stored on your server
-- Authentication happens by proving ownership of the private key
-
-## Browser Support
-
-Before implementing WebAuthn, check browser compatibility:
-
-```typescript
-import { browserSupportsWebAuthn, platformAuthenticatorIsAvailable } from 'ts-auth'
-
 // Check basic WebAuthn support
 if (!browserSupportsWebAuthn()) {
   console.log('WebAuthn is not supported in this browser')
@@ -32,6 +12,7 @@ if (!browserSupportsWebAuthn()) {
 if (await platformAuthenticatorIsAvailable()) {
   console.log('Platform authenticator available - can use biometrics')
 }
+
 ```
 
 ## Registration Flow
@@ -41,6 +22,7 @@ Registration creates a new credential (passkey) for the user.
 ### Server-Side: Generate Registration Options
 
 ```typescript
+
 import { generateRegistrationOptions } from 'ts-auth'
 
 function handleRegistrationStart(userId: string, userName: string) {
@@ -88,11 +70,13 @@ function handleRegistrationStart(userId: string, userName: string) {
 
   return options
 }
+
 ```
 
 ### Client-Side: Create Credential
 
 ```typescript
+
 import { startRegistration, browserSupportsWebAuthn } from 'ts-auth'
 
 async function register() {
@@ -130,11 +114,13 @@ async function register() {
     }
   }
 }
+
 ```
 
 ### Server-Side: Verify Registration
 
 ```typescript
+
 import { verifyRegistrationResponse } from 'ts-auth'
 
 async function handleRegistrationFinish(userId: string, credential: any) {
@@ -172,6 +158,7 @@ async function handleRegistrationFinish(userId: string, credential: any) {
 
   return { success: false, error: 'Verification failed' }
 }
+
 ```
 
 ## Authentication Flow
@@ -181,6 +168,7 @@ Authentication verifies the user owns a previously registered credential.
 ### Server-Side: Generate Authentication Options
 
 ```typescript
+
 import { generateAuthenticationOptions } from 'ts-auth'
 
 async function handleAuthenticationStart(userId?: string) {
@@ -213,11 +201,13 @@ async function handleAuthenticationStart(userId?: string) {
 
   return { options, sessionId }
 }
+
 ```
 
 ### Client-Side: Authenticate
 
 ```typescript
+
 import { startAuthentication, browserSupportsWebAuthnAutofill } from 'ts-auth'
 
 async function login() {
@@ -259,11 +249,13 @@ async function setupAutofill() {
     // Auto-login when user selects a passkey from autofill
   }
 }
+
 ```
 
 ### Server-Side: Verify Authentication
 
 ```typescript
+
 import { verifyAuthenticationResponse } from 'ts-auth'
 
 async function handleAuthenticationFinish(sessionId: string, credential: any) {
@@ -307,6 +299,7 @@ async function handleAuthenticationFinish(sessionId: string, credential: any) {
 
   return { success: false, error: 'Authentication failed' }
 }
+
 ```
 
 ## Security Best Practices
@@ -314,6 +307,7 @@ async function handleAuthenticationFinish(sessionId: string, credential: any) {
 ### Challenge Management
 
 ```typescript
+
 // Always generate challenges server-side
 const challenge = crypto.getRandomValues(new Uint8Array(32))
 
@@ -331,33 +325,39 @@ setInterval(() => {
     }
   }
 }, 60000)
+
 ```
 
 ### Counter Verification
 
 ```typescript
+
 // Always verify and update counters
 if (authData.signCount > 0 && authData.signCount <= storedCounter) {
   // Possible cloned authenticator!
   console.warn('Counter did not increase - possible clone detected')
   // Consider requiring re-registration or additional verification
 }
+
 ```
 
 ### Origin and RP ID Validation
 
 ```typescript
+
 // Verify these match exactly
 const expectedOrigin = 'https://example.com'
 const expectedRpId = 'example.com'
 
 // For subdomains, the RP ID must be the registrable domain
 // e.g., for app.example.com, RP ID can be 'example.com' or 'app.example.com'
+
 ```
 
 ## Error Handling
 
 ```typescript
+
 import {
   WebAuthnError,
   WebAuthnRegistrationError,
@@ -381,6 +381,7 @@ try {
     console.error('Counter error - possible cloned authenticator')
   }
 }
+
 ```
 
 ## Complete Example

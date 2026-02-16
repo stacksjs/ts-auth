@@ -68,7 +68,7 @@ export function validateRpId(rpId: string): void {
   }
 
   // RP ID must be a valid domain
-  const domainRegex = /^([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$|^localhost$/i
+  const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$|^localhost$/i
 
   if (!domainRegex.test(rpId)) {
     throw new ValidationError(`Invalid RP ID format: ${rpId}`, 'rpId', rpId)
@@ -116,7 +116,7 @@ export function validateDuration(duration: string): void {
     throw new ValidationError('Duration is required', 'duration', duration)
   }
 
-  const durationRegex = /^(\d+)([smhdw])$/
+  const durationRegex = /^(?:\d+)(?:[smhdw])$/
   if (!durationRegex.test(duration)) {
     throw new ValidationError(
       `Invalid duration format: ${duration}. Use format like '1h', '7d', '30m'`,

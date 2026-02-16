@@ -18,7 +18,7 @@ export class AuthError extends Error {
     Error.captureStackTrace?.(this, this.constructor)
   }
 
-  toJSON() {
+  toJSON(): { name: string, message: string, code: string, statusCode: number } {
     return {
       name: this.name,
       message: this.message,
@@ -371,6 +371,7 @@ export class ProviderError extends AuthError {
   constructor(message: string, provider: string, code: string = 'PROVIDER_ERROR') {
     super(message, code, 500)
     this.name = 'ProviderError'
+    this.provider = provider
     this.guard = provider
   }
 

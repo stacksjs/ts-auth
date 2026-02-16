@@ -2,25 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-
-# Browser Integration
-
-ts-auth provides browser-side utilities for WebAuthn credential creation and authentication.
-
-## Feature Detection
-
-Before using WebAuthn, check for browser support:
-
-```typescript
-import {
-  browserSupportsWebAuthn,
-  platformAuthenticatorIsAvailable,
-  browserSupportsWebAuthnAutofill,
-} from 'ts-auth'
-
-// Basic WebAuthn support
-if (!browserSupportsWebAuthn()) {
-  showError('Your browser does not support WebAuthn')
   return
 }
 
@@ -33,6 +14,7 @@ if (await platformAuthenticatorIsAvailable()) {
 if (await browserSupportsWebAuthnAutofill()) {
   enablePasskeyAutofill()
 }
+
 ```
 
 ## Registration
@@ -40,6 +22,7 @@ if (await browserSupportsWebAuthnAutofill()) {
 Use `startRegistration` to create a new credential:
 
 ```typescript
+
 import { startRegistration } from 'ts-auth'
 
 async function registerPasskey() {
@@ -82,6 +65,7 @@ async function registerPasskey() {
     }
   }
 }
+
 ```
 
 ## Authentication
@@ -89,6 +73,7 @@ async function registerPasskey() {
 Use `startAuthentication` to authenticate with an existing credential:
 
 ```typescript
+
 import { startAuthentication } from 'ts-auth'
 
 async function authenticateWithPasskey() {
@@ -126,6 +111,7 @@ async function authenticateWithPasskey() {
     }
   }
 }
+
 ```
 
 ## Conditional UI (Autofill)
@@ -133,6 +119,7 @@ async function authenticateWithPasskey() {
 Enable passkey autofill for a seamless login experience:
 
 ```typescript
+
 import {
   startAuthentication,
   browserSupportsWebAuthnAutofill,
@@ -169,17 +156,20 @@ async function setupPasskeyAutofill() {
 if (document.querySelector('input[autocomplete*="webauthn"]')) {
   setupPasskeyAutofill()
 }
+
 ```
 
 HTML for conditional UI:
 
 ```html
+
 <input
   type="text"
   name="username"
   autocomplete="username webauthn"
   placeholder="Email or username"
 />
+
 ```
 
 ## Error Handling
@@ -187,6 +177,7 @@ HTML for conditional UI:
 Handle common WebAuthn errors:
 
 ```typescript
+
 async function handleWebAuthnError(error: Error) {
   switch (error.name) {
     case 'NotAllowedError':
@@ -217,11 +208,13 @@ async function handleWebAuthnError(error: Error) {
       return 'An unexpected error occurred: ' + error.message
   }
 }
+
 ```
 
 ## React Example
 
 ```tsx
+
 import { useState } from 'react'
 import {
   startRegistration,
@@ -305,6 +298,7 @@ function PasskeyAuth() {
     </div>
   )
 }
+
 ```
 
 ## API Reference
@@ -314,7 +308,9 @@ function PasskeyAuth() {
 Check if the browser supports WebAuthn.
 
 ```typescript
+
 function browserSupportsWebAuthn(): boolean
+
 ```
 
 ### platformAuthenticatorIsAvailable()
@@ -322,7 +318,9 @@ function browserSupportsWebAuthn(): boolean
 Check if a platform authenticator (Face ID, Touch ID, etc.) is available.
 
 ```typescript
+
 async function platformAuthenticatorIsAvailable(): Promise<boolean>
+
 ```
 
 ### browserSupportsWebAuthnAutofill()
@@ -330,7 +328,9 @@ async function platformAuthenticatorIsAvailable(): Promise<boolean>
 Check if the browser supports WebAuthn conditional UI (autofill).
 
 ```typescript
+
 async function browserSupportsWebAuthnAutofill(): Promise<boolean>
+
 ```
 
 ### startRegistration()
@@ -338,9 +338,11 @@ async function browserSupportsWebAuthnAutofill(): Promise<boolean>
 Create a new WebAuthn credential.
 
 ```typescript
+
 async function startRegistration(
   options: PublicKeyCredentialCreationOptions
 ): Promise<RegistrationCredential>
+
 ```
 
 ### startAuthentication()
@@ -348,10 +350,12 @@ async function startRegistration(
 Authenticate with an existing credential.
 
 ```typescript
+
 async function startAuthentication(
   options: PublicKeyCredentialRequestOptions,
   opts?: { mediation?: 'conditional' | 'optional' | 'required' | 'silent' }
 ): Promise<AuthenticationCredential>
+
 ```
 
 ## Next Steps

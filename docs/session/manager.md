@@ -2,23 +2,6 @@
 title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
-
-# Session Manager
-
-The `SessionManager` class provides advanced session management with support for multiple drivers and extensibility.
-
-## Creating a Session Manager
-
-```typescript
-import { SessionManager } from 'ts-auth'
-
-const manager = new SessionManager({
-  default: 'redis',
-
-  drivers: {
-    memory: {
-      driver: 'memory',
-      lifetime: 120,
     },
     file: {
       driver: 'file',
@@ -42,11 +25,13 @@ const manager = new SessionManager({
     sameSite: 'lax',
   },
 })
+
 ```
 
 ## Using Multiple Drivers
 
 ```typescript
+
 // Get default driver session
 const session = await manager.driver()
 
@@ -57,11 +42,13 @@ const memorySession = await manager.driver('memory')
 // Use different drivers for different purposes
 const userSession = await manager.driver('redis') // Persistent
 const flashSession = await manager.driver('memory') // Temporary
+
 ```
 
 ## Extending with Custom Drivers
 
 ```typescript
+
 import { SessionDriver } from 'ts-auth'
 
 // Create a custom driver
@@ -92,9 +79,9 @@ class DatabaseDriver implements SessionDriver {
       [
         sessionId,
         JSON.stringify(data),
-        new Date(Date.now() + lifetime * 60 * 1000),
+        new Date(Date.now() + lifetime _ 60 _ 1000),
         JSON.stringify(data),
-        new Date(Date.now() + lifetime * 60 * 1000),
+        new Date(Date.now() + lifetime _ 60 _ 1000),
       ]
     )
   }
@@ -113,11 +100,13 @@ manager.extend('database', (config) => new DatabaseDriver(config))
 
 // Use it
 const session = await manager.driver('database')
+
 ```
 
 ## Session Store Implementation
 
 ```typescript
+
 import { SessionStore } from 'ts-auth'
 
 class CustomStore extends SessionStore {
@@ -171,6 +160,7 @@ class CustomStore extends SessionStore {
     return crypto.randomUUID()
   }
 }
+
 ```
 
 ## Garbage Collection
@@ -178,24 +168,27 @@ class CustomStore extends SessionStore {
 Clean up expired sessions periodically:
 
 ```typescript
+
 // Manual garbage collection
 await manager.gc()
 
 // Automatic garbage collection (run every hour)
 setInterval(() => {
   manager.gc().catch(console.error)
-}, 60 * 60 * 1000)
+}, 60 _ 60 _ 1000)
 
 // Or use probability-based GC
 // 2% chance to run GC on each request
 if (Math.random() < 0.02) {
   manager.gc().catch(console.error)
 }
+
 ```
 
 ## Session Events
 
 ```typescript
+
 import { SessionManager, SessionEvents } from 'ts-auth'
 
 const manager = new SessionManager(config)
@@ -216,6 +209,7 @@ manager.on(SessionEvents.INVALIDATED, (session) => {
 manager.on(SessionEvents.DESTROYED, (sessionId) => {
   console.log('Session destroyed:', sessionId)
 })
+
 ```
 
 ## Session Data Encryption
@@ -223,6 +217,7 @@ manager.on(SessionEvents.DESTROYED, (sessionId) => {
 For sensitive data, enable encryption:
 
 ```typescript
+
 const manager = new SessionManager({
   default: 'redis',
 
@@ -243,6 +238,7 @@ const manager = new SessionManager({
 // Data is automatically encrypted/decrypted
 const session = await manager.driver()
 session.put('credit_card', '4111111111111111') // Stored encrypted
+
 ```
 
 ## Session Serialization
@@ -250,6 +246,7 @@ session.put('credit_card', '4111111111111111') // Stored encrypted
 Customize how session data is serialized:
 
 ```typescript
+
 const manager = new SessionManager({
   serializer: {
     serialize: (data) => JSON.stringify(data),
@@ -266,6 +263,7 @@ const manager = new SessionManager({
     deserialize: (data) => decode(data),
   },
 })
+
 ```
 
 ## Multiple Session Contexts
@@ -273,6 +271,7 @@ const manager = new SessionManager({
 Handle multiple sessions (e.g., web and API):
 
 ```typescript
+
 const webManager = new SessionManager({
   default: 'redis',
   cookie: { name: 'web_session' },
@@ -295,6 +294,7 @@ async function apiRoute(req: Request) {
   const session = await apiManager.driver()
   // ...
 }
+
 ```
 
 ## Next Steps
