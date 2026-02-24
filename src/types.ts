@@ -677,8 +677,8 @@ export interface AuthManager {
   provider(name: string, callback: ProviderFactory): void
 }
 
-export type GuardFactory = (name: string, config: GuardConfig) => Guard
-export type ProviderFactory = (config: ProviderConfig) => UserProvider
+export type GuardFactory = (_name: string, _config: GuardConfig) => Guard
+export type ProviderFactory = (_config: ProviderConfig) => UserProvider
 
 // ============================================
 // Password Hashing Types

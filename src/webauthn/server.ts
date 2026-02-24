@@ -103,6 +103,7 @@ export function generateAuthenticationOptions(
 /**
  * Verify registration response from the client
  */
+// eslint-disable-next-line no-unused-vars
 export async function verifyRegistrationResponse(
   credential: RegistrationCredential,
   expectedChallenge: Uint8Array,
@@ -174,6 +175,7 @@ export async function verifyRegistrationResponse(
 /**
  * Verify authentication response from the client
  */
+// eslint-disable-next-line no-unused-vars
 export async function verifyAuthenticationResponse(
   credential: AuthenticationCredential,
   expectedChallenge: Uint8Array,
