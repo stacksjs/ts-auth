@@ -2,23 +2,6 @@
 title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
-  // Get user's stored credentials
-  const storedCredentials = getCredentialsForUser(userId)
-
-  const options = generateAuthenticationOptions({
-    // Relying Party ID
-    rpID: 'example.com',
-
-    // Allow these credentials
-    allowCredentials: storedCredentials.map(cred => ({
-      id: cred.credentialId,
-      type: 'public-key',
-      transports: ['internal', 'usb', 'ble', 'nfc'],
-    })),
-
-    // User verification requirement
-    userVerification: 'preferred',
-
     // Timeout in milliseconds
     timeout: 60000,
   })

@@ -3,23 +3,6 @@ title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
 
-```typescript
-import { generateTOTPSecret, totpKeyUri } from 'ts-auth'
-
-// Generate a random base32-encoded secret
-const secret = generateTOTPSecret()
-// Returns something like: "JBSWY3DPEHPK3PXP"
-
-// Generate the otpauth:// URI for QR codes
-const uri = totpKeyUri('user@example.com', 'MyApp', secret)
-// Returns: "otpauth://totp/MyApp:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=MyApp"
-```
-
-### Generate a Code
-
-```typescript
-import { generateTOTP } from 'ts-auth'
-
 // Generate the current TOTP code
 const code = await generateTOTP({
   secret: 'JBSWY3DPEHPK3PXP',
@@ -33,11 +16,13 @@ const codeCustom = await generateTOTP({
   digits: 6, // Number of digits (default: 6)
   algorithm: 'SHA-1', // 'SHA-1', 'SHA-256', 'SHA-512' (default: 'SHA-1')
 })
+
 ```
 
 ### Verify a Code
 
 ```typescript
+
 import { verifyTOTP } from 'ts-auth'
 
 // Verify a code submitted by the user
@@ -51,6 +36,7 @@ if (isValid) {
 } else {
   console.log('Invalid code')
 }
+
 ```
 
 ## Complete 2FA Setup Flow
@@ -58,6 +44,7 @@ if (isValid) {
 ### Step 1: Enable 2FA for User
 
 ```typescript
+
 import { generateTOTPSecret, totpKeyUri } from 'ts-auth'
 
 async function enable2FA(userId: string) {
@@ -87,6 +74,7 @@ async function enable2FA(userId: string) {
     uri, // Use this to generate QR code
   }
 }
+
 ```
 
 ### Step 2: Generate QR Code
@@ -94,6 +82,7 @@ async function enable2FA(userId: string) {
 ts-auth includes QR code generation for easy setup:
 
 ```typescript
+
 import { generateQRCodeSVG, generateQRCodeDataURL, totpKeyUri } from 'ts-auth'
 
 // Generate as SVG string
@@ -113,11 +102,13 @@ const dataUrl = await generateQRCodeDataURL({
 
 // Use in HTML
 // <img src="${dataUrl}" alt="Scan with authenticator app" />
+
 ```
 
 ### Step 3: Verify Setup Code
 
 ```typescript
+
 import { verifyTOTP } from 'ts-auth'
 
 async function verify2FASetup(userId: string, code: string) {
@@ -159,11 +150,13 @@ async function verify2FASetup(userId: string, code: string) {
     error: 'Invalid verification code',
   }
 }
+
 ```
 
 ### Step 4: Generate Backup Codes
 
 ```typescript
+
 import { generateRandomString } from 'ts-auth'
 
 async function generateBackupCodes(userId: string, count = 10) {
@@ -191,6 +184,7 @@ async function generateBackupCodes(userId: string, count = 10) {
     `${code.slice(0, 4)}-${code.slice(4)}`
   )
 }
+
 ```
 
 ## Login with 2FA
@@ -198,6 +192,7 @@ async function generateBackupCodes(userId: string, count = 10) {
 ### Step 1: Check if 2FA is Enabled
 
 ```typescript
+
 async function login(email: string, password: string) {
   // Verify password first
   const user = await db.users.findByEmail(email)
@@ -223,11 +218,13 @@ async function login(email: string, password: string) {
   // No 2FA, create session directly
   return createUserSession(user)
 }
+
 ```
 
 ### Step 2: Verify 2FA Code
 
 ```typescript
+
 import { verifyTOTP } from 'ts-auth'
 
 async function verify2FA(tempToken: string, code: string) {
@@ -276,6 +273,7 @@ async function tryBackupCode(userId: string, code: string) {
 
   return false
 }
+
 ```
 
 ## Configuration Options
@@ -283,6 +281,7 @@ async function tryBackupCode(userId: string, code: string) {
 ### TOTPOptions
 
 ```typescript
+
 interface TOTPOptions {
   /** Secret key (base32 encoded) */
   secret: string
@@ -299,6 +298,7 @@ interface TOTPOptions {
   /** Window for validation (default: 1) */
   window?: number
 }
+
 ```
 
 ### Algorithm Compatibility
@@ -316,6 +316,7 @@ Most authenticator apps support all algorithms, but SHA-1 is the most widely sup
 ### Secret Storage
 
 ```typescript
+
 // NEVER store TOTP secrets in plain text
 // Use encryption at rest
 
@@ -330,11 +331,13 @@ async function getTOTPSecret(userId: string) {
   const user = await db.users.findById(userId)
   return decrypt(user.totpSecret, process.env.ENCRYPTION*KEY!)
 }
+
 ```
 
 ### Rate Limiting
 
 ```typescript
+
 import { createAuthRateLimiter } from 'ts-auth'
 
 const rateLimiter = createAuthRateLimiter({
@@ -359,6 +362,7 @@ async function verify2FAWithRateLimit(userId: string, code: string) {
   await rateLimiter.reset(key)
   return true
 }
+
 ```
 
 ### Timing-Safe Comparison
@@ -366,6 +370,7 @@ async function verify2FAWithRateLimit(userId: string, code: string) {
 ts-auth uses timing-safe comparison internally to prevent timing attacks:
 
 ```typescript
+
 // Internally implemented as:
 function timingSafeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) {
@@ -379,11 +384,13 @@ function timingSafeEqual(a: string, b: string): boolean {
 
   return result === 0
 }
+
 ```
 
 ## Error Handling
 
 ```typescript
+
 import {
   TOTPError,
   TOTPInvalidCodeError,
@@ -401,11 +408,13 @@ try {
     console.error('TOTP error:', error.message)
   }
 }
+
 ```
 
 ## Disabling 2FA
 
 ```typescript
+
 async function disable2FA(userId: string, password: string, code: string) {
   const user = await db.users.findById(userId)
 
@@ -442,6 +451,7 @@ async function disable2FA(userId: string, password: string, code: string) {
 
   return { success: true }
 }
+
 ```
 
 ## Next Steps

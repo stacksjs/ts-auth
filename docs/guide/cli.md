@@ -2,25 +2,6 @@
 title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
-auth
-
-```
-
-## Available Commands
-
-### Version
-
-Display the current version of ts-auth:
-
-```bash
-
-auth version
-
-# Output: 0.4.0
-
-```
-
-### Help
 
 Display help information:
 

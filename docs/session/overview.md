@@ -2,21 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-import { createSession, SessionManager } from 'ts-auth'
-
-// Create a session with default settings
-const session = createSession({
-  driver: 'memory',
-  lifetime: 120, // minutes
-  cookie: 'app_session',
-})
-
-// Start the session
-await session.start()
-
-// Store data
-session.put('user_id', 123)
-session.put('role', 'admin')
 
 // Retrieve data
 const userId = session.get('user_id')

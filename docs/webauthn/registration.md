@@ -2,22 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-  const options = generateRegistrationOptions({
-    // Relying Party information
-    rpName: 'My Application',
-    rpID: 'example.com',
-
-    // User information
-    userID: userId,
-    userName: userName,
-    userDisplayName: 'John Doe', // Optional, defaults to userName
-
-    // Authenticator selection
-    authenticatorSelection: {
-      authenticatorAttachment: 'platform', // or 'cross-platform'
-      requireResidentKey: false,
-      residentKey: 'preferred',
-      userVerification: 'preferred',
     },
 
     // Attestation type

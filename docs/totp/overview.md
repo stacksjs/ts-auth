@@ -2,22 +2,6 @@
 title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
-│   (123456)          │     │   (123456)          │
-│                     │     │                     │
-│   Matches? ─────────┼─────┼─── Yes, verified!   │
-└─────────────────────┘     └─────────────────────┘
-
-```
-
-The same code is generated on both sides because:
-
-1. They share the same secret
-2. They use the same time (within a window)
-3. They use the same algorithm
-
-## Basic Usage
-
-```typescript
 
 import {
   generateTOTPSecret,

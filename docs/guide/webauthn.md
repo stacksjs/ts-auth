@@ -2,22 +2,6 @@
 title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
-// Check basic WebAuthn support
-if (!browserSupportsWebAuthn()) {
-  console.log('WebAuthn is not supported in this browser')
-  // Fall back to password authentication
-}
-
-// Check for platform authenticator (Face ID, Touch ID, Windows Hello)
-if (await platformAuthenticatorIsAvailable()) {
-  console.log('Platform authenticator available - can use biometrics')
-}
-
-```
-
-## Registration Flow
-
-Registration creates a new credential (passkey) for the user.
 
 ### Server-Side: Generate Registration Options
 

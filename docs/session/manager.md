@@ -2,21 +2,6 @@
 title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
-    },
-    file: {
-      driver: 'file',
-      lifetime: 120,
-      path: '/tmp/sessions',
-    },
-    redis: {
-      driver: 'redis',
-      lifetime: 120,
-      connection: {
-        host: process.env.REDIS_HOST,
-        port: 6379,
-      },
-    },
-  },
 
   cookie: {
     name: 'app_session',

@@ -2,25 +2,6 @@
 title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
-
-# Using pnpm
-
-pnpm add ts-auth
-
-```
-
-## Basic Setup
-
-### 1. WebAuthn (Passkeys) Authentication
-
-WebAuthn enables passwordless authentication using biometrics, security keys, or device PINs.
-
-```typescript
-
-// Server-side: Generate registration options
-import {
-  generateRegistrationOptions,
-  verifyRegistrationResponse,
 } from 'ts-auth'
 
 // Generate options for creating a new credential

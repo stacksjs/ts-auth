@@ -2,23 +2,8 @@
 title: ts-auth - Native WebAuthn and OTP Authentication
 description: A native WebAuthn and OTP authentication library built with Bun. Zero external authentication dependencies.
 ---
-
-```typescript
-import { generateRegistrationOptions, verifyTOTP, signJwt } from 'ts-auth'
-
-// WebAuthn Registration
-const options = generateRegistrationOptions({
-  rpName: 'My App',
-  rpID: 'example.com',
-  userID: 'user-123',
-  userName: 'john@example.com',
-})
-
-// TOTP Verification
-const isValid = verifyTOTP(userCode, { secret: userSecret })
-
-// JWT Token
 const token = await signJwt({ sub: 'user-123' }, secret, { expiresIn: '7d' })
+
 ```
 
 ## Why ts-auth
@@ -42,7 +27,9 @@ const token = await signJwt({ sub: 'user-123' }, secret, { expiresIn: '7d' })
 ## Getting Started
 
 ```bash
+
 bun add ts-auth
+
 ```
 
 Continue to the [Getting Started Guide](/guide/getting-started) to learn how to implement authentication in your application.

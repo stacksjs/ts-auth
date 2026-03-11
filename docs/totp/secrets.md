@@ -2,23 +2,6 @@
 title: Generating TOTP Secrets
 description: Generate and manage TOTP secrets for two-factor authentication
 ---
-```
-
-## Secret Format
-
-Secrets are encoded in Base32 format, which:
-
-- Uses characters A-Z and 2-7
-- Is case-insensitive
-- Avoids ambiguous characters (0, 1, 8, 9)
-- Is URL-safe
-
-```typescript
-
-// Valid base32 characters
-const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
-
-// The generated secret length depends on the input bytes:
 // 20 bytes -> 32 base32 characters
 // 32 bytes -> 52 base32 characters
 

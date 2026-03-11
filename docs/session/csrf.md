@@ -2,24 +2,6 @@
 title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
-
-5. Form auto-submits with user's session cookie
-6. Your app processes the request as legitimate
-
-```
-
-## CSRF Token Protection
-
-Generate and validate CSRF tokens to prevent these attacks:
-
-```typescript
-
-import { generateCSRFToken, validateCSRFToken } from 'ts-auth'
-
-// Generate token and store in session
-async function getCSRFToken(session: Session): Promise<string> {
-  let token = session.get('_csrf_token')
-
   if (!token) {
     token = generateCSRFToken()
     session.put('_csrf_token', token)

@@ -2,22 +2,6 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-  console.log('Invalid code')
-}
-
-```
-
-## Verification Options
-
-```typescript
-
-const isValid = await verifyTOTP(code, {
-  // Required: The user's secret
-  secret: 'JBSWY3DPEHPK3PXP',
-
-  // Time step in seconds (default: 30)
-  step: 30,
-
   // Number of digits (default: 6)
   digits: 6,
 

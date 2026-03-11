@@ -2,22 +2,6 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-- **Payload**: Claims (user data)
-- **Signature**: Verification signature
-
-## Quick Start
-
-```typescript
-
-import { signJwt, verifyJwt } from 'ts-auth'
-
-// Create a token
-const token = await signJwt(
-  { sub: 'user-123', role: 'admin' },
-  'your-secret-key',
-  { expiresIn: '7d' }
-)
-
 // Verify and decode
 const payload = await verifyJwt(token, 'your-secret-key')
 console.log(payload.sub) // 'user-123'

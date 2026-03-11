@@ -2,24 +2,6 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-│             │<────│             │<────│  (Face ID, etc.)    │
-└─────────────┘     └─────────────┘     └─────────────────────┘
-
-     1. Request          2. Generate          3. User
-
-        options             challenge            verification
-
-     4. Create           5. Verify
-
-        credential          response
-
-```
-
-### Registration Flow
-
-1. **Server generates options** - Creates challenge and user info
-2. **Browser creates credential** - Prompts user for biometric/PIN
-3. **Server verifies response** - Validates and stores credential
 
 ### Authentication Flow
 

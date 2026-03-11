@@ -2,22 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-  return
-}
-
-// Platform authenticator (Face ID, Touch ID, Windows Hello)
-if (await platformAuthenticatorIsAvailable()) {
-  showOption('Sign in with Face ID / Touch ID')
-}
-
-// Conditional UI (autofill) support
-if (await browserSupportsWebAuthnAutofill()) {
-  enablePasskeyAutofill()
-}
-
-```
-
-## Registration
 
 Use `startRegistration` to create a new credential:
 

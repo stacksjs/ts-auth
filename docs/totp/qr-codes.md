@@ -2,23 +2,6 @@
 title: QR Code Generation
 description: Generate QR codes for TOTP setup with authenticator apps
 ---
-
-```
-
-### URI Options
-
-```typescript
-
-const uri = totpKeyUri(
-  'user@example.com',
-  'MyApp',
-  secret,
-  {
-    // Only include if different from defaults
-    algorithm: 'SHA-256', // Default: SHA-1
-    digits: 8,            // Default: 6
-    period: 60,           // Default: 30
-  }
 )
 
 ```

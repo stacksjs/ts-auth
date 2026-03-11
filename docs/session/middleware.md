@@ -2,21 +2,6 @@
 title: Session Middleware
 description: Integrate sessions with your web framework
 ---
-}
-
-Bun.serve({
-  port: 3000,
-
-  async fetch(req) {
-    // Create session middleware
-    const session = await sessionMiddleware(req, sessionConfig)
-
-    // Session is now available
-    const userId = session.get('user_id')
-
-    // Your route handling
-    const url = new URL(req.url)
-
     if (url.pathname === '/login' && req.method === 'POST') {
       // Login logic
       session.put('user_id', 123)

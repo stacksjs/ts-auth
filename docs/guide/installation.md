@@ -2,25 +2,6 @@
 title: Installation
 description: Install ts-auth in your project
 ---
-
-# Using pnpm
-
-pnpm add ts-auth
-
-```
-
-## Requirements
-
-### Runtime Requirements
-
-- **Bun** >= 1.0.0 (for server-side TOTP and WebAuthn verification)
-- **Node.js** >= 18.0.0 (if using Node.js instead of Bun)
-
-### WebAuthn Requirements
-
-WebAuthn requires a secure context to function:
-
-- **HTTPS** - Production environments must use HTTPS
 - **localhost** - Local development works without HTTPS
 
 ### Browser Support

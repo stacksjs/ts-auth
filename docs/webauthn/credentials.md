@@ -2,21 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-  counter: number
-
-  // Device type: 'singleDevice' or 'multiDevice'
-  deviceType: string
-
-  // Whether the credential is backed up (synced to cloud)
-  backedUp: boolean
-
-  // Transports the credential supports
-  transports?: string[]
-
-  // Metadata
-  userId: string
-  name?: string  // User-provided name like "MacBook Pro"
-  createdAt: Date
   lastUsedAt?: Date
 }
 
