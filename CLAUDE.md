@@ -2,7 +2,7 @@
 
 ## About
 
-Native WebAuthn and OTP authentication library built with Bun.
+A zero-dependency WebAuthn and TOTP authentication library built with Bun's native crypto APIs. It provides full passkey/WebAuthn support (server-side registration/authentication verification plus browser-side credential handling), TOTP two-factor authentication with configurable algorithms, and built-in QR code generation for 2FA setup. Everything is implemented using native Web Crypto APIs with no external auth dependencies.
 
 ## Linting
 
