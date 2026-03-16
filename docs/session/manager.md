@@ -2,24 +2,6 @@
 title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
-
-  cookie: {
-    name: 'app_session',
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    sameSite: 'lax',
-  },
-})
-
-```
-
-## Using Multiple Drivers
-
-```typescript
-
-// Get default driver session
-const session = await manager.driver()
-
 // Get specific driver session
 const redisSession = await manager.driver('redis')
 const memorySession = await manager.driver('memory')

@@ -2,25 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-
-// Retrieve data
-const userId = session.get('user_id')
-const role = session.get('role', 'guest') // With default
-
-// Save the session
-await session.save()
-
-```
-
-## Session Drivers
-
-### Memory Driver
-
-Stores sessions in memory. Best for development or single-server deployments.
-
-```typescript
-
-const session = createSession({
   driver: 'memory',
   lifetime: 120,
 })

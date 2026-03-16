@@ -2,21 +2,6 @@
 title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
-} from 'ts-auth'
-
-// Generate options for creating a new credential
-const options = generateRegistrationOptions({
-  rpName: 'My Application',
-  rpID: 'example.com',
-  userID: 'user-unique-id',
-  userName: 'john@example.com',
-  userDisplayName: 'John Doe',
-  authenticatorSelection: {
-    authenticatorAttachment: 'platform',
-    userVerification: 'preferred',
-  },
-})
-
 // Send options to the browser...
 
 ```

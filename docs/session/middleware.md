@@ -2,21 +2,6 @@
 title: Session Middleware
 description: Integrate sessions with your web framework
 ---
-    if (url.pathname === '/login' && req.method === 'POST') {
-      // Login logic
-      session.put('user_id', 123)
-      await session.regenerate() // Prevent session fixation
-      await session.save()
-
-      return new Response('Logged in', {
-        headers: session.getCookieHeader(),
-      })
-    }
-
-    if (url.pathname === '/dashboard') {
-      if (!userId) {
-        return new Response('Unauthorized', { status: 401 })
-      }
       return new Response(`Welcome, user ${userId}`)
     }
 

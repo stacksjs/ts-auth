@@ -2,21 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-    },
-
-    // Attestation type
-    attestationType: 'none', // 'none', 'indirect', or 'direct'
-
-    // Timeout in milliseconds
-    timeout: 60000,
-
-    // Exclude existing credentials
-    excludeCredentials: existingCredentials.map(cred => ({
-      id: cred.id,
-      type: 'public-key',
-      transports: ['internal'],
-    })),
-  })
 
   // Store the challenge for verification
   challenges.set(userId, options.challenge)

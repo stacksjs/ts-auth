@@ -2,23 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-
-Use `startRegistration` to create a new credential:
-
-```typescript
-
-import { startRegistration } from 'ts-auth'
-
-async function registerPasskey() {
-  try {
-    // Get options from your server
-    const response = await fetch('/api/register/start', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: currentUser.id }),
-    })
-    const options = await response.json()
-
     // Create the credential
     const credential = await startRegistration(options)
 

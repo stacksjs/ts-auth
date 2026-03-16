@@ -2,22 +2,6 @@
 title: ts-auth - Native WebAuthn and OTP Authentication
 description: A native WebAuthn and OTP authentication library built with Bun. Zero external authentication dependencies.
 ---
-const token = await signJwt({ sub: 'user-123' }, secret, { expiresIn: '7d' })
-
-```
-
-## Why ts-auth
-
-| Feature | ts-auth | @simplewebauthn | otplib |
-|---------|---------|-----------------|--------|
-| WebAuthn Support | Yes | Yes | No |
-| TOTP Support | Yes | No | Yes |
-| QR Code Generation | Yes | No | No |
-| Zero Auth Dependencies | Yes | No | No |
-| Native Bun Crypto | Yes | No | No |
-| Bundle Size | Minimal | ~50KB | ~25KB |
-| Single Package | Yes | 2 packages | Yes |
-
 ## Requirements
 
 - **Bun** >= 1.0.0

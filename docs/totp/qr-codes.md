@@ -2,24 +2,6 @@
 title: QR Code Generation
 description: Generate QR codes for TOTP setup with authenticator apps
 ---
-)
-
-```
-
-## Generating QR Codes
-
-### SVG Format (Browser)
-
-```typescript
-
-import { generateQRCodeSVG, QRErrorCorrection } from 'ts-auth'
-
-const svg = generateQRCodeSVG({
-  text: uri,
-  width: 256,
-  height: 256,
-  correctLevel: QRErrorCorrection.H, // High error correction
-})
 
 // Use in HTML
 document.getElementById('qr-container').innerHTML = svg

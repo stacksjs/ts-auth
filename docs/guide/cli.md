@@ -3,26 +3,6 @@ title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
 
-Display help information:
-
-```bash
-
-auth help
-auth --help
-auth -h
-
-```
-
-## TOTP Commands
-
-### Generate TOTP Secret
-
-Generate a new TOTP secret for testing:
-
-```bash
-
-auth totp:secret
-
 # Output: JBSWY3DPEHPK3PXP
 
 auth totp:secret --length 32

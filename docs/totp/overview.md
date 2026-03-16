@@ -3,25 +3,6 @@ title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
 
-import {
-  generateTOTPSecret,
-  generateTOTP,
-  verifyTOTP,
-  totpKeyUri,
-} from 'ts-auth'
-
-// 1. Generate a secret for the user
-const secret = generateTOTPSecret()
-// Example: "JBSWY3DPEHPK3PXP"
-
-// 2. Create a URI for authenticator apps
-const uri = totpKeyUri('user@example.com', 'MyApp', secret)
-// Example: "otpauth://totp/MyApp:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=MyApp"
-
-// 3. Generate a code (for testing)
-const code = await generateTOTP({ secret })
-// Example: "123456"
-
 // 4. Verify a user-submitted code
 const isValid = await verifyTOTP(userCode, {
   secret,

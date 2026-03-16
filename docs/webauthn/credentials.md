@@ -2,23 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-  lastUsedAt?: Date
-}
-
-```
-
-## Database Schema Example
-
-### PostgreSQL / SQLite
-
-```sql
-
-CREATE TABLE webauthn_credentials (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  credential_id TEXT NOT NULL UNIQUE,
-  public_key BYTEA NOT NULL,
-  counter INTEGER NOT NULL DEFAULT 0,
   device_type TEXT NOT NULL,
   backed_up BOOLEAN NOT NULL DEFAULT FALSE,
   transports TEXT[],

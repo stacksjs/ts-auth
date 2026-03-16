@@ -2,23 +2,6 @@
 title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
-    // Timeout in milliseconds
-    timeout: 60000,
-  })
-
-  // Store the challenge for verification
-  challenges.set(userId, options.challenge)
-
-  return options
-}
-
-```
-
-## Authentication Options Reference
-
-### Required Fields
-
-| Field | Type | Description |
 |-------|------|-------------|
 | `rpID` | `string` | Domain of the relying party |
 

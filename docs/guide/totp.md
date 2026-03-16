@@ -3,22 +3,6 @@ title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
 
-// Generate the current TOTP code
-const code = await generateTOTP({
-  secret: 'JBSWY3DPEHPK3PXP',
-})
-// Returns: "123456"
-
-// With custom options
-const codeCustom = await generateTOTP({
-  secret: 'JBSWY3DPEHPK3PXP',
-  step: 30, // Time step in seconds (default: 30)
-  digits: 6, // Number of digits (default: 6)
-  algorithm: 'SHA-1', // 'SHA-1', 'SHA-256', 'SHA-512' (default: 'SHA-1')
-})
-
-```
-
 ### Verify a Code
 
 ```typescript

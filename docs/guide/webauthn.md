@@ -3,23 +3,6 @@ title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
 
-### Server-Side: Generate Registration Options
-
-```typescript
-
-import { generateRegistrationOptions } from 'ts-auth'
-
-function handleRegistrationStart(userId: string, userName: string) {
-  const options = generateRegistrationOptions({
-    // Relying Party (your application)
-    rpName: 'My Application',
-    rpID: 'example.com', // Your domain
-
-    // User information
-    userID: userId,
-    userName: userName, // Usually email
-    userDisplayName: 'John Doe',
-
     // Authenticator preferences
     authenticatorSelection: {
       // 'platform' = built-in (Face ID, Touch ID, Windows Hello)

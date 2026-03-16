@@ -2,23 +2,6 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-  // Number of digits (default: 6)
-  digits: 6,
-
-  // Algorithm (default: 'SHA-1')
-  algorithm: 'SHA-1', // 'SHA-1' | 'SHA-256' | 'SHA-512'
-
-  // Window for drift tolerance (default: 1)
-  window: 1,
-})
-
-```
-
-## Time Window
-
-The `window` parameter allows for clock drift between the server and the user's device:
-
-```typescript
 
 // window: 0 - Only current time period (strict)
 // window: 1 - Current + 1 before + 1 after (default, recommended)

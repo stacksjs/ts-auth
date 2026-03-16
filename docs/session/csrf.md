@@ -2,21 +2,6 @@
 title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
-  if (!token) {
-    token = generateCSRFToken()
-    session.put('_csrf_token', token)
-    await session.save()
-  }
-
-  return token
-}
-
-// Validate token from request
-async function validateCSRF(req: Request, session: Session): Promise<boolean> {
-  const sessionToken = session.get('_csrf_token')
-  if (!sessionToken) return false
-
-  // Check header first (for AJAX)
   const headerToken = req.headers.get('X-CSRF-Token')
   if (headerToken) {
     return validateCSRFToken(headerToken, sessionToken)

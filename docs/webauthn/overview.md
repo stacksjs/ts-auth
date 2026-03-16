@@ -2,23 +2,6 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-
-### Authentication Flow
-
-1. **Server generates options** - Creates challenge and allowed credentials
-2. **Browser gets assertion** - User authenticates with biometric/PIN
-3. **Server verifies response** - Validates signature and counter
-
-## Basic Example
-
-### Server-side (Bun)
-
-```typescript
-
-import {
-  generateRegistrationOptions,
-  generateAuthenticationOptions,
-  verifyRegistrationResponse,
   verifyAuthenticationResponse,
 } from 'ts-auth'
 

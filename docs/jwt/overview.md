@@ -2,23 +2,6 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-// Verify and decode
-const payload = await verifyJwt(token, 'your-secret-key')
-console.log(payload.sub) // 'user-123'
-
-```
-
-## Supported Algorithms
-
-ts-auth supports these signing algorithms:
-
-| Algorithm | Type | Key Size | Use Case |
-|-----------|------|----------|----------|
-| HS256 | HMAC | 256-bit | Shared secret |
-| HS384 | HMAC | 384-bit | Shared secret |
-| HS512 | HMAC | 512-bit | Shared secret |
-| RS256 | RSA | 2048-bit+ | Public/private key |
-| RS384 | RSA | 2048-bit+ | Public/private key |
 | RS512 | RSA | 2048-bit+ | Public/private key |
 | ES256 | ECDSA | P-256 | Public/private key |
 | ES384 | ECDSA | P-384 | Public/private key |

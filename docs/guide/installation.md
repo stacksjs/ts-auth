@@ -2,23 +2,6 @@
 title: Installation
 description: Install ts-auth in your project
 ---
-- **localhost** - Local development works without HTTPS
-
-### Browser Support
-
-For WebAuthn (Passkeys) functionality in the browser:
-
-| Browser | Minimum Version |
-|---------|----------------|
-| Chrome/Edge | 67+ |
-| Firefox | 60+ |
-| Safari | 13+ |
-| iOS Safari | 14.5+ |
-| Android Chrome | 67+ |
-
-## Configuration
-
-You can optionally create an `auth.config.ts` file in your project root:
 
 ```typescript
 

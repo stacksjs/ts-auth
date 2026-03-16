@@ -2,23 +2,6 @@
 title: Generating TOTP Secrets
 description: Generate and manage TOTP secrets for two-factor authentication
 ---
-// 20 bytes -> 32 base32 characters
-// 32 bytes -> 52 base32 characters
-
-```
-
-## Security Requirements
-
-### Minimum Length
-
-RFC 4226 recommends at least 128 bits (16 bytes) of entropy. The default 160-bit (20-byte) secret exceeds this requirement.
-
-```typescript
-
-// Recommended: Use at least 20 bytes (default)
-const secret = generateTOTPSecret(20)
-
-// For high-security applications: 32 bytes
 const strongSecret = generateTOTPSecret(32)
 
 ```
