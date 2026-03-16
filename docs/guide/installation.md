@@ -2,25 +2,6 @@
 title: Installation
 description: Install ts-auth in your project
 ---
-
-```typescript
-
-import type { AuthOptions } from 'ts-auth'
-
-const config: AuthOptions = {
-  verbose: true, // Enable verbose logging for debugging
-}
-
-export default config
-
-```
-
-### Configuration Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `verbose` | `boolean` | `false` | Enable verbose logging for debugging |
-
 ## TypeScript Configuration
 
 ts-auth is written in TypeScript and includes comprehensive type definitions. No additional `@types` packages are required.

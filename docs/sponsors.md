@@ -74,4 +74,10 @@ You can also try to convince your employer to sponsor Stacks as a business. This
 
 ### Individual Backers
 
-- Vacant***##### Thanks to Vue.js for the inspiration of this sponsorship page*You can find their sponsorship page [here](https://vuejs.org/sponsor/).*
+- Vacant
+
+***
+
+#### Thanks to Vue.js for the inspiration of this sponsorship page
+
+You can find their [sponsorship page](https://vuejs.org/sponsor/).

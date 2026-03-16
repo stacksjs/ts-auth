@@ -2,25 +2,6 @@
 title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
-// Get specific driver session
-const redisSession = await manager.driver('redis')
-const memorySession = await manager.driver('memory')
-
-// Use different drivers for different purposes
-const userSession = await manager.driver('redis') // Persistent
-const flashSession = await manager.driver('memory') // Temporary
-
-```
-
-## Extending with Custom Drivers
-
-```typescript
-
-import { SessionDriver } from 'ts-auth'
-
-// Create a custom driver
-class DatabaseDriver implements SessionDriver {
-  private db: Database
 
   constructor(config: any) {
     this.db = new Database(config.connection)
@@ -68,7 +49,7 @@ manager.extend('database', (config) => new DatabaseDriver(config))
 // Use it
 const session = await manager.driver('database')
 
-```
+```ts
 
 ## Session Store Implementation
 
@@ -128,7 +109,7 @@ class CustomStore extends SessionStore {
   }
 }
 
-```
+```ts
 
 ## Garbage Collection
 
@@ -150,7 +131,7 @@ if (Math.random() < 0.02) {
   manager.gc().catch(console.error)
 }
 
-```
+```ts
 
 ## Session Events
 
@@ -177,7 +158,7 @@ manager.on(SessionEvents.DESTROYED, (sessionId) => {
   console.log('Session destroyed:', sessionId)
 })
 
-```
+```ts
 
 ## Session Data Encryption
 
@@ -206,7 +187,7 @@ const manager = new SessionManager({
 const session = await manager.driver()
 session.put('credit_card', '4111111111111111') // Stored encrypted
 
-```
+```ts
 
 ## Session Serialization
 
@@ -231,7 +212,7 @@ const manager = new SessionManager({
   },
 })
 
-```
+```ts
 
 ## Multiple Session Contexts
 
@@ -262,7 +243,7 @@ async function apiRoute(req: Request) {
   // ...
 }
 
-```
+```ts
 
 ## Next Steps
 

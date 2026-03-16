@@ -2,24 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-  driver: 'memory',
-  lifetime: 120,
-})
-
-```
-
-**Pros:**
-
-- Very fast
-- No external dependencies
-- Simple setup
-
-**Cons:**
-
-- Lost on server restart
-- Not suitable for multi-server deployments
-
-### File Driver
 
 Stores sessions in the filesystem.
 
@@ -33,12 +15,12 @@ const session = createSession({
 
 ```
 
-**Pros:**
+#### Pros
 
 - Persistent across restarts
 - No external dependencies
 
-**Cons:**
+#### Cons
 
 - Slower than memory
 - Not suitable for multi-server without shared filesystem
@@ -62,13 +44,13 @@ const session = createSession({
 
 ```
 
-**Pros:**
+#### Pros
 
 - Fast and persistent
 - Works with multiple servers
 - Built-in expiration
 
-**Cons:**
+#### Cons
 
 - Requires Redis server
 

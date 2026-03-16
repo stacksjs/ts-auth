@@ -2,24 +2,6 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-| RS512 | RSA | 2048-bit+ | Public/private key |
-| ES256 | ECDSA | P-256 | Public/private key |
-| ES384 | ECDSA | P-384 | Public/private key |
-| ES512 | ECDSA | P-521 | Public/private key |
-
-### Symmetric (HMAC)
-
-Use the same secret for signing and verification:
-
-```typescript
-
-const secret = 'your-256-bit-secret'
-const token = await signJwt(payload, secret, { algorithm: 'HS256' })
-const verified = await verifyJwt(token, secret)
-
-```
-
-### Asymmetric (RSA/ECDSA)
 
 Use private key for signing, public key for verification:
 
@@ -85,7 +67,7 @@ const token = await signJwt(
 
 ## When to Use JWT
 
-**Good for:**
+#### Good for
 
 - Stateless API authentication
 - Microservices communication
@@ -93,7 +75,7 @@ const token = await signJwt(
 - Mobile app authentication
 - Short-lived access tokens
 
-**Consider alternatives when:**
+#### Consider alternatives when
 
 - You need immediate token revocation
 - Tokens contain sensitive data

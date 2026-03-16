@@ -2,23 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-
-  // Store the challenge for verification
-  challenges.set(userId, options.challenge)
-
-  return options
-}
-
-```
-
-## Registration Options Reference
-
-### Required Fields
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `rpName` | `string` | Human-readable name of the relying party |
-| `rpID` | `string` | Domain of the relying party (e.g., 'example.com') |
 | `userID` | `string` | Unique identifier for the user |
 | `userName` | `string` | Username (typically email) |
 

@@ -2,21 +2,6 @@
 title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
-|-------|------|-------------|
-| `rpID` | `string` | Domain of the relying party |
-
-### Optional Fields
-
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `challenge` | `Uint8Array` | Random 32 bytes | Challenge for the request |
-| `allowCredentials` | `array` | `[]` | Allowed credentials |
-| `userVerification` | `string` | `'preferred'` | User verification requirement |
-| `timeout` | `number` | `60000` | Timeout in milliseconds |
-
-### Allow Credentials
-
-```typescript
 
 allowCredentials: [
   {

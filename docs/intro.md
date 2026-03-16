@@ -1,8 +1,4 @@
-<p align="center"><img src="<https://github.com/stacksjs/rpx/blob/main/.github/art/cover.jpg?raw=true"> alt="Social Card of this repo"></p>
-
-# A Better Developer Experience
-
-> A TypeScript Starter Kit that will help you bootstrap your next project without minimal opinion.
+<p align="center"><img src="https://github.com/stacksjs/rpx/blob/main/.github/art/cover.jpg?raw=true" alt="Social Card of this repo"></p>
 
 # ts-auth
 
@@ -82,5 +78,4 @@ Made with 💙
 
 <!-- Badges -->
 
-<!-- [codecov-src]: <https://img.shields.io/codecov/c/gh/stacksjs/rpx/main?style=flat-square>
-[codecov-href]: <https://codecov.io/gh/stacksjs/rpx> -->
+<!-- [codecov-src]: https://img.shields.io/codecov/c/gh/stacksjs/rpx/main?style=flat-square -->

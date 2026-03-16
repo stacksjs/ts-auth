@@ -2,22 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-    // Create the credential
-    const credential = await startRegistration(options)
-
-    // Send to server for verification
-    const verifyResponse = await fetch('/api/register/finish', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: currentUser.id,
-        credential,
-      }),
-    })
-
-    const result = await verifyResponse.json()
-
-    if (result.success) {
       showSuccess('Passkey registered successfully!')
     } else {
       showError('Registration failed: ' + result.error)

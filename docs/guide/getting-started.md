@@ -2,23 +2,6 @@
 title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
-// Send options to the browser...
-
-```
-
-```typescript
-
-// Browser-side: Create credential
-import { startRegistration, browserSupportsWebAuthn } from 'ts-auth'
-
-if (browserSupportsWebAuthn()) {
-  const credential = await startRegistration(optionsFromServer)
-  // Send credential to server for verification
-}
-
-```
-
-### 2. TOTP Two-Factor Authentication
 
 Add an extra layer of security with time-based one-time passwords.
 

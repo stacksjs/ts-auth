@@ -13,7 +13,7 @@ npm install --save-dev @stacksjs/rpx
 
 npm i -g @stacksjs/rpx
 
-```
+```ts
 
 ```sh [bun]
 
@@ -27,7 +27,7 @@ bun install --dev @stacksjs/rpx
 
 bun add --global @stacksjs/rpx
 
-```
+```ts
 
 ```sh [pnpm]
 
@@ -39,7 +39,7 @@ pnpm add --save-dev @stacksjs/rpx
 
 pnpm add --global @stacksjs/rpx
 
-```
+```ts
 
 ```sh [yarn]
 
@@ -51,13 +51,13 @@ yarn add --dev @stacksjs/rpx
 
 yarn global add @stacksjs/rpx
 
-```
+```ts
 
 ```sh [brew]
 
 brew install rpx # coming soon
 
-```
+```ts
 
 ```sh [pkgx]
 

@@ -2,23 +2,6 @@
 title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
-
-// 4. Verify a user-submitted code
-const isValid = await verifyTOTP(userCode, {
-  secret,
-  window: 1, // Allow 1 step before/after
-})
-
-```
-
-## Supported Authenticator Apps
-
-TOTP codes work with any standard authenticator app:
-
-- **Google Authenticator**
-- **Microsoft Authenticator**
-- **Authy**
-- **1Password**
 - **Bitwarden**
 - **Apple Passwords** (iOS 15+)
 
@@ -140,14 +123,14 @@ const hashedCodes = await Promise.all(
 
 ## When to Use TOTP
 
-**Good for:**
+#### Good for
 
 - Second factor authentication
 - Account recovery verification
 - Sensitive operation confirmation
 - Applications requiring offline code generation
 
-**Consider alternatives when:**
+#### Consider alternatives when
 
 - WebAuthn/Passkeys are available (more secure, better UX)
 - Push notifications are feasible

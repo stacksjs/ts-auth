@@ -2,24 +2,6 @@
 title: Generating TOTP Secrets
 description: Generate and manage TOTP secrets for two-factor authentication
 ---
-const strongSecret = generateTOTPSecret(32)
-
-```
-
-### Secure Random Generation
-
-ts-auth uses the Web Crypto API for cryptographically secure random generation:
-
-```typescript
-
-// Internally uses:
-const bytes = crypto.getRandomValues(new Uint8Array(length))
-
-```
-
-## Storing Secrets
-
-### Encryption at Rest
 
 Always encrypt secrets before storing:
 

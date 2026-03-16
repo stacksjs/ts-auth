@@ -2,22 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-  device_type TEXT NOT NULL,
-  backed_up BOOLEAN NOT NULL DEFAULT FALSE,
-  transports TEXT[],
-  name TEXT,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  last_used_at TIMESTAMP
-);
-
-CREATE INDEX idx_credentials_user_id ON webauthn_credentials(user_id);
-CREATE INDEX idx_credentials_credential_id ON webauthn_credentials(credential_id);
-
-```
-
-### Prisma Schema
-
-```prisma
 
 model WebAuthnCredential {
   id           String   @id @default(uuid())

@@ -2,24 +2,6 @@
 title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
-
-    // Authenticator preferences
-    authenticatorSelection: {
-      // 'platform' = built-in (Face ID, Touch ID, Windows Hello)
-      // 'cross-platform' = external (YubiKey, etc.)
-      authenticatorAttachment: 'platform',
-
-      // Resident key (discoverable credential) settings
-      residentKey: 'preferred',
-      requireResidentKey: false,
-
-      // User verification level
-      userVerification: 'preferred', // 'required', 'preferred', 'discouraged'
-    },
-
-    // Attestation type
-    attestationType: 'none', // 'none', 'indirect', 'direct'
-
     // Prevent duplicate registrations
     excludeCredentials: existingCredentials.map(cred => ({
       id: cred.id,

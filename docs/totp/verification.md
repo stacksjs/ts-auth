@@ -2,24 +2,6 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-
-// window: 0 - Only current time period (strict)
-// window: 1 - Current + 1 before + 1 after (default, recommended)
-// window: 2 - Current + 2 before + 2 after (more lenient)
-
-// With 30-second steps and window: 1
-// Accepts codes from -30 to +30 seconds around the current time
-
-```
-
-### How Window Works
-
-```
-
-Time:     |-----|-----|-----|-----|-----|
-          T-2   T-1   T     T+1   T+2
-
-window=0:              [T]
 window=1:        [T-1, T, T+1]
 window=2: [T-2, T-1, T, T+1, T+2]
 

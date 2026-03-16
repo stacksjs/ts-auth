@@ -2,21 +2,6 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-  verifyAuthenticationResponse,
-} from 'ts-auth'
-
-// Registration
-const registrationOptions = generateRegistrationOptions({
-  rpName: 'My App',
-  rpID: 'example.com',
-  userID: 'user-123',
-  userName: 'john@example.com',
-})
-
-// Authentication
-const authOptions = generateAuthenticationOptions({
-  rpID: 'example.com',
-  allowCredentials: [{
     id: storedCredentialId,
     type: 'public-key',
   }],

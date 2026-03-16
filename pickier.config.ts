@@ -1,6 +1,7 @@
 import type { PickierConfig } from 'pickier'
 
 const config: PickierConfig = {
+  ignores: ['CLAUDE.md', '*/CHANGELOG.md'],
   lint: {
     extensions: ['ts', 'js', 'json', 'md'],
   },

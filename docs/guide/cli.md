@@ -3,26 +3,6 @@ title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
 
-# Output: JBSWY3DPEHPK3PXP
-
-auth totp:secret --length 32
-
-# Output: JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP
-
-```
-
-### Generate TOTP Code
-
-Generate a TOTP code from a secret:
-
-```bash
-
-auth totp:generate --secret JBSWY3DPEHPK3PXP
-
-# Output: 123456
-
-# With custom options
-
 auth totp:generate --secret JBSWY3DPEHPK3PXP --digits 8 --algorithm SHA-256
 
 # Output: 12345678

@@ -2,21 +2,6 @@
 title: Session Middleware
 description: Integrate sessions with your web framework
 ---
-      return new Response(`Welcome, user ${userId}`)
-    }
-
-    // Save session at the end
-    await session.save()
-
-    return new Response('Hello World', {
-      headers: session.getCookieHeader(),
-    })
-  },
-})
-
-```
-
-## Express/Hono-style Middleware
 
 ```typescript
 

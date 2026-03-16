@@ -2,23 +2,6 @@
 title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
-
-### Verify a Code
-
-```typescript
-
-import { verifyTOTP } from 'ts-auth'
-
-// Verify a code submitted by the user
-const isValid = await verifyTOTP(userSubmittedCode, {
-  secret: userSecret,
-  window: 1, // Allow 1 step before/after for clock drift
-})
-
-if (isValid) {
-  console.log('Code is valid!')
-} else {
-  console.log('Invalid code')
 }
 
 ```
