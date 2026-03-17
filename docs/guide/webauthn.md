@@ -2,6 +2,8 @@
 title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
+
+```typescript
     // Prevent duplicate registrations
     excludeCredentials: existingCredentials.map(cred => ({
       id: cred.id,
@@ -19,7 +21,6 @@ description: Complete guide to implementing WebAuthn and Passkeys authentication
 
   return options
 }
-
 ```
 
 ### Client-Side: Create Credential

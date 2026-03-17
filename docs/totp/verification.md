@@ -2,9 +2,10 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
+
+```text
 window=1:        [T-1, T, T+1]
 window=2: [T-2, T-1, T, T+1, T+2]
-
 ```
 
 ## Timing-Safe Comparison

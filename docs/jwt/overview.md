@@ -67,7 +67,7 @@ const token = await signJwt(
 
 ## When to Use JWT
 
-#### Good for
+### Good for
 
 - Stateless API authentication
 - Microservices communication
@@ -75,7 +75,7 @@ const token = await signJwt(
 - Mobile app authentication
 - Short-lived access tokens
 
-#### Consider alternatives when
+### Consider alternatives when
 
 - You need immediate token revocation
 - Tokens contain sensitive data

@@ -225,8 +225,8 @@ export class GenericSqlSessionAdapter implements DatabaseAdapter {
     // Use upsert pattern (varies by database)
     await this.connection.execute(
       `INSERT INTO ${this.tableName} (id, data, last_activity)
-       VALUES (?, ?, ?)
-       ON DUPLICATE KEY UPDATE data = ?, last_activity = ?`,
+      VALUES (?, ?, ?)
+      ON DUPLICATE KEY UPDATE data = ?, last_activity = ?`,
       [sessionId, data, lastActivity, data, lastActivity],
     )
   }

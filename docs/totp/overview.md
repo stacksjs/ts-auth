@@ -123,14 +123,14 @@ const hashedCodes = await Promise.all(
 
 ## When to Use TOTP
 
-#### Good for
+### Good for
 
 - Second factor authentication
 - Account recovery verification
 - Sensitive operation confirmation
 - Applications requiring offline code generation
 
-#### Consider alternatives when
+### Consider alternatives when
 
 - WebAuthn/Passkeys are available (more secure, better UX)
 - Push notifications are feasible

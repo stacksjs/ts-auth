@@ -2,8 +2,9 @@
 title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
-}
 
+```typescript
+}
 ```
 
 ## Complete 2FA Setup Flow

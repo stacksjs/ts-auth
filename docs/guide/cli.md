@@ -3,10 +3,10 @@ title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
 
+```bash
 auth totp:generate --secret JBSWY3DPEHPK3PXP --digits 8 --algorithm SHA-256
 
 # Output: 12345678
-
 ```
 
 ### Verify TOTP Code

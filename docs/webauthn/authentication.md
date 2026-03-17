@@ -3,6 +3,7 @@ title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
 
+```typescript
 allowCredentials: [
   {
     id: credentialId,        // ArrayBuffer or Uint8Array
@@ -15,7 +16,6 @@ allowCredentials: [
     ],
   },
 ]
-
 ```
 
 ## Verify Authentication Response

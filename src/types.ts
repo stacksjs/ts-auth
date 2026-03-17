@@ -709,32 +709,51 @@ export interface AuthEvents {
   /**
    * Fired when a user is authenticated
    */
-  authenticated: { user: Authenticatable; guard: string }
+  authenticated: {
+    user: Authenticatable
+    guard: string
+  }
 
   /**
    * Fired when authentication attempt occurs
    */
-  attempting: { credentials: Credentials; guard: string; remember: boolean }
+  attempting: {
+    credentials: Credentials
+    guard: string
+    remember: boolean
+  }
 
   /**
    * Fired when authentication fails
    */
-  failed: { credentials: Credentials; guard: string }
+  failed: {
+    credentials: Credentials
+    guard: string
+  }
 
   /**
    * Fired when a user logs out
    */
-  logout: { user: Authenticatable; guard: string }
+  logout: {
+    user: Authenticatable
+    guard: string
+  }
 
   /**
    * Fired when a user is validated
    */
-  validated: { user: Authenticatable; guard: string }
+  validated: {
+    user: Authenticatable
+    guard: string
+  }
 
   /**
    * Fired when login is locked out
    */
-  lockout: { credentials: Credentials; guard: string }
+  lockout: {
+    credentials: Credentials
+    guard: string
+  }
 
   /**
    * Fired when a new session is created

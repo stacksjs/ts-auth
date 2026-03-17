@@ -23,8 +23,8 @@
 - wip ([98f4958](https://github.com/stacksjs/ts-auth/commit/98f4958)) _(by Chris <chrisbreuer93@gmail.com>)_
 - wip ([fe7ea1a](https://github.com/stacksjs/ts-auth/commit/fe7ea1a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
 - wip ([4c32aba](https://github.com/stacksjs/ts-auth/commit/4c32aba)) _(by glennmichael123 <gtorregosa@gmail.com>)_
-- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
-- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
+- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
+- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
 - initial commit ([358cd81](https://github.com/stacksjs/ts-auth/commit/358cd81)) _(by Chris <chrisbreuer93@gmail.com>)_
 
 ### 📄 Miscellaneous
@@ -34,7 +34,7 @@
 ### Contributors
 
 - _Chris <chrisbreuer93@gmail.com>_
-- _renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
+- _renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
 - _glennmichael123 <gtorregosa@gmail.com>_
 
 ## v0.4.1
@@ -62,8 +62,8 @@
 - wip ([98f4958](https://github.com/stacksjs/ts-auth/commit/98f4958)) _(by Chris <chrisbreuer93@gmail.com>)_
 - wip ([fe7ea1a](https://github.com/stacksjs/ts-auth/commit/fe7ea1a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
 - wip ([4c32aba](https://github.com/stacksjs/ts-auth/commit/4c32aba)) _(by glennmichael123 <gtorregosa@gmail.com>)_
-- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
-- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
+- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
+- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
 - initial commit ([358cd81](https://github.com/stacksjs/ts-auth/commit/358cd81)) _(by Chris <chrisbreuer93@gmail.com>)_
 
 ### 📄 Miscellaneous
@@ -73,7 +73,7 @@
 ### Contributors
 
 - _Chris <chrisbreuer93@gmail.com>_
-- _renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
+- _renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
 - _glennmichael123 <gtorregosa@gmail.com>_
 
 ## v0.4.0
@@ -97,8 +97,8 @@
 - wip ([98f4958](https://github.com/stacksjs/ts-auth/commit/98f4958)) _(by Chris <chrisbreuer93@gmail.com>)_
 - wip ([fe7ea1a](https://github.com/stacksjs/ts-auth/commit/fe7ea1a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
 - wip ([4c32aba](https://github.com/stacksjs/ts-auth/commit/4c32aba)) _(by glennmichael123 <gtorregosa@gmail.com>)_
-- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
-- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
+- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
+- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
 - initial commit ([358cd81](https://github.com/stacksjs/ts-auth/commit/358cd81)) _(by Chris <chrisbreuer93@gmail.com>)_
 
 ### 📄 Miscellaneous
@@ -108,7 +108,7 @@
 ### Contributors
 
 - _Chris <chrisbreuer93@gmail.com>_
-- _renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
+- _renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
 - _glennmichael123 <gtorregosa@gmail.com>_
 
 ## v0.3.0
@@ -132,8 +132,8 @@
 - wip ([98f4958](https://github.com/stacksjs/ts-auth/commit/98f4958)) _(by Chris <chrisbreuer93@gmail.com>)_
 - wip ([fe7ea1a](https://github.com/stacksjs/ts-auth/commit/fe7ea1a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
 - wip ([4c32aba](https://github.com/stacksjs/ts-auth/commit/4c32aba)) _(by glennmichael123 <gtorregosa@gmail.com>)_
-- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
-- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
+- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
+- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
 - initial commit ([358cd81](https://github.com/stacksjs/ts-auth/commit/358cd81)) _(by Chris <chrisbreuer93@gmail.com>)_
 
 ### 📄 Miscellaneous
@@ -143,7 +143,7 @@
 ### Contributors
 
 - _Chris <chrisbreuer93@gmail.com>_
-- _renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
+- _renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
 - _glennmichael123 <gtorregosa@gmail.com>_
 
 ## v0.2.0
@@ -165,8 +165,8 @@
 - wip ([98f4958](https://github.com/stacksjs/ts-auth/commit/98f4958)) _(by Chris <chrisbreuer93@gmail.com>)_
 - wip ([fe7ea1a](https://github.com/stacksjs/ts-auth/commit/fe7ea1a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
 - wip ([4c32aba](https://github.com/stacksjs/ts-auth/commit/4c32aba)) _(by glennmichael123 <gtorregosa@gmail.com>)_
-- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
-- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
+- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
+- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
 - initial commit ([358cd81](https://github.com/stacksjs/ts-auth/commit/358cd81)) _(by Chris <chrisbreuer93@gmail.com>)_
 
 ### 📄 Miscellaneous
@@ -176,7 +176,7 @@
 ### Contributors
 
 - _Chris <chrisbreuer93@gmail.com>_
-- _renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
+- _renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
 - _glennmichael123 <gtorregosa@gmail.com>_
 
 ## v0.1.0
@@ -198,8 +198,8 @@
 - wip ([98f4958](https://github.com/stacksjs/ts-auth/commit/98f4958)) _(by Chris <chrisbreuer93@gmail.com>)_
 - wip ([fe7ea1a](https://github.com/stacksjs/ts-auth/commit/fe7ea1a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
 - wip ([4c32aba](https://github.com/stacksjs/ts-auth/commit/4c32aba)) _(by glennmichael123 <gtorregosa@gmail.com>)_
-- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
-- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
+- **deps**: update actions/checkout action to v6 (#5) ([e8866ba](https://github.com/stacksjs/ts-auth/commit/e8866ba)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#5](https://github.com/stacksjs/ts-auth/issues/5), [#5](https://github.com/stacksjs/ts-auth/issues/5))
+- **deps**: update all non-major dependencies (#4) ([3c383fd](https://github.com/stacksjs/ts-auth/commit/3c383fd)) _(by renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D))_ ([#4](https://github.com/stacksjs/ts-auth/issues/4), [#4](https://github.com/stacksjs/ts-auth/issues/4))
 - initial commit ([358cd81](https://github.com/stacksjs/ts-auth/commit/358cd81)) _(by Chris <chrisbreuer93@gmail.com>)_
 
 ### 📄 Miscellaneous
@@ -209,5 +209,5 @@
 ### Contributors
 
 - _Chris <chrisbreuer93@gmail.com>_
-- _renovate\[bot\] <29139614+renovate\[bot\]@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
+- _renovate(bot) <29139614+renovate(bot)@users.noreply.github.com>](https://github.com/renovate%5Bbot%5D)_
 - _glennmichael123 <gtorregosa@gmail.com>_

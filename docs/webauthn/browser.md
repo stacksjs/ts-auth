@@ -2,6 +2,8 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
+
+```typescript
       showSuccess('Passkey registered successfully!')
     } else {
       showError('Registration failed: ' + result.error)
@@ -16,7 +18,6 @@ description: Implement WebAuthn in the browser with ts-auth
     }
   }
 }
-
 ```
 
 ## Authentication

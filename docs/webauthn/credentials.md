@@ -3,6 +3,7 @@ title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
 
+```prisma
 model WebAuthnCredential {
   id           String   @id @default(uuid())
   userId       String
@@ -19,7 +20,6 @@ model WebAuthnCredential {
 
   @@index([userId])
 }
-
 ```
 
 ## Credential Service

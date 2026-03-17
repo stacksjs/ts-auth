@@ -324,6 +324,7 @@ export class ConsoleAuditLogStorage implements AuditLogStorage {
     const color = entry.success ? '\x1b[32m' : '\x1b[31m'
     const reset = '\x1b[0m'
 
+    // eslint-disable-next-line no-console
     console.log(
       `${color}[AUTH]${reset} ${entry.timestamp.toISOString()} ` +
       `${entry.event} | User: ${entry.userId ?? 'anonymous'} | ` +

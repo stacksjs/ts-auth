@@ -2,9 +2,10 @@
 title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
-}
 
-```ts
+```typescript
+}
+```
 
 ## CSRF Middleware
 
@@ -60,7 +61,7 @@ Bun.serve({
   },
 })
 
-```ts
+```
 
 ## HTML Form Integration
 
@@ -81,7 +82,7 @@ function renderForm(session: Session) {
   `
 }
 
-```ts
+```
 
 ## JavaScript/AJAX Requests
 
@@ -105,7 +106,7 @@ fetch('/api/transfer', {
 // Or set up axios defaults
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
 
-```ts
+```
 
 ## React Integration
 
@@ -155,7 +156,7 @@ function useSecureFetch() {
   }
 }
 
-```ts
+```
 
 ## Token Rotation
 
@@ -182,7 +183,7 @@ async function handleLogin(req: Request, session: Session) {
   return new Response('Logged in')
 }
 
-```ts
+```
 
 ## Double Submit Cookie Pattern
 
@@ -215,7 +216,7 @@ async function validateDoubleSubmit(req: Request): Promise<boolean> {
   return validateCSRFToken(headerToken, cookieToken)
 }
 
-```ts
+```
 
 ## SameSite Cookie Protection
 
@@ -231,7 +232,7 @@ const sessionConfig = {
 // SameSite=Strict: Cookie only sent for same-site requests
 // SameSite=Lax: Cookie sent for same-site + top-level navigations
 
-```ts
+```
 
 **Note:** SameSite is not supported in all browsers and scenarios. Always use CSRF tokens as the primary defense.
 

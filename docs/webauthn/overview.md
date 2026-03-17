@@ -2,11 +2,12 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
+
+```typescript
     id: storedCredentialId,
     type: 'public-key',
   }],
 })
-
 ```
 
 ### Browser-side
