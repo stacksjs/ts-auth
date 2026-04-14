@@ -2,39 +2,6 @@
 title: Generating TOTP Secrets
 description: Generate and manage TOTP secrets for two-factor authentication
 ---
-
-Always encrypt secrets before storing:
-
-```typescript
-
-import { hash } from 'ts-auth'
-
-// Using AES-256-GCM encryption
-async function encryptSecret(secret: string): Promise<string> {
-  const key = await crypto.subtle.importKey(
-    'raw',
-    Buffer.from(process.env.ENCRYPTION_KEY!, 'hex'),
-    { name: 'AES-GCM' },
-    false,
-    ['encrypt']
-  )
-
-  const iv = crypto.getRandomValues(new Uint8Array(12))
-  const encrypted = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    new TextEncoder().encode(secret)
-  )
-
-  // Return IV + ciphertext as base64
-  const combined = new Uint8Array(iv.length + encrypted.byteLength)
-  combined.set(iv)
-  combined.set(new Uint8Array(encrypted), iv.length)
-
-  return Buffer.from(combined).toString('base64')
-}
-
-async function decryptSecret(encrypted: string): Promise<string> {
   const data = Buffer.from(encrypted, 'base64')
   const iv = data.subarray(0, 12)
   const ciphertext = data.subarray(12)

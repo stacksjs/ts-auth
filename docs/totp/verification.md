@@ -2,42 +2,6 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-
-```text
-window=1:        [T-1, T, T+1]
-window=2: [T-2, T-1, T, T+1, T+2]
-```
-
-## Timing-Safe Comparison
-
-ts-auth uses timing-safe comparison internally to prevent timing attacks:
-
-```typescript
-
-// The verification function compares codes safely
-// regardless of where they differ
-function timingSafeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false
-
-  let result = 0
-  for (let i = 0; i < a.length; i++) {
-    result |= a.charCodeAt(i) ^ b.charCodeAt(i)
-  }
-
-  return result === 0
-}
-
-```
-
-## Complete Verification Flow
-
-```typescript
-
-import { verifyTOTP, hash, verifyHash } from 'ts-auth'
-
-interface VerificationResult {
-  success: boolean
-  method?: 'totp' | 'backup'
   error?: string
 }
 

@@ -2,37 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-| `userID` | `string` | Unique identifier for the user |
-| `userName` | `string` | Username (typically email) |
-
-### Optional Fields
-
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `userDisplayName` | `string` | `userName` | Human-readable display name |
-| `challenge` | `Uint8Array` | Random 32 bytes | Challenge for the request |
-| `attestationType` | `string` | `'none'` | Attestation conveyance preference |
-| `timeout` | `number` | `60000` | Timeout in milliseconds |
-| `authenticatorSelection` | `object` | See below | Authenticator criteria |
-| `excludeCredentials` | `array` | `[]` | Credentials to exclude |
-
-### Authenticator Selection
-
-```typescript
-
-authenticatorSelection: {
-  // Require platform (built-in) or cross-platform (roaming) authenticator
-  authenticatorAttachment: 'platform' | 'cross-platform',
-
-  // Require a resident key (discoverable credential)
-  requireResidentKey: false,
-
-  // Resident key preference
-  residentKey: 'discouraged' | 'preferred' | 'required',
-
-  // User verification requirement
-  userVerification: 'required' | 'preferred' | 'discouraged',
-}
 
 ```
 

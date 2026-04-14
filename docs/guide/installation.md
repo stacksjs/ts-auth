@@ -2,42 +2,6 @@
 title: Installation
 description: Install ts-auth in your project
 ---
-## TypeScript Configuration
-
-ts-auth is written in TypeScript and includes comprehensive type definitions. No additional `@types` packages are required.
-
-Ensure your `tsconfig.json` includes:
-
-```json
-
-{
-  "compilerOptions": {
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
-    "strict": true
-  }
-}
-
-```
-
-## Importing
-
-### Named Imports
-
-Import specific functions as needed:
-
-```typescript
-
-import {
-  // WebAuthn
-  generateRegistrationOptions,
-  verifyRegistrationResponse,
-  startRegistration,
-  browserSupportsWebAuthn,
-
-  // TOTP
-  generateTOTPSecret,
-  generateTOTP,
   verifyTOTP,
   totpKeyUri,
 

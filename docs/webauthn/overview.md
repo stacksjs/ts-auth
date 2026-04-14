@@ -2,37 +2,6 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-
-```typescript
-    id: storedCredentialId,
-    type: 'public-key',
-  }],
-})
-```
-
-### Browser-side
-
-```typescript
-
-import {
-  startRegistration,
-  startAuthentication,
-  browserSupportsWebAuthn,
-  platformAuthenticatorIsAvailable,
-} from 'ts-auth'
-
-// Check support
-if (!browserSupportsWebAuthn()) {
-  console.log('WebAuthn not supported')
-  return
-}
-
-// Check for platform authenticator (Face ID, Touch ID, etc.)
-if (await platformAuthenticatorIsAvailable()) {
-  console.log('Platform authenticator available')
-}
-
-// Register
 const credential = await startRegistration(optionsFromServer)
 
 // Authenticate

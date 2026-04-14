@@ -2,42 +2,6 @@
 title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
-
-```typescript
-}
-```
-
-## Complete 2FA Setup Flow
-
-### Step 1: Enable 2FA for User
-
-```typescript
-
-import { generateTOTPSecret, totpKeyUri } from 'ts-auth'
-
-async function enable2FA(userId: string) {
-  // Generate a new secret
-  const secret = generateTOTPSecret()
-
-  // Get user email for the URI
-  const user = await db.users.findById(userId)
-
-  // Generate the URI for QR code
-  const uri = totpKeyUri(user.email, 'MyApp', secret, {
-    algorithm: 'SHA-1',
-    digits: 6,
-    period: 30,
-  })
-
-  // Store the secret temporarily (not yet verified)
-  await db.pending2FA.create({
-    userId,
-    secret,
-    createdAt: new Date(),
-    expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
-  })
-
-  return {
     secret, // Display this as backup
     uri, // Use this to generate QR code
   }

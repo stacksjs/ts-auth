@@ -2,41 +2,6 @@
 title: QR Code Generation
 description: Generate QR codes for TOTP setup with authenticator apps
 ---
-
-```typescript
-// Use in an img tag
-const img = document.createElement('img')
-img.src = dataUrl
-img.alt = 'Scan with your authenticator app'
-document.getElementById('qr-container').appendChild(img)
-```
-
-### Attach to DOM Element
-
-```typescript
-
-import { createQRCode } from 'ts-auth'
-
-// Render directly into a container
-createQRCode(document.getElementById('qr-container'), {
-  text: uri,
-  width: 256,
-  height: 256,
-})
-
-```
-
-## QR Code Options
-
-```typescript
-
-interface QRCodeOptions {
-  // The text/URL to encode
-  text: string
-
-  // Width in pixels
-  width?: number // Default: 256
-
   // Height in pixels
   height?: number // Default: 256
 

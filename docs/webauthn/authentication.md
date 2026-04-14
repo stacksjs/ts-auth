@@ -3,38 +3,6 @@ title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
 
-```typescript
-allowCredentials: [
-  {
-    id: credentialId,        // ArrayBuffer or Uint8Array
-    type: 'public-key',      // Always 'public-key'
-    transports: [            // Optional transport hints
-      'internal',            // Platform authenticator
-      'usb',                 // USB security key
-      'ble',                 // Bluetooth
-      'nfc',                 // NFC
-    ],
-  },
-]
-```
-
-## Verify Authentication Response
-
-```typescript
-
-import { verifyAuthenticationResponse } from 'ts-auth'
-
-async function handleAuthenticationFinish(
-  userId: string,
-  credential: AuthenticationCredential
-) {
-  // Retrieve the stored challenge
-  const expectedChallenge = challenges.get(userId)
-
-  if (!expectedChallenge) {
-    throw new Error('No challenge found')
-  }
-
   // Get the stored credential
   const storedCredential = getCredential(userId, credential.id)
 

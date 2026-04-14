@@ -3,44 +3,6 @@ title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
 
-```bash
-auth totp:generate --secret JBSWY3DPEHPK3PXP --digits 8 --algorithm SHA-256
-
-# Output: 12345678
-```
-
-### Verify TOTP Code
-
-Verify a TOTP code against a secret:
-
-```bash
-
-auth totp:verify --secret JBSWY3DPEHPK3PXP --code 123456
-
-# Output: Valid
-
-auth totp:verify --secret JBSWY3DPEHPK3PXP --code 000000
-
-# Output: Invalid
-
-```
-
-### Generate TOTP URI
-
-Generate an otpauth:// URI for QR codes:
-
-```bash
-
-auth totp:uri --account user@example.com --issuer MyApp --secret JBSWY3DPEHPK3PXP
-
-# Output: otpauth://totp/MyApp:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=MyApp
-
-```
-
-## JWT Commands
-
-### Sign JWT Token
-
 Create a signed JWT token:
 
 ```bash

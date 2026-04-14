@@ -2,39 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-
-```typescript
-      showSuccess('Passkey registered successfully!')
-    } else {
-      showError('Registration failed: ' + result.error)
-    }
-  } catch (error) {
-    if (error.name === 'NotAllowedError') {
-      showError('Registration was cancelled')
-    } else if (error.name === 'InvalidStateError') {
-      showError('This device is already registered')
-    } else {
-      showError('Registration failed: ' + error.message)
-    }
-  }
-}
-```
-
-## Authentication
-
-Use `startAuthentication` to authenticate with an existing credential:
-
-```typescript
-
-import { startAuthentication } from 'ts-auth'
-
-async function authenticateWithPasskey() {
-  try {
-    // Get options from your server
-    const response = await fetch('/api/auth/start', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    })
     const options = await response.json()
 
     // Get the assertion

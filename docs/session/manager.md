@@ -3,38 +3,6 @@ title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
 
-```typescript
-  constructor(config: any) {
-    this.db = new Database(config.connection)
-  }
-
-  async read(sessionId: string): Promise<Record<string, any> | null> {
-    const row = await this.db.query(
-      'SELECT data FROM sessions WHERE id = ?',
-      [sessionId]
-    )
-    return row ? JSON.parse(row.data) : null
-  }
-
-  async write(
-    sessionId: string,
-    data: Record<string, any>,
-    lifetime: number
-  ): Promise<void> {
-    await this.db.query(
-      `INSERT INTO sessions (id, data, expires_at)
-       VALUES (?, ?, ?)
-       ON CONFLICT (id) DO UPDATE SET data = ?, expires_at = ?`,
-      [
-        sessionId,
-        JSON.stringify(data),
-        new Date(Date.now() + lifetime _ 60 _ 1000),
-        JSON.stringify(data),
-        new Date(Date.now() + lifetime _ 60 _ 1000),
-      ]
-    )
-  }
-
   async destroy(sessionId: string): Promise<void> {
     await this.db.query('DELETE FROM sessions WHERE id = ?', [sessionId])
   }

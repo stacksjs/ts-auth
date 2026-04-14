@@ -3,38 +3,6 @@ title: Session Middleware
 description: Integrate sessions with your web framework
 ---
 
-```typescript
-
-import type { Context, Next } from 'hono'
-import { createSession } from 'ts-auth'
-
-export function session(config: SessionConfig) {
-  return async (c: Context, next: Next) => {
-    // Get session ID from cookie
-    const sessionId = c.req.cookie(config.cookie)
-
-    // Create session instance
-    const sess = createSession({
-      ...config,
-      id: sessionId,
-    })
-
-    await sess.start()
-
-    // Attach to context
-    c.set('session', sess)
-
-    // Process request
-    await next()
-
-    // Save session
-    await sess.save()
-
-    // Set cookie
-    c.header('Set-Cookie', sess.getCookieString())
-  }
-}
-
 // Usage with Hono
 import { Hono } from 'hono'
 

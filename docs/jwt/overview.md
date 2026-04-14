@@ -2,40 +2,6 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-
-Use private key for signing, public key for verification:
-
-```typescript
-
-// Sign with private key
-const token = await signJwt(payload, privateKey, { algorithm: 'RS256' })
-
-// Verify with public key
-const verified = await verifyJwt(token, publicKey, { algorithms: ['RS256'] })
-
-```
-
-## Standard Claims
-
-JWTs support standard registered claims:
-
-```typescript
-
-const token = await signJwt(
-  {
-    // Standard claims
-    sub: 'user-123',        // Subject (user ID)
-    iss: 'my-app',          // Issuer
-    aud: 'api.example.com', // Audience
-    exp: Date.now() + 3600, // Expiration time
-    nbf: Date.now(),        // Not before
-    iat: Date.now(),        // Issued at
-    jti: 'unique-token-id', // JWT ID
-
-    // Custom claims
-    role: 'admin',
-    permissions: ['read', 'write'],
-  },
   secret
 )
 

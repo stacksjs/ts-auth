@@ -2,41 +2,6 @@
 title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
-
-Add an extra layer of security with time-based one-time passwords.
-
-```typescript
-
-import {
-  generateTOTPSecret,
-  generateTOTP,
-  verifyTOTP,
-  totpKeyUri,
-} from 'ts-auth'
-
-// Generate a secret for the user
-const secret = generateTOTPSecret()
-
-// Generate the otpauth:// URI for QR codes
-const uri = totpKeyUri('user@example.com', 'MyApp', secret)
-
-// Verify a code submitted by the user
-const isValid = verifyTOTP(userSubmittedCode, {
-  secret,
-  window: 1, // Allow 1 step before/after for clock drift
-})
-
-```
-
-### 3. Session Management
-
-Manage user sessions with built-in session handling.
-
-```typescript
-
-import { createSession, sessionMiddleware } from 'ts-auth'
-
-// Create a session
 const session = createSession({
   driver: 'memory',
   lifetime: 120, // minutes

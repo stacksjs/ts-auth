@@ -2,39 +2,6 @@
 title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
-- **Bitwarden**
-- **Apple Passwords** (iOS 15+)
-
-## Configuration Options
-
-```typescript
-
-interface TOTPOptions {
-  // The base32-encoded secret
-  secret: string
-
-  // Time step in seconds (default: 30)
-  step?: number
-
-  // Number of digits in the code (default: 6)
-  digits?: number
-
-  // HMAC algorithm (default: 'SHA-1')
-  algorithm?: 'SHA-1' | 'SHA-256' | 'SHA-512'
-
-  // Window for verification (default: 1)
-  // Allows codes from +-window time steps
-  window?: number
-}
-
-```
-
-### Default Values
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| `step` | 30 | Seconds per time period |
-| `digits` | 6 | Length of generated code |
 | `algorithm` | 'SHA-1' | HMAC algorithm |
 | `window` | 1 | Verification tolerance |
 

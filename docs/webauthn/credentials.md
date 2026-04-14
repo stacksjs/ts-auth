@@ -2,38 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-
-```prisma
-model WebAuthnCredential {
-  id           String   @id @default(uuid())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  credentialId String   @unique
-  publicKey    Bytes
-  counter      Int      @default(0)
-  deviceType   String
-  backedUp     Boolean  @default(false)
-  transports   String[]
-  name         String?
-  createdAt    DateTime @default(now())
-  lastUsedAt   DateTime?
-
-  @@index([userId])
-}
-```
-
-## Credential Service
-
-```typescript
-
-import { db } from './database'
-
-export class CredentialService {
-  // Store a new credential
-  async create(
-    userId: string,
-    credentialData: {
-      credentialId: string
       publicKey: ArrayBuffer
       counter: number
       deviceType: string

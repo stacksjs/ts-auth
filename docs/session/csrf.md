@@ -2,39 +2,6 @@
 title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
-
-```typescript
-}
-```
-
-## CSRF Middleware
-
-```typescript
-
-import { generateCSRFToken, validateCSRFToken } from 'ts-auth'
-
-// Methods that require CSRF validation
-const UNSAFE_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE']
-
-function csrfMiddleware(config?: { exclude?: string[] }) {
-  return async (req: Request, session: Session) => {
-    // Ensure token exists
-    if (!session.get('_csrf_token')) {
-      session.put('_csrf_token', generateCSRFToken())
-    }
-
-    // Skip safe methods
-    if (!UNSAFE_METHODS.includes(req.method)) {
-      return null // Continue
-    }
-
-    // Skip excluded paths
-    const url = new URL(req.url)
-    if (config?.exclude?.some(path => url.pathname.startsWith(path))) {
-      return null
-    }
-
-    // Validate token
     const isValid = await validateCSRF(req, session)
 
     if (!isValid) {

@@ -2,41 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-
-Stores sessions in the filesystem.
-
-```typescript
-
-const session = createSession({
-  driver: 'file',
-  lifetime: 120,
-  path: '/tmp/sessions', // Session file directory
-})
-
-```
-
-#### Pros
-
-- Persistent across restarts
-- No external dependencies
-
-#### Cons
-
-- Slower than memory
-- Not suitable for multi-server without shared filesystem
-
-### Redis Driver
-
-Stores sessions in Redis. Recommended for production.
-
-```typescript
-
-const session = createSession({
-  driver: 'redis',
-  lifetime: 120,
-  connection: {
-    host: 'localhost',
-    port: 6379,
     password: process.env.REDIS_PASSWORD,
     db: 0,
   },

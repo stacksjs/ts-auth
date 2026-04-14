@@ -2,39 +2,6 @@
 title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
-
-```typescript
-    // Prevent duplicate registrations
-    excludeCredentials: existingCredentials.map(cred => ({
-      id: cred.id,
-      type: 'public-key',
-      transports: ['internal', 'usb', 'ble', 'nfc'],
-    })),
-
-    // Timeout in milliseconds
-    timeout: 60000,
-  })
-
-  // Store the challenge for verification
-  // IMPORTANT: Use server-side storage (session, cache, database)
-  challengeStore.set(userId, options.challenge)
-
-  return options
-}
-```
-
-### Client-Side: Create Credential
-
-```typescript
-
-import { startRegistration, browserSupportsWebAuthn } from 'ts-auth'
-
-async function register() {
-  // Check support first
-  if (!browserSupportsWebAuthn()) {
-    throw new Error('WebAuthn not supported')
-  }
-
   // Get options from your server
   const options = await fetch('/api/auth/register/start', {
     method: 'POST',
