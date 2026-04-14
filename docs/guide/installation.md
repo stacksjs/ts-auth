@@ -2,21 +2,6 @@
 title: Installation
 description: Install ts-auth in your project
 ---
-  verifyTOTP,
-  totpKeyUri,
-
-  // JWT
-  signJwt,
-  verifyJwt,
-  createTokenPair,
-
-  // Session
-  createSession,
-  SessionManager,
-
-  // OAuth
-  createGoogleProvider,
-  createGitHubProvider,
 } from 'ts-auth'
 
 ```

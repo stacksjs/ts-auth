@@ -2,23 +2,6 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-  secret
-)
-
-```
-
-## Token Expiration
-
-Always set expiration for security:
-
-```typescript
-
-// Using expiresIn option (recommended)
-const token = await signJwt(payload, secret, {
-  expiresIn: '15m', // 15 minutes
-  // expiresIn: '1h', // 1 hour
-  // expiresIn: '7d', // 7 days
-})
 
 // Using exp claim directly
 const token = await signJwt(

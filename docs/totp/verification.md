@@ -2,22 +2,6 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-  error?: string
-}
-
-async function verify2FA(
-  userId: string,
-  code: string
-): Promise<VerificationResult> {
-  const user = await db.user.findUnique({ where: { id: userId } })
-
-  if (!user || !user.totpEnabled) {
-    return { success: false, error: '2FA not enabled' }
-  }
-
-  // Check rate limiting
-  const attempts = await getAttempts(userId)
-  if (attempts >= 5) {
     return { success: false, error: 'Too many attempts' }
   }
 

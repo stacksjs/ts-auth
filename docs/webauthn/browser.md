@@ -2,21 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-    const options = await response.json()
-
-    // Get the assertion
-    const credential = await startAuthentication(options)
-
-    // Send to server for verification
-    const verifyResponse = await fetch('/api/auth/finish', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ credential }),
-    })
-
-    const result = await verifyResponse.json()
-
-    if (result.success) {
       // Redirect to dashboard or update UI
       window.location.href = '/dashboard'
     } else {

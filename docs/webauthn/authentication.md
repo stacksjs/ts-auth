@@ -3,23 +3,6 @@ title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
 
-  // Get the stored credential
-  const storedCredential = getCredential(userId, credential.id)
-
-  if (!storedCredential) {
-    throw new Error('Credential not found')
-  }
-
-  // Verify the authentication response
-  const verification = await verifyAuthenticationResponse(
-    credential,
-    expectedChallenge,
-    'https://example.com',     // Expected origin
-    'example.com',             // Expected RP ID
-    storedCredential.publicKey, // Stored public key
-    storedCredential.counter    // Stored counter
-  )
-
   if (verification.verified) {
     // Update the counter to prevent replay attacks
     await updateCredentialCounter(

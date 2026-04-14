@@ -3,23 +3,6 @@ title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
 
-  async destroy(sessionId: string): Promise<void> {
-    await this.db.query('DELETE FROM sessions WHERE id = ?', [sessionId])
-  }
-
-  async gc(maxLifetime: number): Promise<void> {
-    await this.db.query('DELETE FROM sessions WHERE expires_at < NOW()')
-  }
-}
-
-// Register the custom driver
-manager.extend('database', (config) => new DatabaseDriver(config))
-
-// Use it
-const session = await manager.driver('database')
-
-```
-
 ## Session Store Implementation
 
 ```typescript

@@ -2,24 +2,6 @@
 title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
-
-Create a signed JWT token:
-
-```bash
-
-auth jwt:sign --payload '{"sub":"user-123","role":"admin"}' --secret your-secret-key
-
-# Output: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-
-# With options
-
-auth jwt:sign \
-  --payload '{"sub":"user-123"}' \
-  --secret your-secret-key \
-  --algorithm HS512 \
-  --expires-in 7d \
-  --issuer my-app
-
 ```
 
 ### Verify JWT Token

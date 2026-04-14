@@ -2,21 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-      publicKey: ArrayBuffer
-      counter: number
-      deviceType: string
-      backedUp: boolean
-      transports?: string[]
-    }
-  ) {
-    return db.webAuthnCredential.create({
-      data: {
-        userId,
-        credentialId: credentialData.credentialId,
-        publicKey: Buffer.from(credentialData.publicKey),
-        counter: credentialData.counter,
-        deviceType: credentialData.deviceType,
-        backedUp: credentialData.backedUp,
         transports: credentialData.transports || [],
       },
     })

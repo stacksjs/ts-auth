@@ -2,24 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-
-```
-
-## Verify Registration Response
-
-After receiving the credential from the browser, verify it:
-
-```typescript
-
-import { verifyRegistrationResponse } from 'ts-auth'
-
-async function handleRegistrationFinish(
-  userId: string,
-  credential: RegistrationCredential
-) {
-  // Retrieve the stored challenge
-  const expectedChallenge = challenges.get(userId)
-
   if (!expectedChallenge) {
     throw new Error('No challenge found for user')
   }

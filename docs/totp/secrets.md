@@ -2,22 +2,6 @@
 title: Generating TOTP Secrets
 description: Generate and manage TOTP secrets for two-factor authentication
 ---
-  const data = Buffer.from(encrypted, 'base64')
-  const iv = data.subarray(0, 12)
-  const ciphertext = data.subarray(12)
-
-  const key = await crypto.subtle.importKey(
-    'raw',
-    Buffer.from(process.env.ENCRYPTION_KEY!, 'hex'),
-    { name: 'AES-GCM' },
-    false,
-    ['decrypt']
-  )
-
-  const decrypted = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    ciphertext
   )
 
   return new TextDecoder().decode(decrypted)

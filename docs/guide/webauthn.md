@@ -2,23 +2,6 @@
 title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
-  // Get options from your server
-  const options = await fetch('/api/auth/register/start', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId, userName }),
-  }).then(r => r.json())
-
-  try {
-    // Create the credential (this prompts the user)
-    const credential = await startRegistration(options)
-
-    // Send credential to server for verification
-    const result = await fetch('/api/auth/register/finish', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credential),
-    }).then(r => r.json())
 
     if (result.success) {
       console.log('Registration successful!')

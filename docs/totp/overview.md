@@ -2,23 +2,6 @@
 title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
-| `algorithm` | 'SHA-1' | HMAC algorithm |
-| `window` | 1 | Verification tolerance |
-
-## Security Considerations
-
-### Secret Storage
-
-- **Never** store secrets in plain text in production
-- Use encryption at rest
-- Consider using a hardware security module (HSM)
-
-```typescript
-
-// Example: Encrypt secret before storage
-import { encrypt, decrypt } from './encryption'
-
-// Store
 const encryptedSecret = encrypt(secret, process.env.ENCRYPTION_KEY)
 await db.user.update({
   where: { id: userId },

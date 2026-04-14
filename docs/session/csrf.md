@@ -2,22 +2,6 @@
 title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
-    const isValid = await validateCSRF(req, session)
-
-    if (!isValid) {
-      return new Response('CSRF token mismatch', { status: 419 })
-    }
-
-    return null // Continue
-  }
-}
-
-// Usage
-Bun.serve({
-  async fetch(req) {
-    const session = await sessionMiddleware(req, sessionConfig)
-
-    // Apply CSRF middleware
     const csrfResult = await csrfMiddleware({
       exclude: ['/api/webhooks'], // Exclude webhook endpoints
     })(req, session)

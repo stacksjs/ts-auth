@@ -2,24 +2,6 @@
 title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
-    secret, // Display this as backup
-    uri, // Use this to generate QR code
-  }
-}
-
-```
-
-### Step 2: Generate QR Code
-
-ts-auth includes QR code generation for easy setup:
-
-```typescript
-
-import { generateQRCodeSVG, generateQRCodeDataURL, totpKeyUri } from 'ts-auth'
-
-// Generate as SVG string
-const svg = generateQRCodeSVG({
-  text: uri,
   width: 256,
   height: 256,
   correctLevel: 'H', // Error correction: L, M, Q, H

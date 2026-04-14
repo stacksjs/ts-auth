@@ -2,22 +2,6 @@
 title: Session Middleware
 description: Integrate sessions with your web framework
 ---
-
-// Usage with Hono
-import { Hono } from 'hono'
-
-const app = new Hono()
-
-app.use('_', session({
-  driver: 'redis',
-  lifetime: 120,
-  cookie: 'app_session',
-}))
-
-app.get('/', (c) => {
-  const session = c.get('session')
-  session.put('visits', (session.get('visits') || 0) + 1)
-  return c.json({ visits: session.get('visits') })
 })
 
 ```

@@ -2,23 +2,6 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-const credential = await startRegistration(optionsFromServer)
-
-// Authenticate
-const assertion = await startAuthentication(optionsFromServer)
-
-```
-
-## Authenticator Types
-
-### Platform Authenticators
-
-Built into the device:
-
-- **Face ID** (iOS/macOS)
-- **Touch ID** (iOS/macOS)
-- **Windows Hello** (Windows)
-- **Android Biometrics** (Android)
 
 ```typescript
 

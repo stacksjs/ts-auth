@@ -2,21 +2,6 @@
 title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
-const session = createSession({
-  driver: 'memory',
-  lifetime: 120, // minutes
-  cookie: 'app_session',
-  secure: true,
-  httpOnly: true,
-})
-
-// Start the session
-await session.start()
-
-// Store user data
-session.put('user_id', 123)
-session.put('role', 'admin')
-
 // Retrieve data
 const userId = session.get('user_id')
 

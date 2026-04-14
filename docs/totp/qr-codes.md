@@ -2,21 +2,6 @@
 title: QR Code Generation
 description: Generate QR codes for TOTP setup with authenticator apps
 ---
-  // Height in pixels
-  height?: number // Default: 256
-
-  // Error correction level
-  correctLevel?: QRErrorCorrection // Default: H
-
-  // Colors (for some implementations)
-  colorDark?: string  // Default: '#000000'
-  colorLight?: string // Default: '#ffffff'
-}
-
-// Error correction levels
-enum QRErrorCorrection {
-  L = 1, // Low (~7% recovery)
-  M = 0, // Medium (~15% recovery)
   Q = 3, // Quartile (~25% recovery)
   H = 2, // High (~30% recovery) - Recommended for TOTP
 }

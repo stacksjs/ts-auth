@@ -2,22 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-    password: process.env.REDIS_PASSWORD,
-    db: 0,
-  },
-})
-
-```
-
-#### Pros
-
-- Fast and persistent
-- Works with multiple servers
-- Built-in expiration
-
-#### Cons
-
-- Requires Redis server
 
 ## Configuration Options
 
