@@ -25,9 +25,6 @@ jobs:
           ref: ${{ inputs.tag || github.ref }}
           fetch-depth: 0
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2.2.0
-
       - name: Setup Pantry
         uses: home-lang/pantry/packages/action@v0.9.18
 
