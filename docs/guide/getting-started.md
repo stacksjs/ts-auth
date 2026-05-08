@@ -2,23 +2,6 @@
 title: Getting Started with ts-auth
 description: Learn how to implement authentication in your application using ts-auth
 ---
-// Retrieve data
-const userId = session.get('user_id')
-
-// Save the session
-await session.save()
-
-```
-
-### 4. JWT Authentication
-
-Generate and verify JSON Web Tokens for API authentication.
-
-```typescript
-
-import { signJwt, verifyJwt, createTokenPair } from 'ts-auth'
-
-// Sign a JWT token
 const token = await signJwt(
   { sub: 'user-123', role: 'admin' },
   'your-secret-key',

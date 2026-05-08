@@ -3,24 +3,6 @@ title: Session Manager
 description: Use the SessionManager class for advanced session handling
 ---
 
-## Session Store Implementation
-
-```typescript
-
-import { SessionStore } from 'ts-auth'
-
-class CustomStore extends SessionStore {
-  private data: Record<string, any> = {}
-  private id: string = ''
-  private started = false
-
-  constructor(
-    private driver: SessionDriver,
-    private config: SessionConfig
-  ) {
-    super()
-  }
-
   async start(): Promise<void> {
     if (this.started) return
 

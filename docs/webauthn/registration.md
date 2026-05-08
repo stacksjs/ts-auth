@@ -2,22 +2,6 @@
 title: WebAuthn Server-side Registration
 description: Implement WebAuthn credential registration on the server
 ---
-  if (!expectedChallenge) {
-    throw new Error('No challenge found for user')
-  }
-
-  // Verify the registration response
-  const verification = await verifyRegistrationResponse(
-    credential,
-    expectedChallenge,
-    'https://example.com', // Expected origin
-    'example.com'          // Expected RP ID
-  )
-
-  if (verification.verified && verification.registrationInfo) {
-    // Store the credential
-    const { credential: credentialData } = verification.registrationInfo
-
     await storeCredential(userId, {
       credentialId: credentialData.id,
       publicKey: credentialData.publicKey,

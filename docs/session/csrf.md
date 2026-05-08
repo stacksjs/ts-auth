@@ -2,23 +2,6 @@
 title: CSRF Protection
 description: Protect your application from Cross-Site Request Forgery attacks
 ---
-    const csrfResult = await csrfMiddleware({
-      exclude: ['/api/webhooks'], // Exclude webhook endpoints
-    })(req, session)
-
-    if (csrfResult) return csrfResult
-
-    // Continue with request handling...
-  },
-})
-
-```
-
-## HTML Form Integration
-
-Include the CSRF token in forms:
-
-```typescript
 
 // Server-side: Render form with token
 function renderForm(session: Session) {

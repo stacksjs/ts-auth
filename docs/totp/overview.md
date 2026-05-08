@@ -2,23 +2,6 @@
 title: TOTP Overview
 description: Time-based One-Time Password (TOTP) two-factor authentication
 ---
-const encryptedSecret = encrypt(secret, process.env.ENCRYPTION_KEY)
-await db.user.update({
-  where: { id: userId },
-  data: { totpSecret: encryptedSecret },
-})
-
-// Retrieve
-const encryptedSecret = user.totpSecret
-const secret = decrypt(encryptedSecret, process.env.ENCRYPTION_KEY)
-
-```
-
-### Rate Limiting
-
-Implement rate limiting to prevent brute-force attacks:
-
-```typescript
 
 import { createAuthRateLimiter } from 'ts-auth'
 

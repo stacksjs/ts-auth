@@ -3,22 +3,6 @@ title: WebAuthn/Passkeys Implementation
 description: Complete guide to implementing WebAuthn and Passkeys authentication with ts-auth
 ---
 
-    if (result.success) {
-      console.log('Registration successful!')
-    }
-  } catch (error) {
-    if (error.name === 'NotAllowedError') {
-      console.log('User cancelled the registration')
-    } else {
-      console.error('Registration failed:', error)
-    }
-  }
-}
-
-```
-
-### Server-Side: Verify Registration
-
 ```typescript
 
 import { verifyRegistrationResponse } from 'ts-auth'

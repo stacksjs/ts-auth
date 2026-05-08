@@ -2,23 +2,6 @@
 title: Session Middleware
 description: Integrate sessions with your web framework
 ---
-})
-
-```
-
-## Type-Safe Session Data
-
-Define session data types for TypeScript:
-
-```typescript
-
-// Define your session data structure
-interface SessionData {
-  user_id?: number
-  role?: 'admin' | 'user' | 'guest'
-  cart?: CartItem[]
-  flash_message?: string
-}
 
 // Create a typed session wrapper
 import { Session, createSession } from 'ts-auth'

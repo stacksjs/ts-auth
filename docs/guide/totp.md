@@ -2,21 +2,6 @@
 title: TOTP/2FA Setup
 description: Implement Time-based One-Time Password (TOTP) two-factor authentication with ts-auth
 ---
-  width: 256,
-  height: 256,
-  correctLevel: 'H', // Error correction: L, M, Q, H
-})
-
-// Generate as data URL for img tags
-const dataUrl = await generateQRCodeDataURL({
-  text: uri,
-  width: 256,
-  height: 256,
-})
-
-// Use in HTML
-// <img src="${dataUrl}" alt="Scan with authenticator app" />
-
 ```
 
 ### Step 3: Verify Setup Code

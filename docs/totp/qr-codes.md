@@ -2,24 +2,6 @@
 title: QR Code Generation
 description: Generate QR codes for TOTP setup with authenticator apps
 ---
-  Q = 3, // Quartile (~25% recovery)
-  H = 2, // High (~30% recovery) - Recommended for TOTP
-}
-
-```
-
-## Server-Side Generation
-
-Generate QR codes on the server and send to the client:
-
-```typescript
-
-import { generateQRCodeDataURL, totpKeyUri, generateTOTPSecret } from 'ts-auth'
-
-// API endpoint
-app.post('/api/totp/setup', async (req, res) => {
-  const user = req.user
-
   // Generate secret
   const secret = generateTOTPSecret()
 

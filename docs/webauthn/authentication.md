@@ -2,22 +2,6 @@
 title: WebAuthn Server-side Authentication
 description: Implement WebAuthn credential authentication on the server
 ---
-
-  if (verification.verified) {
-    // Update the counter to prevent replay attacks
-    await updateCredentialCounter(
-      userId,
-      credential.id,
-      verification.authenticationInfo!.newCounter
-    )
-
-    // Clean up the challenge
-    challenges.delete(userId)
-
-    return {
-      success: true,
-      userId: userId,
-    }
   }
 
   return {

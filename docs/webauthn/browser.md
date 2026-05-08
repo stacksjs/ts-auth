@@ -2,21 +2,6 @@
 title: WebAuthn Browser Integration
 description: Implement WebAuthn in the browser with ts-auth
 ---
-      // Redirect to dashboard or update UI
-      window.location.href = '/dashboard'
-    } else {
-      showError('Authentication failed: ' + result.error)
-    }
-  } catch (error) {
-    if (error.name === 'NotAllowedError') {
-      showError('Authentication was cancelled')
-    } else {
-      showError('Authentication failed: ' + error.message)
-    }
-  }
-}
-
-```
 
 ## Conditional UI (Autofill)
 

@@ -2,25 +2,6 @@
 title: Auth CLI Usage
 description: Command-line interface for ts-auth authentication utilities
 ---
-```
-
-### Verify JWT Token
-
-Verify and decode a JWT token:
-
-```bash
-
-auth jwt:verify --token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... --secret your-secret-key
-
-# Output: { "sub": "user-123", "role": "admin", "iat": 1234567890, "exp": 1234567890 }
-
-```
-
-### Decode JWT Token
-
-Decode a JWT token without verification (for debugging):
-
-```bash
 
 auth jwt:decode --token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
@@ -46,7 +27,7 @@ auth hash --password "my-secure-password" --memory 131072 --iterations 4
 
 ```
 
-### Verify Password
+## Verify Password
 
 Verify a password against a hash:
 

@@ -2,24 +2,6 @@
 title: Generating TOTP Secrets
 description: Generate and manage TOTP secrets for two-factor authentication
 ---
-  )
-
-  return new TextDecoder().decode(decrypted)
-}
-
-```
-
-### Database Storage
-
-```typescript
-
-// Store encrypted secret
-const secret = generateTOTPSecret()
-const encryptedSecret = await encryptSecret(secret)
-
-await db.user.update({
-  where: { id: userId },
-  data: {
     totpSecret: encryptedSecret,
     totpEnabled: false, // Don't enable until verified
     totpEnabledAt: null,

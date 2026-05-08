@@ -2,24 +2,6 @@
 title: Session Management Overview
 description: Manage user sessions with ts-auth
 ---
-
-## Configuration Options
-
-```typescript
-
-interface SessionConfig {
-  // Storage driver
-  driver: 'memory' | 'file' | 'redis'
-
-  // Session lifetime in minutes
-  lifetime: number
-
-  // Cookie name
-  cookie: string
-
-  // Cookie path
-  path?: string
-
   // Cookie domain
   domain?: string
 

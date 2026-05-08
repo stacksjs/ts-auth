@@ -2,22 +2,6 @@
 title: WebAuthn Credential Management
 description: Store and manage WebAuthn credentials
 ---
-        transports: credentialData.transports || [],
-      },
-    })
-  }
-
-  // Get all credentials for a user
-  async getByUserId(userId: string) {
-    return db.webAuthnCredential.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-    })
-  }
-
-  // Get a specific credential
-  async getByCredentialId(credentialId: string) {
-    return db.webAuthnCredential.findUnique({
       where: { credentialId },
     })
   }

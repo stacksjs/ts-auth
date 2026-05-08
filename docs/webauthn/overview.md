@@ -2,24 +2,6 @@
 title: WebAuthn Overview
 description: Implement passwordless authentication with WebAuthn and Passkeys
 ---
-
-```typescript
-
-const options = generateRegistrationOptions({
-  // ... other options
-  authenticatorSelection: {
-    authenticatorAttachment: 'platform',
-    userVerification: 'required',
-  },
-})
-
-```
-
-### Roaming Authenticators
-
-External security keys:
-
-- **YubiKey**
 - **Google Titan**
 - **Feitian**
 

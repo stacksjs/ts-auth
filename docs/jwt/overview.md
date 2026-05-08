@@ -2,23 +2,6 @@
 title: JWT Overview
 description: JSON Web Tokens for stateless authentication
 ---
-
-// Using exp claim directly
-const token = await signJwt(
-  {
-    ...payload,
-    exp: Math.floor(Date.now() / 1000) + (60 * 15), // 15 minutes
-  },
-  secret
-)
-
-```
-
-## When to Use JWT
-
-### Good for
-
-- Stateless API authentication
 - Microservices communication
 - Single Sign-On (SSO)
 - Mobile app authentication

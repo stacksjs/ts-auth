@@ -2,23 +2,6 @@
 title: Installation
 description: Install ts-auth in your project
 ---
-} from 'ts-auth'
-
-```
-
-### Type Imports
-
-Import types for TypeScript:
-
-```typescript
-
-import type {
-  AuthConfig,
-  TOTPOptions,
-  RegistrationOptions,
-  AuthenticationOptions,
-  JWTPayload,
-  SessionConfig,
   OAuthProviderConfig,
 } from 'ts-auth'
 

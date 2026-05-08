@@ -2,22 +2,6 @@
 title: TOTP Code Verification
 description: Verify time-based one-time passwords
 ---
-    return { success: false, error: 'Too many attempts' }
-  }
-
-  // Try TOTP verification first
-  const secret = await decryptSecret(user.totpSecret)
-  const totpValid = await verifyTOTP(code, { secret, window: 1 })
-
-  if (totpValid) {
-    await resetAttempts(userId)
-    await logVerification(userId, 'totp', true)
-    return { success: true, method: 'totp' }
-  }
-
-  // Try backup codes
-  for (let i = 0; i < user.backupCodes.length; i++) {
-    if (await verifyHash(code, user.backupCodes[i])) {
       // Remove used backup code
       const codes = [...user.backupCodes]
       codes.splice(i, 1)
