@@ -13,3 +13,9 @@ docs/.vitepress/cache
 .zed
 .cursor
 pantry
+
+# Compiled CLI binaries — built in CI and attached to GitHub releases (never commit)
+bin/auth
+bin/auth-*
+bin/*.zip
+!bin/cli.ts

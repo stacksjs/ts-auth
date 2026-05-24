@@ -1,6 +1,6 @@
 {
   "name": "@stacksjs/ts-auth",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "repository": {
     "type": "git",
@@ -51,7 +51,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "bun --bun build.ts && bun run compile",
+    "build": "bun --bun run build.ts",
     "prepare": "test -f dist/index.js || bun --bun run build.ts",
     "compile": "bun build ./bin/cli.ts --compile --minify --outfile bin/auth",
     "compile:all": "bun run compile:linux-x64 && bun run compile:linux-arm64 && bun run compile:windows-x64 && bun run compile:darwin-x64 && bun run compile:darwin-arm64",
@@ -68,7 +68,7 @@
     "zip:darwin-x64": "zip -j bin/auth-darwin-x64.zip bin/auth-darwin-x64",
     "zip:darwin-arm64": "zip -j bin/auth-darwin-arm64.zip bin/auth-darwin-arm64",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
-    "prepublishOnly": "bun --bun run build && bun run compile:all && bun run zip",
+    "prepublishOnly": "bun --bun run build.ts",
     "test": "bun test",
     "lint": "bunx --bun pickier .",
     "lint:fix": "bunx --bun pickier . --fix",

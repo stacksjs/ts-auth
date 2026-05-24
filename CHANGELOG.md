@@ -1,3 +1,17 @@
+[Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.2...v0.4.3)
+
+### 🐛 Bug Fixes
+
+- build dist on install when missing ([987594a](https://github.com/stacksjs/ts-auth/commit/987594a)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.4.3 ([e42ba65](https://github.com/stacksjs/ts-auth/commit/e42ba65)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.1...v0.4.2)
 
 ### 🐛 Bug Fixes
