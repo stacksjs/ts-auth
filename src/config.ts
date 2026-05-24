@@ -54,7 +54,12 @@ export async function getConfig(): Promise<AuthConfig> {
   if (!_config) {
     _config = await loadConfig({
       name: 'auth',
+      alias: ['auth'],
+      cwd: process.cwd(),
+      configDir: './config',
       defaultConfig,
+      checkEnv: true,
+      verbose: false,
     })
   }
   return _config

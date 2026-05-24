@@ -86,6 +86,7 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "bunfig": "^0.15.13",
     "ts-rate-limiter": "^0.4.1"
   }
 }
