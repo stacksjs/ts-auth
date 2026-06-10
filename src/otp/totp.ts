@@ -45,9 +45,19 @@ export async function generate(options: TOTPOptions): Promise<string> {
 }
 
 /**
- * Verify a TOTP code
+ * Verify a TOTP code, returning the matched time-step counter.
+ *
+ * The counter is the discrete time-step the token belongs to
+ * (`floor(now / step)`, offset by the matched window position). It is
+ * stable for the lifetime of a given code, which makes it the natural key
+ * for replay protection: persist the last-accepted counter per user and
+ * refuse a code whose counter has already been consumed. `counter` is
+ * `null` when the token does not validate.
  */
-export async function verify(token: string, options: TOTPOptions): Promise<boolean> {
+export async function verifyWithCounter(
+  token: string,
+  options: TOTPOptions,
+): Promise<{ valid: boolean, counter: number | null }> {
   const step = options.step || 30
   const window = options.window ?? 1
   const currentCounter = Math.floor(Date.now() / 1000 / step)
@@ -63,11 +73,18 @@ export async function verify(token: string, options: TOTPOptions): Promise<boole
     })
 
     if (timingSafeEqual(token, expectedToken)) {
-      return true
+      return { valid: true, counter }
     }
   }
 
-  return false
+  return { valid: false, counter: null }
+}
+
+/**
+ * Verify a TOTP code
+ */
+export async function verify(token: string, options: TOTPOptions): Promise<boolean> {
+  return (await verifyWithCounter(token, options)).valid
 }
 
 /**

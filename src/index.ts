@@ -143,6 +143,7 @@ export {
 export {
   generate as generateTOTP,
   verify as verifyTOTP,
+  verifyWithCounter as verifyTOTPWithCounter,
   generateSecret as generateTOTPSecret,
   keyuri as totpKeyUri,
 } from './otp/totp'
