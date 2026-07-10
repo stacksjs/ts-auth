@@ -92,5 +92,8 @@
   "dependencies": {
     "bunfig": "^0.15.13",
     "ts-rate-limiter": "^0.4.1"
+  },
+  "overrides": {
+    "typescript": "^7.0.2"
   }
 }
