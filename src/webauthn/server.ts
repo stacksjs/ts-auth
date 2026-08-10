@@ -4,6 +4,7 @@
  * Native implementation to replace @simplewebauthn/server
  */
 
+import { Buffer } from 'node:buffer'
 import { base64Decode, base64Encode } from '../utils/base64'
 import type {
   AttestationObject,
@@ -129,8 +130,7 @@ export async function verifyRegistrationResponse(
     const clientDataJSON = JSON.parse(new TextDecoder().decode(response.clientDataJSON))
 
     // Verify challenge
-    const receivedChallenge = base64Decode(clientDataJSON.challenge)
-    if (receivedChallenge !== base64Encode(expectedChallenge)) {
+    if (!challengeMatches(clientDataJSON.challenge, expectedChallenge)) {
       return { verified: false }
     }
 
@@ -196,8 +196,7 @@ export async function verifyAuthenticationResponse(
     const clientDataJSON = JSON.parse(new TextDecoder().decode(response.clientDataJSON))
 
     // Verify challenge
-    const receivedChallenge = base64Decode(clientDataJSON.challenge)
-    if (receivedChallenge !== base64Encode(expectedChallenge)) {
+    if (!challengeMatches(clientDataJSON.challenge, expectedChallenge)) {
       return { verified: false }
     }
 
@@ -318,23 +317,89 @@ function parseAuthenticatorData(authData: ArrayBuffer) {
   }
 }
 
+/**
+ * Whether the challenge in `clientDataJSON` is the one the server issued.
+ *
+ * The browser writes it as **base64url of the raw challenge bytes**, per the
+ * WebAuthn specification. This previously read `base64Decode(challenge)` -
+ * which interprets those bytes as UTF-8 text - and compared the result to
+ * `base64Encode(expected)`, a base64 string. For a random 32-byte challenge
+ * those two are never equal, so the check failed on every well-formed
+ * assertion and `verifyAuthenticationResponse` always returned
+ * `{ verified: false }`. Passkeys could not be used at all.
+ *
+ * Compared as bytes, and in constant time: a challenge is a secret for the
+ * length of a ceremony.
+ */
+function challengeMatches(received: unknown, expected: Uint8Array): boolean {
+  if (typeof received !== 'string')
+    return false
+
+  const normalized = received.replace(/-/g, '+').replace(/_/g, '/')
+  const padded = normalized + '='.repeat((4 - (normalized.length % 4)) % 4)
+  const bytes = new Uint8Array(Buffer.from(padded, 'base64'))
+
+  if (bytes.length !== expected.length)
+    return false
+
+  let difference = 0
+
+  for (let i = 0; i < bytes.length; i++)
+    difference |= bytes[i]! ^ expected[i]!
+
+  return difference === 0
+}
+
+/**
+ * Import a credential public key, whether it is COSE or SPKI.
+ *
+ * An authenticator reports its public key as a **COSE key** - a small CBOR map
+ * carrying the curve and the two coordinates - and that is what a relying party
+ * stores. This function previously called `importKey('spki', ...)` only, which
+ * throws on COSE bytes and was caught and reported as a bad signature, so a
+ * genuine assertion from a genuine authenticator was rejected as forged.
+ *
+ * SPKI is still accepted, because callers that stored a converted key should
+ * not break.
+ */
+async function importCredentialKey(publicKey: ArrayBuffer): Promise<CryptoKey> {
+  const bytes = new Uint8Array(publicKey)
+
+  // A COSE EC2 key is a CBOR map: 0xA5 for five pairs, and the coordinates are
+  // introduced by 0x21 0x58 0x20 (x) and 0x22 0x58 0x20 (y).
+  const looksCose = bytes.length > 0 && (bytes[0]! & 0xE0) === 0xA0
+
+  if (!looksCose)
+    return await crypto.subtle.importKey('spki', publicKey, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify'])
+
+  const coordinate = (label: number): Uint8Array => {
+    for (let i = 0; i < bytes.length - 3; i++) {
+      if (bytes[i] === label && bytes[i + 1] === 0x58 && bytes[i + 2] === 0x20)
+        return bytes.slice(i + 3, i + 35)
+    }
+
+    throw new Error('the COSE key is missing a coordinate')
+  }
+
+  const base64url = (part: Uint8Array): string =>
+    Buffer.from(part).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+
+  return await crypto.subtle.importKey(
+    'jwk',
+    { kty: 'EC', crv: 'P-256', x: base64url(coordinate(0x21)), y: base64url(coordinate(0x22)), ext: true },
+    { name: 'ECDSA', namedCurve: 'P-256' },
+    false,
+    ['verify'],
+  )
+}
+
 async function verifySignature(
   publicKey: ArrayBuffer,
   data: Uint8Array,
   signature: ArrayBuffer,
 ): Promise<boolean> {
   try {
-    // Import the public key
-    const key = await crypto.subtle.importKey(
-      'spki',
-      publicKey,
-      {
-        name: 'ECDSA',
-        namedCurve: 'P-256',
-      },
-      false,
-      ['verify'],
-    )
+    const key = await importCredentialKey(publicKey)
 
     // Verify the signature
     return await crypto.subtle.verify(
