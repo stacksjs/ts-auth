@@ -30,10 +30,17 @@ export interface RegistrationOptions {
     residentKey?: 'discouraged' | 'preferred' | 'required'
     userVerification?: 'required' | 'preferred' | 'discouraged'
   }
+  /**
+   * Credentials to exclude. `id` accepts a base64url STRING as well as an
+   * ArrayBuffer: a server generating these options has to send them to the
+   * browser as JSON, where an ArrayBuffer serializes to `{}`, so the stored
+   * base64url id is what actually travels. The client decodes it before
+   * calling `navigator.credentials`.
+   */
   excludeCredentials?: Array<{
-    id: ArrayBuffer
+    id: ArrayBuffer | string
     type: 'public-key'
-    transports?: ('usb' | 'nfc' | 'ble' | 'internal')[]
+    transports?: ('usb' | 'nfc' | 'ble' | 'internal' | 'hybrid')[]
   }>
   timeout?: number
 }
@@ -41,10 +48,11 @@ export interface RegistrationOptions {
 export interface AuthenticationOptions {
   rpID: string
   challenge?: Uint8Array
+  /** See `RegistrationOptions.excludeCredentials` on the string form. */
   allowCredentials?: Array<{
-    id: ArrayBuffer
+    id: ArrayBuffer | string
     type: 'public-key'
-    transports?: ('usb' | 'nfc' | 'ble' | 'internal')[]
+    transports?: ('usb' | 'nfc' | 'ble' | 'internal' | 'hybrid')[]
   }>
   userVerification?: 'required' | 'preferred' | 'discouraged'
   timeout?: number
