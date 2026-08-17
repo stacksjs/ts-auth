@@ -26,7 +26,8 @@ export interface PublicKeyCredentialCreationOptions {
     userVerification?: 'required' | 'preferred' | 'discouraged'
   }
   excludeCredentials?: Array<{
-    id: ArrayBuffer
+    /** ArrayBuffer in the browser; base64url string on the JSON wire. */
+    id: ArrayBuffer | string
     type: string
     transports?: string[]
   }>
@@ -36,7 +37,8 @@ export interface PublicKeyCredentialRequestOptions {
   challenge: Uint8Array
   rpId?: string
   allowCredentials?: Array<{
-    id: ArrayBuffer
+    /** ArrayBuffer in the browser; base64url string on the JSON wire. */
+    id: ArrayBuffer | string
     type: string
     transports?: string[]
   }>
