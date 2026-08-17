@@ -1,3 +1,37 @@
+[Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.3...HEAD)
+
+## 🚀 Features
+
+- **totp**: add verifyWithCounter for replay protection ([f1ba7f7](https://github.com/stacksjs/ts-auth/commit/f1ba7f7)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🐛 Bug Fixes
+
+- **webauthn**: let credential descriptors carry a base64url id ([87f8285](https://github.com/stacksjs/ts-auth/commit/87f8285)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **webauthn**: the challenge check could never pass ([8f18bca](https://github.com/stacksjs/ts-auth/commit/8f18bca)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 📚 Documentation
+
+- link the community as stacksjs.com/discord ([c36c2d2](https://github.com/stacksjs/ts-auth/commit/c36c2d2)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🤖 Continuous Integration
+
+- **buddy-bot**: add daily cleanup cron to workflow ([27936e4](https://github.com/stacksjs/ts-auth/commit/27936e4)) _(by Glenn Michael Torregosa <gtorregosa@gmail.com>)_
+
+## 🧹 Chores
+
+- upgrade to TypeScript 7 ([9c6f9ec](https://github.com/stacksjs/ts-auth/commit/9c6f9ec)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **deps**: refresh bun.lock to pick up pickier 0.1.37 ([53ddc82](https://github.com/stacksjs/ts-auth/commit/53ddc82)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up pickier 0.1.35 ([a62165f](https://github.com/stacksjs/ts-auth/commit/a62165f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up pickier 0.1.33 ([b3adcdf](https://github.com/stacksjs/ts-auth/commit/b3adcdf)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up @stacksjs/logsmith 0.2.3 ([1798f01](https://github.com/stacksjs/ts-auth/commit/1798f01)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up buddy-bot 0.9.20 ([dcf1272](https://github.com/stacksjs/ts-auth/commit/dcf1272)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _Glenn Michael Torregosa <gtorregosa@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.2...v0.4.3)
 
 ### 🐛 Bug Fixes
