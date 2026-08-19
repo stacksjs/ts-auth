@@ -1,3 +1,17 @@
+[Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.4...v0.4.5)
+
+## 🐛 Bug Fixes
+
+- drop the scaffold CLI this package never had ([5ccc661](https://github.com/stacksjs/ts-auth/commit/5ccc661)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.4.5 ([f5edb89](https://github.com/stacksjs/ts-auth/commit/f5edb89)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.3...HEAD)
 
 ## 🚀 Features
