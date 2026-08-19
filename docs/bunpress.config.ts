@@ -1,12 +1,19 @@
-import type { BunpressConfig } from 'bunpress'
+import type { BunPressConfig } from '@stacksjs/bunpress'
 
-const config: BunpressConfig = {
-  name: 'ts-auth',
+const config: BunPressConfig = {
+  title: 'ts-auth',
   description: 'Native WebAuthn and OTP authentication library built with Bun',
   url: 'https://ts-auth.stacksjs.org',
 
-  theme: {
-    primaryColor: '#0A0ABC',
+  themeConfig: {
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/stacksjs/ts-auth' },
+      { icon: 'discord', link: 'https://discord.gg/stacksjs' },
+      { icon: 'twitter', link: 'https://twitter.com/stacksjs' },
+    ],
+    colors: {
+      primary: '#0A0ABC',
+    },
   },
 
   nav: [
@@ -104,11 +111,6 @@ const config: BunpressConfig = {
     ['meta', { name: 'keywords', content: 'webauthn, passkeys, totp, 2fa, authentication, typescript, bun' }],
   ],
 
-  socialLinks: [
-    { icon: 'github', link: 'https://github.com/stacksjs/ts-auth' },
-    { icon: 'discord', link: 'https://discord.gg/stacksjs' },
-    { icon: 'twitter', link: 'https://twitter.com/stacksjs' },
-  ],
 }
 
 export default config
