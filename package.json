@@ -8,8 +8,8 @@
   },
   "module": "./dist/index.js",
   "devDependencies": {
-    "@stacksjs/bunpress": "^0.2.11",
-    "better-dx": "^0.2.15"
+    "@stacksjs/bunpress": "^0.2.14",
+    "better-dx": "^0.2.25"
   },
   "exports": {
     ".": {
@@ -74,8 +74,8 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "bunfig": "^0.15.13",
-    "ts-rate-limiter": "^0.4.1"
+    "bunfig": "^0.15.19",
+    "ts-rate-limiter": "^0.4.8"
   },
   "overrides": {
     "typescript": "^7.0.2"
