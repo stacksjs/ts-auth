@@ -36,17 +36,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Build Release Binaries
-        run: bun run compile:all && bun run zip
-
       - name: Create GitHub Release
         uses: stacksjs/action-releaser@v1.2.9
-        with:
-          files: |
-            bin/auth-linux-x64.zip
-            bin/auth-linux-arm64.zip
-            bin/auth-windows-x64.zip
-            bin/auth-darwin-x64.zip
-            bin/auth-darwin-arm64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
