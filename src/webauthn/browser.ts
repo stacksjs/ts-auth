@@ -3,7 +3,8 @@
  * Native implementation to replace @simplewebauthn/browser
  */
 
-import { base64Decode, base64Encode } from '../utils/base64'
+import { decodeBase64URL } from './json'
+import type { RegistrationOptionsJSON, AuthenticationOptionsJSON } from './json'
 import type {
   AuthenticationCredential,
   PublicKeyCredentialCreationOptions,
@@ -15,26 +16,30 @@ import type {
  * Start registration (credential creation) process
  */
 export async function startRegistration(
-  options: PublicKeyCredentialCreationOptions,
+  options: PublicKeyCredentialCreationOptions | RegistrationOptionsJSON,
+  control: { signal?: AbortSignal } = {},
 ): Promise<RegistrationCredential> {
   // Check if WebAuthn is supported
-  if (!window.PublicKeyCredential) {
+  if (!browserSupportsWebAuthn()) {
     throw new Error('WebAuthn is not supported in this browser')
   }
 
   // Convert options to browser-compatible format
   const publicKeyOptions: PublicKeyCredentialCreationOptions = {
     ...options,
-    challenge: options.challenge,
+    challenge: typeof options.challenge === 'string' ? new Uint8Array(decodeBase64URL(options.challenge)) : options.challenge,
     user: {
       ...options.user,
-      id: options.user.id,
+      id: typeof options.user.id === 'string' ? new Uint8Array(decodeBase64URL(options.user.id)) : options.user.id,
     },
   }
+
+  publicKeyOptions.excludeCredentials = options.excludeCredentials?.map(item => ({ ...item, id: typeof item.id === 'string' ? decodeBase64URL(item.id) : item.id }))
 
   // Create credential
   const credential = await navigator.credentials.create({
     publicKey: publicKeyOptions as any,
+    signal: control.signal,
   }) as any
 
   if (!credential) {
@@ -48,6 +53,7 @@ export async function startRegistration(
     response: {
       clientDataJSON: credential.response.clientDataJSON,
       attestationObject: credential.response.attestationObject,
+      transports: credential.response.getTransports?.() || [],
     },
     type: credential.type,
   }
@@ -57,16 +63,20 @@ export async function startRegistration(
  * Start authentication (credential verification) process
  */
 export async function startAuthentication(
-  options: PublicKeyCredentialRequestOptions,
+  options: PublicKeyCredentialRequestOptions | AuthenticationOptionsJSON,
+  control: { signal?: AbortSignal, mediation?: 'conditional' | 'optional' | 'required' } = {},
 ): Promise<AuthenticationCredential> {
   // Check if WebAuthn is supported
-  if (!window.PublicKeyCredential) {
+  if (!browserSupportsWebAuthn()) {
     throw new Error('WebAuthn is not supported in this browser')
   }
 
   // Get credential
   const credential = await navigator.credentials.get({
-    publicKey: options as any,
+    publicKey: { ...options, challenge: typeof options.challenge === 'string' ? decodeBase64URL(options.challenge) : options.challenge,
+      allowCredentials: options.allowCredentials?.map(item => ({ ...item, id: typeof item.id === 'string' ? decodeBase64URL(item.id) : item.id })) } as any,
+    signal: control.signal,
+    mediation: control.mediation,
   }) as any
 
   if (!credential) {
@@ -91,7 +101,7 @@ export async function startAuthentication(
  * Check if platform authenticator is available
  */
 export async function platformAuthenticatorIsAvailable(): Promise<boolean> {
-  if (!window.PublicKeyCredential) {
+  if (!browserSupportsWebAuthn()) {
     return false
   }
 
@@ -107,19 +117,19 @@ export async function platformAuthenticatorIsAvailable(): Promise<boolean> {
  * Check if browser supports WebAuthn
  */
 export function browserSupportsWebAuthn(): boolean {
-  return !!window.PublicKeyCredential
+  return typeof globalThis.PublicKeyCredential !== 'undefined' && typeof navigator !== 'undefined' && !!navigator.credentials
 }
 
 /**
  * Check if browser supports conditional UI
  */
 export async function browserSupportsWebAuthnAutofill(): Promise<boolean> {
-  if (!window.PublicKeyCredential) {
+  if (!browserSupportsWebAuthn()) {
     return false
   }
 
   try {
-    return await (PublicKeyCredential as any).isConditionalMediationAvailable?.()
+    return !!(await (PublicKeyCredential as any).isConditionalMediationAvailable?.())
   }
   catch {
     return false

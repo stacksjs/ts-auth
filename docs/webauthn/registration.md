@@ -172,3 +172,24 @@ Bun.serve({
 - [Server-side Authentication](/webauthn/authentication)
 - [Browser Integration](/webauthn/browser)
 - [Security Best Practices](/security/best-practices)
+
+## JSON and verification profile
+
+Use `registrationOptionsToJSON` to send creation options over HTTP and
+`registrationCredentialFromJSON` to decode the returned credential before
+verification. For the browser import `@stacksjs/ts-auth/passkeys-browser`:
+it contains no server or Node dependencies. `startRegistration` accepts either
+binary options or base64url JSON; send its result with
+`registrationCredentialToJSON`, which also preserves authenticator transports.
+Authentication has the corresponding option and credential codecs, and
+`startAuthentication(options, { signal, mediation: 'conditional' })` supports
+abortable autofill. Place `webauthn` last in the username autocomplete attribute.
+
+The verifier supports attestation `none`, ES256/P-256 and RS256 credentials.
+It decodes definite-length CBOR and COSE, checks the credential ID against
+attested data, and verifies authenticator signatures (including DER ES256).
+Other attestation formats fail closed. Pass `{ requireUserVerification: true }`
+as the last argument to both verifiers for passwordless sign-in. User presence
+is always required. The relying party must persist short-lived challenges,
+consume them once and atomically advance the verified credential's counter.
+See the [WebAuthn registration and assertion algorithms](https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential).

@@ -18,6 +18,10 @@
     },
     "./*": {
       "import": "./dist/*"
+    },
+    "./passkeys-browser": {
+      "types": "./dist/passkeys-browser.d.ts",
+      "import": "./dist/passkeys-browser.js"
     }
   },
   "bugs": {

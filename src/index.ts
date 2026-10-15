@@ -255,3 +255,5 @@ export {
   createConsoleAuditLogger,
   createCallbackAuditLogger,
 } from './audit'
+
+export * from './webauthn/json'

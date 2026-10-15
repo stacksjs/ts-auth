@@ -3,7 +3,7 @@ import { dts } from 'bun-plugin-dtsx'
 
 // eslint-disable-next-line ts/no-top-level-await
 await Bun.build({
-  entrypoints: ['src/index.ts'],
+  entrypoints: ['src/index.ts', 'src/passkeys-browser.ts'],
   outdir: './dist',
   target: 'node',
   // Keep config/logging as runtime deps — bundling clarity/bunfig pulls in

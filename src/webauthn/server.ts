@@ -5,9 +5,9 @@
  */
 
 import { Buffer } from 'node:buffer'
-import { base64Decode, base64Encode } from '../utils/base64'
+import { createPublicKey, verify as verifyCryptoSignature } from 'node:crypto'
+import { decodeCBOR } from './cbor'
 import type {
-  AttestationObject,
   AuthenticationCredential,
   AuthenticatorAssertionResponse,
   AuthenticatorAttestationResponse,
@@ -118,6 +118,7 @@ export async function verifyRegistrationResponse(
   expectedChallenge: Uint8Array,
   expectedOrigin: string,
   expectedRPID: string,
+  options: { requireUserVerification?: boolean } = {},
 ): Promise<{
   verified: boolean
   registrationInfo?: {
@@ -143,7 +144,7 @@ export async function verifyRegistrationResponse(
     }
 
     // Verify origin
-    if (clientDataJSON.origin !== expectedOrigin) {
+    if (clientDataJSON.origin !== expectedOrigin || clientDataJSON.crossOrigin === true) {
       return { verified: false }
     }
 
@@ -152,8 +153,16 @@ export async function verifyRegistrationResponse(
       return { verified: false }
     }
 
+    if (credential.type !== 'public-key' || credential.id !== Buffer.from(credential.rawId).toString('base64url')) return { verified: false }
+
     // Parse attestation object
     const attestationObject = parseAttestationObject(response.attestationObject)
+
+    if (!attestationObject.authData.flags.userPresent || (options.requireUserVerification && !attestationObject.authData.flags.userVerified)) return { verified: false }
+    if (attestationObject.authData.flags.backupState && !attestationObject.authData.flags.backupEligible) return { verified: false }
+    if (!arraysEqual(new Uint8Array(credential.rawId), attestationObject.authData.credentialId)) return { verified: false }
+    // Reject unsupported algorithms and malformed COSE keys at enrollment.
+    importCredentialKey(attestationObject.authData.credentialPublicKey)
 
     // Verify RP ID hash
     const rpIdHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(expectedRPID))
@@ -191,6 +200,7 @@ export async function verifyAuthenticationResponse(
   expectedRPID: string,
   credentialPublicKey: ArrayBuffer,
   currentCounter: number,
+  options: { requireUserVerification?: boolean } = {},
 ): Promise<{
   verified: boolean
   authenticationInfo?: {
@@ -209,7 +219,7 @@ export async function verifyAuthenticationResponse(
     }
 
     // Verify origin
-    if (clientDataJSON.origin !== expectedOrigin) {
+    if (clientDataJSON.origin !== expectedOrigin || clientDataJSON.crossOrigin === true) {
       return { verified: false }
     }
 
@@ -220,6 +230,9 @@ export async function verifyAuthenticationResponse(
 
     // Parse authenticator data
     const authData = parseAuthenticatorData(response.authenticatorData)
+    if (credential.type !== 'public-key' || credential.id !== Buffer.from(credential.rawId).toString('base64url')) return { verified: false }
+    if (!authData.flags.userPresent || (options.requireUserVerification && !authData.flags.userVerified)) return { verified: false }
+    if (authData.flags.backupState && !authData.flags.backupEligible) return { verified: false }
 
     // Verify RP ID hash
     const rpIdHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(expectedRPID))
@@ -228,7 +241,7 @@ export async function verifyAuthenticationResponse(
     }
 
     // Verify counter
-    if (authData.signCount > 0 && authData.signCount <= currentCounter) {
+    if ((authData.signCount !== 0 || currentCounter !== 0) && authData.signCount <= currentCounter) {
       return { verified: false }
     }
 
@@ -263,19 +276,21 @@ export async function verifyAuthenticationResponse(
 
 // Helper functions
 
-function parseAttestationObject(attestationObject: ArrayBuffer): AttestationObject {
-  // This is a simplified parser - in production, use proper CBOR parsing
-  const view = new DataView(attestationObject)
-  const authData = parseAuthenticatorData(attestationObject)
-
-  return {
-    fmt: 'none',
-    attStmt: {},
-    authData,
-  }
+function parseAttestationObject(attestationObject: ArrayBuffer) {
+  const bytes = new Uint8Array(attestationObject)
+  const decoded = decodeCBOR(bytes)
+  const object = decoded.value
+  // This RP requests attestation:none. Never silently accept unverified attestation.
+  if (decoded.end !== bytes.length || !(object instanceof Map) || object.get('fmt') !== 'none'
+    || !(object.get('attStmt') instanceof Map) || object.get('attStmt').size !== 0
+    || !(object.get('authData') instanceof Uint8Array)) throw new Error('Invalid attestation')
+  const authData = parseAuthenticatorData(object.get('authData').buffer)
+  if (!authData.flags.attestedCredentialData) throw new Error('Missing credential data')
+  return { authData }
 }
 
 function parseAuthenticatorData(authData: ArrayBuffer) {
+  if (authData.byteLength < 37) throw new Error('Truncated authenticator data')
   const view = new DataView(authData)
   let offset = 0
 
@@ -301,6 +316,7 @@ function parseAuthenticatorData(authData: ArrayBuffer) {
   offset += 4
 
   let credentialPublicKey: ArrayBuffer = new ArrayBuffer(0)
+  let credentialId = new Uint8Array(0)
 
   if (flags.attestedCredentialData) {
     // AAGUID (16 bytes)
@@ -310,14 +326,18 @@ function parseAuthenticatorData(authData: ArrayBuffer) {
     const credIdLength = view.getUint16(offset, false)
     offset += 2
 
-    // Credential ID
+    if (!credIdLength || offset + credIdLength > authData.byteLength) throw new Error('Invalid credential id')
+    credentialId = new Uint8Array(authData.slice(offset, offset + credIdLength))
     offset += credIdLength
-
-    // Credential public key (rest of the data)
-    credentialPublicKey = authData.slice(offset)
+    const key = decodeCBOR(new Uint8Array(authData), offset)
+    credentialPublicKey = authData.slice(offset, key.end)
+    offset = key.end
   }
 
+  if (flags.extensionData) offset = decodeCBOR(new Uint8Array(authData), offset).end
+  if (offset !== authData.byteLength) throw new Error('Trailing authenticator data')
   return {
+    credentialId,
     rpIdHash,
     flags,
     signCount,
@@ -370,55 +390,34 @@ function challengeMatches(received: unknown, expected: Uint8Array): boolean {
  * SPKI is still accepted, because callers that stored a converted key should
  * not break.
  */
-async function importCredentialKey(publicKey: ArrayBuffer): Promise<CryptoKey> {
+function importCredentialKey(publicKey: ArrayBuffer): ReturnType<typeof createPublicKey> {
   const bytes = new Uint8Array(publicKey)
-
-  // A COSE EC2 key is a CBOR map: 0xA5 for five pairs, and the coordinates are
-  // introduced by 0x21 0x58 0x20 (x) and 0x22 0x58 0x20 (y).
-  const looksCose = bytes.length > 0 && (bytes[0]! & 0xE0) === 0xA0
-
-  if (!looksCose)
-    return await crypto.subtle.importKey('spki', publicKey, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify'])
-
-  const coordinate = (label: number): Uint8Array => {
-    for (let i = 0; i < bytes.length - 3; i++) {
-      if (bytes[i] === label && bytes[i + 1] === 0x58 && bytes[i + 2] === 0x20)
-        return bytes.slice(i + 3, i + 35)
-    }
-
-    throw new Error('the COSE key is missing a coordinate')
+  if ((bytes[0]! & 0xE0) !== 0xA0)
+    return createPublicKey({ key: Buffer.from(publicKey), format: 'der', type: 'spki' })
+  const decoded = decodeCBOR(bytes)
+  const key = decoded.value
+  if (!(key instanceof Map) || decoded.end !== bytes.length) throw new Error('Invalid COSE key')
+  function part(label: number, length?: number): string {
+    const value = key.get(label)
+    if (!(value instanceof Uint8Array) || !value.length || (length && value.length !== length)) throw new Error('Invalid key component')
+    return Buffer.from(value).toString('base64url')
   }
-
-  const base64url = (part: Uint8Array): string =>
-    Buffer.from(part).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-
-  return await crypto.subtle.importKey(
-    'jwk',
-    { kty: 'EC', crv: 'P-256', x: base64url(coordinate(0x21)), y: base64url(coordinate(0x22)), ext: true },
-    { name: 'ECDSA', namedCurve: 'P-256' },
-    false,
-    ['verify'],
-  )
+  if (key.get(1) === 2 && key.get(3) === -7 && key.get(-1) === 1)
+    return createPublicKey({ format: 'jwk', key: { kty: 'EC', crv: 'P-256', x: part(-2, 32), y: part(-3, 32) } })
+  if (key.get(1) === 3 && key.get(3) === -257) {
+    const modulus = key.get(-1)
+    if (!(modulus instanceof Uint8Array) || modulus.length < 256) throw new Error('Weak RSA key')
+    return createPublicKey({ format: 'jwk', key: { kty: 'RSA', n: part(-1), e: part(-2) } })
+  }
+  throw new Error('Unsupported credential algorithm')
 }
 
-async function verifySignature(
-  publicKey: ArrayBuffer,
-  data: Uint8Array,
-  signature: ArrayBuffer,
-): Promise<boolean> {
+async function verifySignature(publicKey: ArrayBuffer, data: Uint8Array, signature: ArrayBuffer): Promise<boolean> {
   try {
-    const key = await importCredentialKey(publicKey)
-
-    // Verify the signature
-    return await crypto.subtle.verify(
-      {
-        name: 'ECDSA',
-        hash: 'SHA-256',
-      },
-      key,
-      signature,
-      data.buffer as ArrayBuffer,
-    )
+    const key = importCredentialKey(publicKey)
+    if (key.asymmetricKeyType !== 'ec' && key.asymmetricKeyType !== 'rsa') return false
+    // Authenticators encode ES256 signatures as ASN.1 DER, not WebCrypto's P1363.
+    return verifyCryptoSignature('sha256', data, key, Buffer.from(signature))
   }
   catch {
     return false

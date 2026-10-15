@@ -63,6 +63,7 @@ export interface AuthenticationCredential {
 export interface AuthenticatorAttestationResponse {
   clientDataJSON: ArrayBuffer
   attestationObject: ArrayBuffer
+  transports?: string[]
 }
 
 export interface AuthenticatorAssertionResponse {
