@@ -1,3 +1,24 @@
+[Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.5...v0.4.6)
+
+## 🚀 Features
+
+- implement interoperable WebAuthn passkey ceremonies ([096fb9d](https://github.com/stacksjs/ts-auth/commit/096fb9d)) _(by Chris Breuer <chris@stacksjs.com>)_
+
+## 🐛 Bug Fixes
+
+- **docs**: use the config keys bunpress actually has ([3308b58](https://github.com/stacksjs/ts-auth/commit/3308b58)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.4.6 ([8ed0678](https://github.com/stacksjs/ts-auth/commit/8ed0678)) _(by Chris <chrisbreuer93@gmail.com>)_
+- run bun-git-hooks and @stacksjs/logsmith, not the unrelated npm 'git-hooks' and 'logsmith' ([e8a4551](https://github.com/stacksjs/ts-auth/commit/e8a4551)) _(by Chris <chrisbreuer93@gmail.com>)_
+- release through @stacksjs/bumpx, not the unrelated npm 'bumpx' ([1445ea1](https://github.com/stacksjs/ts-auth/commit/1445ea1)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _Chris Breuer <chris@stacksjs.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.4...v0.4.5)
 
 ## 🐛 Bug Fixes
