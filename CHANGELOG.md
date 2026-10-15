@@ -1,3 +1,18 @@
+[Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.6...v0.4.7)
+
+## 🐛 Bug Fixes
+
+- **ci**: release auth as a library without obsolete CLI artifacts ([e06cfc5](https://github.com/stacksjs/ts-auth/commit/e06cfc5)) _(by Chris Breuer <chris@stacksjs.com>)_
+
+## 🧹 Chores
+
+- release v0.4.7 ([a525198](https://github.com/stacksjs/ts-auth/commit/a525198)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _Chris Breuer <chris@stacksjs.com>_
+
 [Compare changes](https://github.com/stacksjs/ts-auth/compare/v0.4.5...v0.4.6)
 
 ## 🚀 Features
