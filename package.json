@@ -38,7 +38,7 @@
         "*.{js,ts,json,yaml,yml,md}": "bunx pickier run --fix"
       }
     },
-    "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
+    "commit-msg": "bun x gitlint --edit \"$1\""
   },
   "homepage": "https://github.com/stacksjs/ts-auth#readme",
   "keywords": [
@@ -69,7 +69,7 @@
     "release:patch": "bunx --bun @stacksjs/bumpx patch --yes",
     "release:minor": "bunx --bun @stacksjs/bumpx minor --yes",
     "release:major": "bunx --bun @stacksjs/bumpx major --yes",
-    "postinstall": "bunx bun-git-hooks",
+    "hooks:install": "bun-git-hooks",
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
     "preview:docs": "bun --bun vitepress preview docs",
